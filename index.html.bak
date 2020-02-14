@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Page Title</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Include jQuery Mobile stylesheets -->
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+        <!-- Include the jQuery library -->
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+        <!-- Include the jQuery Mobile library -->
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
+	<link rel="stylesheet" href="css/w3.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.4.5.js"></script>
+	<script src="appml.js"></script>
+</head>
+
+<body class="">
+<!-- Homepage -->
+<div data-role="page" id="home">
+	<div data-role="header" style="display: none">
+		<h1>Moto | Online Classifieds</h1>
+	</div>
+	<div role="main" class="ui-content1">
+		<div class="w3-container w3-green w3-padding-16" style="min-height:28vh;">
+		<h2 class="w3-large w3-center w3-padding-top">What are you looking for?</h2>
+		<form>
+			<input type="search" name="text-basic" id="text-basic" value="" class="">
+		</form>
+	</div>
+	
+	<div class="ui-grid-b">
+    	<div class="ui-block-a">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ">Star</a>
+			<p>Trends</p>
+			</div>
+		</div>
+    	<div class="ui-block-b">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ">Star</a>
+			<p>Vehicles</p>
+			</div>
+		</div>
+    	<div class="ui-block-c">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ">Star</a>
+			<p>Real Estate</p>
+			</div>
+		</div>
+	</div><!-- /grid-b -->
+	
+	<div class="ui-grid-b">
+    	<div class="ui-block-a">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">   	
+			<p>Phones &amp; Tablets</p>
+			</div>
+		</div>
+    	<div class="ui-block-b">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<p>Electronics</p>
+			</div>
+		</div>
+    	<div class="ui-block-c">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<p>Home &amp; Garden</p>
+			</div>
+		</div>
+	</div><!-- /grid-b -->
+	
+	<div class="ui-grid-b">
+    	<div class="ui-block-a">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">   	
+			<p>Health &amp; Beauty</p>
+			</div>
+		</div>
+    	<div class="ui-block-b">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<p>Fashion</p>
+			</div>
+		</div>
+    	<div class="ui-block-c">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<p>Hobbies, Art &amp; Sports</p>
+			</div>
+		</div>
+	</div><!-- /grid-b -->
+	
+	<div class="ui-grid-b">
+    	<div class="ui-block-a">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">   	
+			<p>Seeking Work - CV</p>
+			</div>
+		</div>
+    	<div class="ui-block-b">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<p>Services</p>
+			</div>
+		</div>
+    	<div class="ui-block-c">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<p>Jobs</p>
+			</div>
+		</div>
+	</div><!-- /grid-b -->
+	
+	<div class="ui-grid-b">
+    	<div class="ui-block-a">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">   	
+			<p>Babies &amp; Kids</p>
+			</div>
+		</div>
+    	<div class="ui-block-b">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<p>Animals &amp; Pets</p>
+			</div>
+		</div>
+    	<div class="ui-block-c">
+			<div class="ui-bar ui-bar-a" style="min-height:100px;">
+			<p>Agriculture &amp; Food</p>
+			</div>
+		</div>
+	</div><!-- /grid-b -->
+	
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed" data-theme="a">
+        <div data-role="navbar">
+        	<h1 style="display: none">Favorites | Moto</h1>
+            <ul>
+                <li><a href="#home" data-icon="home" class="ui-btn-active">Home</a></li>
+                <li><a href="#favorites" data-icon="star" class="ui-btn-active1">Favorites</a></li>
+                <li><a href="#messages" data-icon="comment">Messages</a></li>
+                <li><a href="#profile" data-icon="user">Profile</a></li>
+            </ul>
+        </div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Favorites Page -->
+<div data-role="page" id="favorites">
+	<div data-role="header">
+		<div data-role="navbar">
+        <ul>
+            <li><a href="#">Favorites</a></li>
+            <li><a href="#">Subscribing</a></li>
+        </ul>
+    	</div><!-- /navbar -->
+	</div>
+	<div role="main">
+		<div class="ui-bar">
+			&nbsp;
+		</div>
+<table appml-data="customers.js">
+<tr>
+  <th>Customer</th>
+  <th>City</th>
+  <th>Country</th>
+</tr>
+<tr appml-repeat="records">
+  <td>{{CustomerName}}</td>
+  <td>{{City}}</td>
+  <td>{{Country}}</td>
+</tr>
+</table>
+	</div>
+	<div data-role="footer" data-position="fixed" data-theme="a">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home" class="ui-nodisk-icon">Home</a></li>
+                <li><a href="#favorites" data-icon="star" class="ui-btn-active">Favorites</a></li>
+                <li><a href="#messages" data-icon="comment">Messages</a></li>
+                <li><a href="#profile" data-icon="user">Profile</a></li>
+            </ul>
+        </div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Messages Page -->
+<div data-role="page" id="messages">
+	<div data-role="header">
+		<div data-role="navbar">
+        <ul>
+            <li><a href="#">Messages</a></li>
+            <li><a href="#">Notifications</a></li>
+        </ul>
+    	</div><!-- /navbar -->
+	</div>
+	<div role="main"></div>
+	<div data-role="footer" data-position="fixed" data-theme="a">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home" class="ui-nodisk-icon">Home</a></li>
+                <li><a href="#favorites" data-icon="star">Favorites</a></li>
+                <li><a href="#messages" data-icon="comment" class="ui-btn-active">Messages</a></li>
+                <li><a href="#profile" data-icon="user">Profile</a></li>
+            </ul>
+        </div><!-- /navbar -->
+</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- My Account Page -->
+<div data-role="page" id="profile">
+	<div data-role="header">
+		<h1>My Account</h1>
+		<a href="#" class="ui-btn-right ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-a ui-btn-inline ui-btn-icon-notext">Plus</a>
+	</div>
+	<div role="main"></div>
+	<div data-role="footer" data-position="fixed" data-theme="a">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home" class="ui-nodisk-icon">Home</a></li>
+                <li><a href="#favorites" data-icon="star">Favorites</a></li>
+                <li><a href="#messages" data-icon="comment">Messages</a></li>
+                <li><a href="#profile" data-icon="user" class="ui-btn-active">Profile</a></li>
+            </ul>
+        </div><!-- /navbar -->
+</div><!-- /footer -->
+</div><!-- /page -->
+</body>
+</html>
