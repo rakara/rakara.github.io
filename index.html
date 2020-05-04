@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="css/style.css" />
     <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
     <!-- ios support -->
     <link rel="apple-touch-icon" href="images/icons/icon-72x72.png" />
     <link rel="apple-touch-icon" href="images/icons/icon-96x96.png" />
@@ -17,20 +20,314 @@
     <link rel="apple-touch-icon" href="images/icons/icon-512x512.png" />
     <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
     <meta name="theme-color" content="#db4938" />
-    <title>Dev'Coffee PWA</title>
+    <title>Page Title</title>
   </head>
   <body>
-    <main>
-      <nav>
-        <h1>Dev'Coffee</h1>
+    <div data-role="page" class="splash" id="splash1">
+  <div data-role="footer" data-position="fixed">
+    <a href="#home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-home" data-transition="pop">Skip</a>
+      <h1>Splash #1</h1>
+    <a href="#splash2" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-r" data-transition="slide">Next</a>
+  </div>
+</div>
+
+<div data-role="page" class="splash" id="splash2">
+  <div data-role="footer" data-position="fixed">
+    <a href="#splash1" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-l" data-transition="slide" data-direction="reverse">Back</a>
+      <h1>Splash #2</h1>
+    <a href="#splash3" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-r" data-transition="slide">Next</a>
+  </div>
+</div>
+
+<div data-role="page" class="splash" id="splash3">
+  <div data-role="footer" data-position="fixed">
+    <a href="#splash2" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-l" data-transition="slide" data-direction="reverse">Back</a>
+      <h1>Splash #3</h1>
+    <a href="#home" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-r" data-transition="slide">Start</a>
+  </div>
+</div>
+
+<div data-role="page" id="login">
+  <div data-role="main">
+    <p>Login</p>
+  </div>
+  <div data-role="footer" data-position="fixed">
+    <h1>CLIMORFRESH &copy; 2020</h1>
+  </div><!-- /footer -->
+</div><!-- /page --><!-- /home -->
+
+<div data-role="page" id="home">
+  
+  <div data-role="panel" data-display="overlay" data-theme="" id="menu">
+    <h2>Categories</h2>
+    <ul data-role="listview">
+      <li><a href="#">Dairy</a></li>
+      <li><a href="#">Vegetables</a></li>
+      <li><a href="#">Fruits</a></li>
+    </ul>
+  </div><!-- /menu -->
+  
+  <div data-role="panel" data-display="overlay" data-position="right" data-theme="a" id="settings">
+    <h2>Settings</h2>
+    <ul data-role="listview">
+      <li data-icon="user"><a href="#profile">My Account</a></li>
+      <li data-icon="shop"><a href="#">My Orders</a></li>
+      <li data-icon="phone"><a href="#">Call To Order</a></li>
+      <li data-icon="info"><a href="#splash1">About App</a></li>
+      <li data-icon="lock"><a href="#login">Logout</a></li>
+    </ul>
+  </div><!-- /settings -->
+  
+   <div data-role="header" style="overflow:hidden;">
+     <div data-role="navbar">
         <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Blog</li>
+            <li><a href="#" data-icon="bars" data-iconpos="left" class="ui-icon-notext">One</a></li>
+            <li>Jumia</li>
+            <li><a href="#">Three</a></li>
         </ul>
-      </nav>
-      <div class="container"></div>
-    </main>
+     </div><!-- /navbar -->
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+    <form>
+      <label for="search" class="ui-hidden-accessible">Search Input:</label>
+      <input type="search" name="search" id="search" value="">
+    </form>
+    <div class="jumbotron">
+    </div>
+    <div class="ui-grid-b">
+      <div class="ui-block-a cats">Dairy</div>
+      <div class="ui-block-b cats">Vegetables</div>
+      <div class="ui-block-c cats">Fruits</div>
+    </div>
+  </div><!-- /content -->
+
+  <div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+        <ul>
+          <li><a href="#" data-icon="home" data-iconpos="notext" class="ui-btn-active">Home</a></li>
+            <li><a href="#cart" data-icon="shop">Cart</a></li>
+            <li><a href="#favorite" data-icon="star">Favorites</a></li>
+            <li><a href="#profile" data-icon="user">Profile</a></li>
+        </ul>
+    </div><!-- /navbar -->
+  </div><!-- /footer -->
+</div><!-- /page --><!-- /home -->
+
+<div data-role="page" id="cart">
+  
+  <div data-role="panel" data-display="overlay" data-theme="" id="myPanel">
+    <h2>Categories</h2>
+    <ul data-role="listview">
+      <li><a href="#">Dairy</a></li>
+      <li><a href="#">Vegetables</a></li>
+      <li><a href="#">Fruits</a></li>
+    </ul>
+  </div><!-- /menu -->
+  
+  <div data-role="panel" data-display="overlay" data-position="right" data-theme="a" id="settings">
+    <h2>Settings</h2>
+    <ul data-role="listview">
+      <li data-icon="user"><a href="#profile">My Account</a></li>
+      <li data-icon="shop"><a href="#">My Orders</a></li>
+      <li data-icon="star"><a href="#">My Subscriptions</a></li>
+      <li data-icon="phone"><a href="#callPopUp" data-rel="popup" data-position-to="window">Call To Order</a></li>
+      <li data-icon="info"><a href="#splash1">About App</a></li>
+      <li data-icon="lock"><a href="#">Logout</a></li>
+    </ul>
+  </div><!-- /settings -->
+  
+  <div data-role="popup" id="callPopUp" class="ui-content">
+    <p>Call 07xx xxx xxx To Order</p>
+    
+  </div>
+  
+  <div data-role="header">
+    
+      <a href="#myPanel" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-bars ui-btn-icon-notext">Menu</a>
+        <h1>Cart</h1>
+      <a href="#settings" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-gear ui-btn-icon-notext">Settings</a>
+  
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+    <p class="ui-bar ui-bar-a">Cart</p>
+  </div><!-- /content -->
+
+  <div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+        <ul>
+          <li><a href="#home" data-icon="home">Shop</a></li>
+            <li><a href="#" data-icon="shop" class="ui-btn-active">Shopping Cart</a></li>
+            <li><a href="#favorite" data-icon="mail">Notifications</a></li>
+            <li><a href="#profile" data-icon="user">My Account</a></li>
+        </ul>
+    </div><!-- /navbar -->
+  </div><!-- /footer -->
+</div><!-- /page --><!-- /cart -->
+
+<div data-role="page" id="favorite">
+  
+  <div data-role="panel" data-display="overlay" data-theme="" id="myPanel">
+    <h2>Categories</h2>
+    <ul data-role="listview">
+      <li><a href="#">Dairy</a></li>
+      <li><a href="#">Vegetables</a></li>
+      <li><a href="#">Fruits</a></li>
+    </ul>
+  </div><!-- /menu -->
+  
+  <div data-role="panel" data-display="overlay" data-position="right" data-theme="b" id="settings">
+    <h2>Settings</h2>
+    <ul data-role="listview">
+      <li data-icon="user"><a href="#profile">My Account</a></li>
+      <li data-icon="shop"><a href="#">My Orders</a></li>
+      <li data-icon="star"><a href="#">My Subscriptions</a></li>
+      <li data-icon="phone"><a href="#">Call To Order</a></li>
+      <li data-icon="info"><a href="#">About App</a></li>
+      <li data-icon="lock"><a href="#">Logout</a></li>
+    </ul>
+  </div><!-- /settings -->
+  
+  <div data-role="header">
+    
+      <a href="#myPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Menu</a>
+      <h1>Favorites</h1>
+      <a href="#settings" class="ui-btn ui-btn-right ui-btn-inline ui-corner-all ui-shadow">Settings</a>
+  
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+    <p>Favorites</p>
+  </div><!-- /content -->
+
+  <div data-role="footer" data-position="fixed" >
+    <div data-role="navbar">
+        <ul>
+          <li><a href="#home" data-icon="home">Home</a></li>
+            <li><a href="#cart" data-icon="shop">Cart</a></li>
+            <li><a href="#" data-icon="star" class="ui-btn-active">Favorites</a></li>
+            <li><a href="#profile" data-icon="user">Profile</a></li>
+        </ul>
+    </div><!-- /navbar -->
+  </div><!-- /footer -->
+</div><!-- /page --><!-- /favorite -->
+
+<div data-role="page" id="profile">
+  
+  <div data-role="panel" data-display="overlay" data-theme="" id="myPanel">
+    <h2>Categories</h2>
+    <ul data-role="listview">
+      <li><a href="#">Dairy</a></li>
+      <li><a href="#">Vegetables</a></li>
+      <li><a href="#">Fruits</a></li>
+    </ul>
+  </div><!-- /menu -->
+  
+  <div data-role="panel" data-display="overlay" data-position="right" data-theme="b" id="settings">
+    <h2>Settings</h2>
+    <ul data-role="listview">
+      <li data-icon="user"><a href="#">My Account</a></li>
+      <li data-icon="shop"><a href="#">My Orders</a></li>
+      <li data-icon="star"><a href="#">My Subscriptions</a></li>
+      <li data-icon="phone"><a href="#">Call To Order</a></li>
+      <li data-icon="info"><a href="#">About App</a></li>
+      <li data-icon="lock"><a href="#">Logout</a></li>
+    </ul>
+  </div><!-- /settings -->
+  
+  <div data-role="header">
+    
+      <a href="#myPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Menu</a>
+      <h1>Profile</h1>
+      <a href="#settings" class="ui-btn ui-btn-right ui-btn-inline ui-corner-all ui-shadow">Settings</a>
+  
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+    <p>Profile</p>
+    <hr class="ui-bar-a">
+    <label for="name" class="ui-hidden-accessible">Full Name:</label>
+    <input type="text" name="name" id="name" placeholder="Full Name" value="">
+  </div><!-- /content -->
+
+  <div data-role="footer" data-position="fixed" >
+    <div data-role="navbar">
+        <ul>
+          <li><a href="#home" data-icon="home">Home</a></li>
+            <li><a href="#cart" data-icon="shop">Cart</a></li>
+            <li><a href="#favorite" data-icon="star">Favorites</a></li>
+            <li><a href="#" data-icon="user" class="ui-btn-active">Profile</a></li>
+        </ul>
+    </div><!-- /navbar -->
+  </div><!-- /footer -->
+</div><!-- /page --><!-- /profile -->
+
+<div data-role="page" id="inbox">
+  
+  <div data-role="panel" data-display="overlay" data-theme="" id="myPanel">
+    <h2>Categories</h2>
+    <ul data-role="listview">
+      <li><a href="#">Dairy</a></li>
+      <li><a href="#">Vegetables</a></li>
+      <li><a href="#">Fruits</a></li>
+    </ul>
+  </div><!-- /menu -->
+  
+  <div data-role="panel" data-display="overlay" data-position="right" data-theme="b" id="settings">
+    <h2>Settings</h2>
+    <ul data-role="listview">
+      <li data-icon="user"><a href="#profile">My Account</a></li>
+      <li data-icon="shop"><a href="#">My Orders</a></li>
+      <li data-icon="star"><a href="#">My Subscriptions</a></li>
+      <li data-icon="phone"><a href="#">Call To Order</a></li>
+      <li data-icon="info"><a href="#">About App</a></li>
+      <li data-icon="lock"><a href="#">Logout</a></li>
+    </ul>
+  </div><!-- /settings -->
+  
+  <div data-role="header">
+    
+      <a href="#myPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Menu</a>
+      <h1>Inbox</h1>
+      <a href="#settings" class="ui-btn ui-btn-right ui-btn-inline ui-corner-all ui-shadow">Settings</a>
+  
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+    <p>Inbox</p>
+  </div><!-- /content -->
+
+  <div data-role="footer" data-position="fixed" data-theme="b">
+    <div data-role="navbar">
+        <ul>
+          <li><a href="#home" data-icon="home">Home</a></li>
+            <li><a href="#cart" data-icon="shop">Cart</a></li>
+            <li><a href="#favorite" data-icon="star">Favorites</a></li>
+            <li><a href="#profile" data-icon="user" class="ui-btn-active">Profile</a></li>
+        </ul>
+    </div><!-- /navbar -->
+  </div><!-- /footer -->
+</div><!-- /page --><!-- /inbox -->
+
+<div data-role="page" id="splash">
+  <div data-role="header">
+     <a href="#" data-icon="gear" data-iconpos="notext" class="ui-btn-right">Options</a>
+    <h1>CLIMORFRESH</h1>
+  </div>
+  <div data-role="main">
+    <div class="ui-content"> Splash Dialog</div>
+  </div>
+  <div data-role="footer">
+    <p>Footer</p>
+  </div>
+</div><!-- /splash screen -->
+
+<div data-role="page" id="login">
+</div><!-- login -->
+
+<div data-role="page" id="registration">
+</div><!-- /registration -->
     <script src="js/app.js"></script>
   </body>
 </html>
