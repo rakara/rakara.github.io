@@ -15,7 +15,11 @@
   background: url("images/splash1.jpg");
   min-height: 25vh;
 }
-cats{
+.cats{
   min-height:10vh;
   text-align:center;
+}
+.ui-btn-active{
+	color:#fff !important; 
+	background-color:#3b6ba5 !important
 }
