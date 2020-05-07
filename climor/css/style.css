@@ -1,0 +1,25 @@
+.ui-page { -webkit-backface-visibility: hidden; }
+.splash, .jumbotron{
+  background-size: cover;
+}
+#splash1{
+  background: url("images/splash1.jpg");
+}
+#splash2{
+  background: url("images/splash2.jpg");
+}
+#splash3{
+  background: url("images/splash1.jpg");
+}
+.jumbotron{
+  background: url("images/splash1.jpg");
+  min-height: 25vh;
+}
+.cats{
+  min-height:10vh;
+  text-align:center;
+}
+.ui-btn-active{
+	color:#fff !important; 
+	background-color:#3b6ba5 !important
+}

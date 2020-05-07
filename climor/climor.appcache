@@ -1,0 +1,13 @@
+CACHE MANIFEST
+# 06-05-2020 v1.0.0
+/css/jquery.mobile-1.4.5.min.css
+/css/w3.css
+/css/w3-theme.css
+/css/style.css
+/js/jquery.min.js
+/js/jquery.mobile-1.4.5.min.js
+/js/app.js
+/serviceWorker.js
+
+FALLBACK:
+/html/ /offline.html
