@@ -1,4 +1,4 @@
-# [ClimorFresh Progressive Web App](https://rakara.github.io/climor)
+# [Progressive Web App](https://rakara.github.io/climor)
 
-ClimorFresh Progressive Web App
+Progressive Web App
 
