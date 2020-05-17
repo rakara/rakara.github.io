@@ -2,11 +2,11 @@ const staticClimorFresh = "climorfresh-site-v6";
 const assets = [
   "/",
   "/index.html",
-  "css/jquery.mobile-1.4.5.min.css",
+  "/css/jquery.mobile-1.4.5.min.css",
   "/css/style.css",
   "/js/app.js",
-  "js/jquery.min.js",
-  "js/jquery.mobile-1.4.5.min.js",
+  "/js/jquery.min.js",
+  "/js/jquery.mobile-1.4.5.min.js",
 ];
 
 self.addEventListener("install", installEvent => {
