@@ -1,4 +1,4 @@
-const staticClimorFresh = "climorfresh-site-v1";
+const staticClimorFresh = "climorfresh-site-v6";
 const assets = [
   "/",
   "/index.html",
