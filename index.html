@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="/climor.appcache">
+<html>
 <head>
   <meta charset="UTF-8" />
   <link rel="manifest" href="manifest.json" />
@@ -20,7 +20,7 @@
   
   <div data-role="panel" data-display="reveal" id="menu">
     <h2>Categories</h2>
-    <ul data-role="listview">
+    <ul data-role="listview" class="ui-nodisc-icon ui-alt-icon">
       <li><a href="#">Dairy</a></li>
       <li><a href="#">Vegetables</a></li>
       <li><a href="#">Fruits</a></li>
@@ -36,8 +36,7 @@
   <div data-role="panel" data-display="reveal" data-position="right" id="settings">
     <h2>Settings</h2>
     <ul data-role="listview">
-      <li data-icon="user"><a href="#template">My Account</a></li>
-      <li data-icon="shop"><a href="#">My Orders</a></li>
+      <li data-icon="user"><a href="#account">My Account</a></li>
       <li data-icon="phone"><a href="#callPopUp" data-rel="popup" data-position-to="window">Call To Order</a></li>
       <li data-icon="lock"><a href="#">Logout</a></li>
     </ul>
@@ -56,11 +55,7 @@
   </div><!-- /header -->
 
   <div role="main" class="ui-content">
-    <div class="ui-grid-solo">
-        <div class="ui-block-a">
-          <div class="ui-bar ui-bar-a" style="height:9vh"><img src="images/icons/icon144x144.png"></div>
-        </div>
-    </div><!-- /jumbotron -->
+    <div><img src="images/banner/2.jpg" width="100%"></div>
     <div class="ui-grid-solo">
         <div class="ui-block-a">
           <label for="search-4" class="ui-hidden-accessible">Search Input:</label>
@@ -69,13 +64,13 @@
     </div><!-- /search bar -->
     <div class="ui-grid-solo">
         <div class="ui-block-a">
-          <h3 class="ui-bar ui-bar-a">Featured Categories</h3>
+          <h3 class="ui-bar ui-bar-a">Featured Products</h3>
         </div>
     </div>
     <div class="ui-grid-b">
-      <div class="ui-block-a"><div class="ui-bar" style="height:9vh"><img src="images/icons/icon144x144.png"></div></div>
-      <div class="ui-block-b"><div class="ui-bar" style="height:9vh"><img src="images/icons/icon144x144.png"></div></div>
-      <div class="ui-block-c"><div class="ui-bar" style="height:9vh"><img src="images/icons/icon144x144.png"></div></div>
+      <div class="ui-block-a"><div class="ui-bar" style="min-height:70px"><img src="images/inventory/1.png"></div></div>
+      <div class="ui-block-b"><div class="ui-bar" style="min-height:70px"><img src="images/inventory/2.png"></div></div>
+      <div class="ui-block-c"><div class="ui-bar" style="min-height:70px"><img src="images/inventory/3.png"></div></div>
     </div><!-- /featured -->
     <div class="ui-grid-solo">
         <div class="ui-block-a">
@@ -83,9 +78,9 @@
         </div>
     </div>
     <div class="ui-grid-b">
-       <div class="ui-block-a"><div class="ui-bar" style="height:9vh"><img src="images/icons/icon144x144.png"></div></div>
-      <div class="ui-block-b"><div class="ui-bar" style="height:9vh"><img src="images/icons/icon144x144.png"></div></div>
-      <div class="ui-block-c"><div class="ui-bar" style="height:9vh"><img src="images/icons/icon144x144.png"></div></div>
+       <div class="ui-block-a"><div class="ui-bar" style="min-height:70px"><img src="images/icons/icon72x72.png"></div></div>
+      <div class="ui-block-b"><div class="ui-bar" style="min-height:70px"><img src="images/icons/icon72x72.png"></div></div>
+      <div class="ui-block-c"><div class="ui-bar" style="min-height:70px"><img src="images/icons/icon72x72.png"></div></div>
     </div><!-- /popular-c -->
     <div class="ui-grid-solo">
         <div class="ui-block-a">
@@ -99,8 +94,8 @@
         <ul>
           <li><a href="#" data-icon="home" class="ui-btn-active">Home</a></li>
           <li><a href="#cart" data-icon="shop">Cart</a></li>
-          <li><a href="https://telegra.ph/Test-05-17-112" data-icon="info">Help</a></li>
-          <li><a href="#template" data-icon="user">Account</a></li>
+          <li><a href="#faq" data-icon="info">Help</a></li>
+          <li><a href="#account" data-icon="user">Account</a></li>
         </ul>
     </div><!-- /navbar -->
   </div><!-- /footer -->
@@ -127,8 +122,7 @@
   <div data-role="panel" data-display="reveal" data-position="right" id="settings">
     <h2>Settings</h2>
     <ul data-role="listview">
-      <li data-icon="user"><a href="#template">My Account</a></li>
-      <li data-icon="shop"><a href="#">My Orders</a></li>
+      <li data-icon="user"><a href="#account">My Account</a></li>
       <li data-icon="phone"><a href="#callPopUp" data-rel="popup" data-position-to="window">Call To Order</a></li>
       <li data-icon="lock"><a href="#">Logout</a></li>
     </ul>
@@ -147,22 +141,11 @@
   </div><!-- /header -->
 
   <div role="main" class="ui-content">
-    <ul data-role="listview" data-inset="true">
-        <li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
-        <li><a href="index.html">
-        <h2>Stephen Weber</h2>
-        <p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
-        <p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-            <p class="ui-li-aside"><strong>6:24</strong>PM</p>
-        </a></li>
-        <li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-li-count">1</span></li>
-        <li><a href="index.html">
-        <h2>Avery Walker</h2>
-        <p><strong>Re: Dinner Tonight</strong></p>
-        <p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait!</p>
-            <p class="ui-li-aside"><strong>4:48</strong>PM</p>
-        </a></li>
-    </ul>
+    <div class="ui-grid-solo">
+        <div class="ui-block-a">
+          <p class="ui-bar ui-bar-a"><i data-icon="alert" class="ui-icon-alert"></i> Empty</p>
+        </div>
+    </div>
     <div class="ui-grid-solo">
         <div class="ui-block-a">
           <a href="#menu" class="ui-btn ui-shadow ui-mini">Continue Shopping</a>
@@ -180,12 +163,120 @@
         <ul>
           <li><a href="#home" data-icon="home">Home</a></li>
           <li><a href="#" data-icon="shop" class="ui-btn-active">Cart</a></li>
-          <li><a href="#template" data-icon="info">Help</a></li>
-          <li><a href="#template" data-icon="user">Account</a></li>
+          <li><a href="#faq" data-icon="info">Help</a></li>
+          <li><a href="#account" data-icon="user">Account</a></li>
         </ul>
     </div><!-- /navbar -->
   </div><!-- /footer -->
 </div><!-- /page --><!-- /cart -->
+
+<div data-role="page" id="faq">
+  
+  <div data-role="panel" data-display="reveal" id="menu">
+    <h2>Categories</h2>
+    <ul data-role="listview">
+      <li><a href="#">Dairy</a></li>
+      <li><a href="#">Vegetables</a></li>
+      <li><a href="#">Fruits</a></li>
+      <li><a href="#">Fresh Juices</a></li>
+      <li><a href="#">Mushrooms</a></li>
+      <li><a href="#">Cereals</a></li>
+      <li><a href="#">Eggs</a></li>
+      <li><a href="#">Tubers, Bulbs &amp; Roots</a></li>
+      <li><a href="#">Herbs, Spices &amp; Chillies</a></li>
+    </ul>
+  </div><!-- /menu -->
+  
+  <div data-role="panel" data-display="reveal" data-position="right" id="settings">
+    <h2>Settings</h2>
+    <ul data-role="listview">
+      <li data-icon="user"><a href="#account">My Account</a></li>
+      <li data-icon="phone"><a href="#callPopUp" data-rel="popup" data-position-to="window">Call To Order</a></li>
+      <li data-icon="lock"><a href="#">Logout</a></li>
+    </ul>
+  </div><!-- /settings -->
+  
+  <div data-role="popup" id="callPopUp" class="ui-content" style="padding: 20px 5px:">
+    <p>Call 07xx xxx xxx To Order</p>
+  </div>
+  
+  <div data-role="header" data-position="fixed" class="ui-nodisc-icon ui-alt-icon">
+    
+      <a href="#menu" class="ui-btn-left ui-btn ui-btn-inline ui-mini  ui-btn-icon-left ui-icon-bars ui-btn-icon-notext ui-corner-all">Menu</a>
+        <h1>FAQ</h1>
+      <a href="#settings" class="ui-btn-right ui-btn ui-btn-inline ui-mini  ui-btn-icon-left ui-icon-gear ui-btn-icon-notext ui-corner-all">Settings</a>
+  
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+    
+  </div><!-- /content -->
+
+  <div data-role="footer" data-position="fixed" >
+    <div data-role="navbar" class="ui-nodisc-icon ui-alt-icon">
+        <ul>
+          <li><a href="#home" data-icon="home">Home</a></li>
+          <li><a href="#cart" data-icon="shop">Cart</a></li>
+          <li><a href="#faq" data-icon="info">Help</a></li>
+          <li><a href="#account" data-icon="user">Account</a></li>
+        </ul>
+    </div><!-- /navbar -->
+  </div><!-- /footer -->
+</div><!-- /page --><!-- /faq -->
+
+<div data-role="page" id="account">
+  
+  <div data-role="panel" data-display="reveal" id="menu">
+    <h2>Categories</h2>
+    <ul data-role="listview">
+      <li><a href="#">Dairy</a></li>
+      <li><a href="#">Vegetables</a></li>
+      <li><a href="#">Fruits</a></li>
+      <li><a href="#">Fresh Juices</a></li>
+      <li><a href="#">Mushrooms</a></li>
+      <li><a href="#">Cereals</a></li>
+      <li><a href="#">Eggs</a></li>
+      <li><a href="#">Tubers, Bulbs &amp; Roots</a></li>
+      <li><a href="#">Herbs, Spices &amp; Chillies</a></li>
+    </ul>
+  </div><!-- /menu -->
+  
+  <div data-role="panel" data-display="reveal" data-position="right" id="settings">
+    <h2>Settings</h2>
+    <ul data-role="listview">
+      <li data-icon="user"><a href="#account">My Account</a></li>
+      <li data-icon="phone"><a href="#callPopUp" data-rel="popup" data-position-to="window">Call To Order</a></li>
+      <li data-icon="lock"><a href="#">Logout</a></li>
+    </ul>
+  </div><!-- /settings -->
+  
+  <div data-role="popup" id="callPopUp" class="ui-content" style="padding: 20px 5px:">
+    <p>Call 07xx xxx xxx To Order</p>
+  </div>
+  
+  <div data-role="header" data-position="fixed" class="ui-nodisc-icon ui-alt-icon">
+    
+      <a href="#menu" class="ui-btn-left ui-btn ui-btn-inline ui-mini  ui-btn-icon-left ui-icon-bars ui-btn-icon-notext ui-corner-all">Menu</a>
+        <h1>Account</h1>
+      <a href="#settings" class="ui-btn-right ui-btn ui-btn-inline ui-mini  ui-btn-icon-left ui-icon-gear ui-btn-icon-notext ui-corner-all">Settings</a>
+  
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+    
+  </div><!-- /content -->
+
+  <div data-role="footer" data-position="fixed" >
+    <div data-role="navbar" class="ui-nodisc-icon ui-alt-icon">
+        <ul>
+          <li><a href="#home" data-icon="home">Home</a></li>
+          <li><a href="#cart" data-icon="shop">Cart</a></li>
+          <li><a href="#faq" data-icon="info">Help</a></li>
+          <li><a href="#account" data-icon="user">Account</a></li>
+        </ul>
+    </div><!-- /navbar -->
+  </div><!-- /footer -->
+</div><!-- /page --><!-- /account -->
 
 <div data-role="page" id="template">
   
@@ -207,8 +298,7 @@
   <div data-role="panel" data-display="reveal" data-position="right" id="settings">
     <h2>Settings</h2>
     <ul data-role="listview">
-      <li data-icon="user"><a href="#template">My Account</a></li>
-      <li data-icon="shop"><a href="#">My Orders</a></li>
+      <li data-icon="user"><a href="#account">My Account</a></li>
       <li data-icon="phone"><a href="#callPopUp" data-rel="popup" data-position-to="window">Call To Order</a></li>
       <li data-icon="lock"><a href="#">Logout</a></li>
     </ul>
@@ -235,12 +325,13 @@
         <ul>
           <li><a href="#home" data-icon="home">Home</a></li>
           <li><a href="#cart" data-icon="shop">Cart</a></li>
-          <li><a href="#template" data-icon="info">Help</a></li>
-          <li><a href="#template" data-icon="user">Account</a></li>
+          <li><a href="#faq" data-icon="info">Help</a></li>
+          <li><a href="#account" data-icon="user">Account</a></li>
         </ul>
     </div><!-- /navbar -->
   </div><!-- /footer -->
 </div><!-- /page --><!-- /page template -->
+
 
 <script src="js/app.js"></script>
 </body>
