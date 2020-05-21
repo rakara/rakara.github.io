@@ -18,18 +18,27 @@ const assets = [
   "/images/icons/icon512x512.png",
 ];
 
-self.addEventListener("install", installEvent => {
-  installEvent.waitUntil(
-    caches.open(staticClimorFresh).then(cache => {
-      cache.addAll(assets);
-    })
+self.addEventListener('install', function(event) {
+  // Perform install steps
+  event.waitUntil(
+    caches.open(staticClimorFresh)
+      .then(function(cache) {
+        console.log('Opened cache');
+        return cache.addAll(assets);
+      })
   );
 });
 
-self.addEventListener("fetch", fetchEvent => {
-  fetchEvent.respondWith(
-    caches.match(fetchEvent.request).then(res => {
-      return res || fetch(fetchEvent.request);
-    })
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        // Cache hit - return response
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      }
+    )
   );
 });
