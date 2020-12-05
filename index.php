@@ -20,6 +20,10 @@
 		$(function() {
 			 /* code here */ });
 	</script>
+	<style type="text/css">
+		body {font-family: calibri; }
+		h1, footer { text-align: center; }
+	</style>
 </head>
 <body>
 	<header>
@@ -35,7 +39,13 @@
 			</div>
 		</nav>
 	</header>
-	<footer></footer>
-	<script type="text/javascript" src="js/app.js"></script>
+	<main>
+		<h1>Rakara Web Studio</h1>
+		<hr>
+	</main>
+	<footer>
+		&copy; <?= date('Y') ?>
+	</footer>
+	<script type="text/javascript" src="app.js"></script>
 </body>
 </html>
