@@ -1,0 +1,60 @@
+html, body, h1, h2, h3, h4, h5, h6{
+	font-family: Candara !important;
+}
+body{
+	background: #252525;
+}
+h1, h2, h3, h4, h5, h6{
+	font-weight: bolder;
+}
+.intro{
+	/*background: url("../img/intro.jpg");
+	background-size: cover;*/
+}
+.brand{
+	color: rgba(192, 192, 192, 0.9); 
+	background: rgba(0, 0, 0, 0.9); ; 
+	border: 5px solid #c0c0c0; 
+	padding: 25px 20px; 
+	font-size: 550%;
+}
+.about{
+	background: url("../img/about_bg.jpg") bottom right;
+	background-attachment: fixed;
+	background-size: cover;
+}
+.about-cover{
+	background: rgba(37, 37, 37, 0.8);
+	min-height: 100%;
+	width: 100%;
+}
+.disciplines h3{
+	text-transform: uppercase;
+	text-align: center;
+}
+.referals{
+
+}
+.clients, .cta, .contact{
+	background: #c0c0c0;
+}
+.cta{
+	background: url("../img/cta_bg.jpg") center center;
+}
+.referals, .footer{
+	background: #252525;
+	color: #dedede;
+}
+.team{
+	min-height: 368px;
+}
+.footer .uk-grid{
+	/*border-top: 2px solid #3399ff;*/
+}
+.panel{
+	border-top: 1px solid #3399ff;
+}
+.see-thru{
+	background: transparent;
+	border: 1px solid #c0c0c0; 
+}
