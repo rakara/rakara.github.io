@@ -1,2 +1,66 @@
-<html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0ea5e9">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PWA Boilerplate</title>
+
+  <!-- PWA basics -->
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/assets/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
+  <meta name="description" content="A minimal, modern PWA boilerplate.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="PWA Boilerplate">
+  <meta name="application-name" content="PWA Boilerplate">
+
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="container">
+    <h1>🚀 PWA Boilerplate</h1>
+    <p>Ready to go offline, installable, and fast.</p>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Status</h2>
+      <ul>
+        <li><strong>Service Worker:</strong> <span id="sw-status">checking…</span></li>
+        <li><strong>App Version:</strong> <span id="app-version">1.0.0</span></li>
+        <li><strong>Install Prompt:</strong> <button id="install-btn" hidden>Install App</button></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Try it</h2>
+      <p>Toggle your network offline and reload. You should still see this page thanks to the service worker cache.</p>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <p>Made with ♥ — Edit <code>manifest.webmanifest</code> and <code>sw.js</code> to customize.</p>
+  </footer>
+
+  <script src="/app.js" defer></script>
+  <script>
+    // Register the service worker ASAP
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+          document.getElementById('sw-status').textContent = 'registered';
+        }).catch(err => {
+          document.getElementById('sw-status').textContent = 'failed';
+          console.error('SW registration failed:', err);
+        });
+      });
+    } else {
+      document.getElementById('sw-status').textContent = 'not supported';
+    }
+  </script>
+</body>
 </html>
