@@ -1,0 +1,260 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>B2B Brand Management — Kenya Edition</title>  <!-- Fonts & Icons -->  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />  <!-- Favicon (placeholder) -->  <link rel="icon" href="/assets/favicon.png" />  <meta name="description" content="B2B Brand Management — Kenya Edition. Localized insights, case studies, and academic integration." />  <style>
+    :root{
+      --navy:#0f3950; /* deep blue */
+      --gold:#d8b44a; /* gold accent */
+      --accent-green:#1b9a55; /* gentle green */
+      --cream:#f5f2ed;
+      --muted:#7a8692;
+      --max-width:1200px;
+      --container-padding:24px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      color:#102028;
+      background:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      font-size:16px;
+    }
+
+    /* Layout container */
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding)}
+
+    /* NAV */
+    header.site-header{background:var(--navy);color:#fff;padding:18px 0;position:sticky;top:0;z-index:40}
+    .site-header .wrap{display:flex;align-items:center;gap:18px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:44px;height:44px;object-fit:contain}
+    .brand h1{font-family: 'Libre Caslon Text', serif;font-size:18px;margin:0;font-weight:700}
+    nav.main-nav{margin-left:auto}
+    nav.main-nav a{color:rgba(255,255,255,0.9);text-decoration:none;margin-left:18px;font-weight:600}
+    nav.main-nav a:hover{opacity:0.9}
+
+    /* HERO */
+    .hero{background:linear-gradient(180deg, rgba(15,57,80,1) 0%, rgba(15,57,80,0.95) 60%);color:#fff;padding:64px 0;}
+    .hero-inner{display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:center}
+    .hero h2{font-family: 'Libre Caslon Text', serif;font-size:48px;margin:0 0 12px;line-height:1.02}
+    .hero p.lead{margin:0 0 22px;color:rgba(255,255,255,0.9);font-size:18px}
+    .cta-row{display:flex;gap:12px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:8px;font-weight:700;border:0;cursor:pointer}
+    .btn--primary{background:var(--gold);color:var(--navy)}
+    .btn--secondary{background:transparent;border:2px solid rgba(255,255,255,0.18);color:#fff}
+
+    /* Book mockup */
+    .book-mock{display:flex;justify-content:center}
+    .book-mock img{width:320px;max-width:100%;height:auto;box-shadow:0 20px 40px rgba(0,0,0,0.35);border-radius:6px}
+
+    /* ABOUT */
+    section.about{background:var(--cream);padding:44px 0}
+    .about-grid{display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start}
+    .about h3{font-family:'Libre Caslon Text', serif;margin-top:0;font-size:28px}
+    .about p{color:var(--muted)}
+    .authors{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .author{background:#fff;padding:12px;border-radius:8px;display:flex;gap:12px;align-items:center;box-shadow:0 6px 18px rgba(18,32,44,0.04)}
+    .author img{width:72px;height:72px;border-radius:6px;object-fit:cover}
+    .author .meta{font-size:14px}
+    .author .meta b{display:block}
+
+    /* CASE STUDIES */
+    section.cases{padding:46px 0}
+    .cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .case-card{background:#fff;border-radius:10px;padding:20px;min-height:160px;box-shadow:0 10px 30px rgba(14,30,40,0.06);display:flex;flex-direction:column;gap:12px}
+    .case-card .logo{height:42px}
+    .case-card h4{margin:0;font-size:18px}
+    .case-card p{color:var(--muted);margin:0}
+
+    /* FOOTER */
+    footer.site-footer{background:var(--navy);color:#fff;padding:38px 0;margin-top:40px}
+    .footer-grid{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:center}
+    .purchase-box{background:linear-gradient(90deg, rgba(22,50,66,0.95), rgba(9,32,47,0.9));padding:18px;border-radius:10px;text-align:center}
+    .purchase-box .btn{margin-top:12px}
+    .footer-bottom{margin-top:18px;color:rgba(255,255,255,0.55);font-size:13px}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero-inner{grid-template-columns:1fr 320px}
+      .about-grid{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:780px){
+      .hero-inner{grid-template-columns:1fr;gap:28px}
+      .hero h2{font-size:34px}
+      .cases-grid{grid-template-columns:1fr}
+      nav.main-nav{display:none}
+      header.site-header .wrap{justify-content:space-between}
+    }
+
+    /* utility */
+    .muted{color:var(--muted)}
+    .logo-small{width:110px}
+  </style></head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">
+        <img src="/assets/logo-mark.png" alt="B2B Kenya logo" />
+        <h1>B2B Brand Management — Kenya</h1>
+      </div><nav class="main-nav" aria-label="Main navigation">
+    <a href="#about">About</a>
+    <a href="#cases">Case Studies</a>
+    <a href="#academics">Academic</a>
+    <a href="#corporate">Corporate</a>
+    <a href="#news">News</a>
+    <a href="#buy">Buy</a>
+  </nav>
+</div>
+
+  </header>  <main>
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <div>
+          <h2>Redefining B2B Branding in Kenya</h2>
+          <p class="lead">A collaboration between global thought leaders and Kenyan innovators — bringing AI, sustainability and performance branding to the region.</p>
+          <div class="cta-row">
+            <a class="btn btn--primary" href="#get-involved"><i class="fa-solid fa-people-group"></i> Join the Movement</a>
+            <a class="btn btn--secondary" href="#cases">Explore Case Studies</a>
+          </div><div style="margin-top:20px;color:rgba(255,255,255,0.85);font-size:14px">
+        <strong>Featured:</strong> 10–20 Kenya-based case studies • Academic integrations • Annual releases
+      </div>
+    </div>
+
+    <div class="book-mock">
+      <!-- Prefer to replace with your actual book cover asset -->
+      <img src="/assets/book-cover.png" alt="B2B Brand Management — Kenya Edition (book cover)" />
+    </div>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="wrap about-grid">
+    <div>
+      <h3>About the Book</h3>
+      <p class="muted">The Kenya edition adapts the global B2B Brand Management framework to the realities of Kenyan industry, policy, and entrepreneurship. It combines academic rigor with hands-on case studies, practical toolkits, and curricula for university adoption.</p>
+
+      <p class="muted" style="margin-top:12px">Key themes include Performance Branding, Transformative Marketing, Digital Transformation, and AI-driven B2B strategy tailored to Kenya's sectors.</p>
+
+      <div style="margin-top:18px">
+        <a class="btn btn--secondary" href="#about-full">Read More</a>
+        <a class="btn btn--primary" style="margin-left:10px" href="#buy">Purchase on Amazon</a>
+      </div>
+    </div>
+
+    <aside>
+      <div class="authors">
+        <div class="author">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Philip Kotler" />
+          <div class="meta"><b>Philip Kotler</b><span class="muted">Global Marketing Scholar</span></div>
+        </div>
+
+        <div class="author">
+          <img src="https://images.unsplash.com/photo-1545996124-1f9f0d36f2ec?w=400&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Waldemar Pfoertsch" />
+          <div class="meta"><b>Waldemar Pfoertsch</b><span class="muted">Co-Author</span></div>
+        </div>
+
+        <div class="author">
+          <img src="https://images.unsplash.com/photo-1544005313-74c6fbc6d6a1?w=400&q=60&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Dr. Sarah Juidette" />
+          <div class="meta"><b>Dr. Sarah Juidette</b><span class="muted">Regional Editor</span></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="cases" class="cases">
+  <div class="wrap">
+    <h3 style="font-family:'Libre Caslon Text', serif;margin-bottom:18px">Featured Case Studies</h3>
+    <div class="cases-grid">
+      <article class="case-card">
+        <img class="logo" src="/assets/logos/m-kopa.png" alt="M-KOPA logo" />
+        <h4>Case Study: M-KOPA</h4>
+        <p class="muted">Revolutionizing energy access in Kenya through performance branding and pay-as-you-go models.</p>
+        <div style="margin-top:auto"><a class="btn btn--secondary" href="#">Read Case</a></div>
+      </article>
+
+      <article class="case-card">
+        <img class="logo" src="/assets/logos/safaricom.png" alt="Safaricom logo" />
+        <h4>Case Study: Safaricom</h4>
+        <p class="muted">Transformative marketing in telecommunications and digital financial services.</p>
+        <div style="margin-top:auto"><a class="btn btn--secondary" href="#">Read Case</a></div>
+      </article>
+
+      <article class="case-card">
+        <img class="logo" src="/assets/logos/kenya-airways.png" alt="Kenya Airways logo" />
+        <h4>Case Study: Kenya Airways</h4>
+        <p class="muted">Digital transformation and brand repositioning in aviation.</p>
+        <div style="margin-top:auto"><a class="btn btn--secondary" href="#">Read Case</a></div>
+      </article>
+    </div>
+
+    <div style="text-align:center;margin-top:22px">
+      <a class="btn btn--primary" href="#submit-case">View More Case Studies</a>
+    </div>
+  </div>
+</section>
+
+<!-- Optional sections (placeholders) -->
+<section id="academics" class="wrap" style="padding:46px 0;">
+  <h3 style="font-family:'Libre Caslon Text', serif">Academic Integration</h3>
+  <p class="muted">Curriculum modules, instructor slide decks, certification pathways and student competitions designed in partnership with Kenyan universities.</p>
+</section>
+
+<section id="corporate" class="wrap" style="padding:46px 0;">
+  <h3 style="font-family:'Libre Caslon Text', serif">Corporate Participation</h3>
+  <p class="muted">Sponsorship tiers, co-development of cases and visibility packages for participating companies.</p>
+</section>
+
+<section id="news" class="wrap" style="padding:46px 0;">
+  <h3 style="font-family:'Libre Caslon Text', serif">News & Insights</h3>
+  <p class="muted">Latest articles, interviews, and AI-driven perspectives on B2B brands in East Africa.</p>
+</section>
+
+<section id="get-involved" class="wrap" style="padding:46px 0;">
+  <h3 style="font-family:'Libre Caslon Text', serif">Get Involved</h3>
+  <p class="muted">Partner, sponsor, submit a case, or integrate the book into your curriculum. <a href="#contact">Contact us</a> to start a partnership.</p>
+</section>
+
+  </main>  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <h4 style="margin:0 0 8px">B2B Brand Management — Kenya Edition</h4>
+        <p class="muted">Published by Global Marketing Nexus in partnership with Kenyan universities and corporate partners.</p><div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <img src="/assets/partners/uni1.png" alt="partner" class="logo-small" />
+      <img src="/assets/partners/uni2.png" alt="partner" class="logo-small" />
+      <img src="/assets/partners/uni3.png" alt="partner" class="logo-small" />
+    </div>
+  </div>
+
+  <div class="purchase-box">
+    <h4 style="margin:0 0 8px">Get the Kenya Edition</h4>
+    <p class="muted">Available on Amazon Kindle and local academic distributors.</p>
+    <a class="btn btn--primary" id="buy" href="https://www.amazon.com" target="_blank" rel="noopener">Purchase on Amazon</a>
+  </div>
+</div>
+
+<div class="wrap footer-bottom">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+    <div>&copy; <span id="year"></span> B2B Brand Management — Kenya Edition. All rights reserved.</div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <a href="#" style="color:rgba(255,255,255,0.8);text-decoration:none">Privacy</a>
+      <a href="#" style="color:rgba(255,255,255,0.8);text-decoration:none">Terms</a>
+    </div>
+  </div>
+</div>
+
+  </footer>  <script>
+    // small helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script></body>
+</html>
