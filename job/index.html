@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobConnect - Find Your Dream Job</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196F3">
+    <style>
+        .page { display: none; }
+        .active { display: block; }
+        .fixed-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            border-top: 1px solid #e0e0e0;
+        }
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            cursor: pointer;
+            color: #757575;
+            transition: all 0.3s;
+        }
+        .nav-item.active {
+            color: #2196F3;
+        }
+        .job-card {
+            margin-bottom: 16px;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+        .job-card:hover {
+            transform: translateY(-2px);
+        }
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #e0e0e0;
+        }
+        .salary {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .main-content {
+            padding-bottom: 80px;
+        }
+        .category-card {
+            transition: transform 0.2s;
+            border-radius: 12px;
+        }
+        .category-card:hover {
+            transform: translateY(-2px);
+        }
+        .search-box {
+            border-radius: 25px;
+            padding: 12px 20px;
+        }
+        .stats-card {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w3-container w3-blue w3-center w3-padding-16">
+        <h1 class="w3-wide" style="margin: 0;">JobConnect</h1>
+        <p class="w3-small" style="margin: 0;">Find Your Dream Job</p>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="w3-container main-content">
+        <!-- Home Page -->
+        <div id="home-page" class="page active">
+            <div class="w3-container w3-padding-16">
+                <!-- Search Bar -->
+                <div class="w3-row w3-margin-bottom">
+                    <div class="w3-col s9">
+                        <input class="w3-input w3-border search-box" 
+                               type="text" placeholder="🔍 Search jobs, companies..." id="searchInput">
+                    </div>
+                    <div class="w3-col s3 w3-padding-left">
+                        <button class="w3-button w3-blue w3-round-large w3-block" onclick="showFilters()">
+                            <i class="fas fa-sliders-h"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="w3-row-padding w3-margin-bottom">
+                    <div class="w3-col s4">
+                        <div class="w3-card w3-padding w3-center stats-card w3-light-blue">
+                            <h4 style="margin: 0;">124</h4>
+                            <small>Tech Jobs</small>
+                        </div>
+                    </div>
+                    <div class="w3-col s4">
+                        <div class="w3-card w3-padding w3-center stats-card w3-light-green">
+                            <h4 style="margin: 0;">89</h4>
+                            <small>Remote</small>
+                        </div>
+                    </div>
+                    <div class="w3-col s4">
+                        <div class="w3-card w3-padding w3-center stats-card w3-light-grey">
+                            <h4 style="margin: 0;">45</h4>
+                            <small>New Today</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="w3-container w3-margin-top">
+                    <h4><i class="fas fa-th-large w3-text-blue"></i> Categories</h4>
+                    <div class="w3-row-padding">
+                        <div class="w3-col s6 w3-margin-bottom" appml-repeat="categories">
+                            <div class="w3-card w3-padding w3-center category-card w3-hover-light-grey" 
+                                 style="border-radius: 12px;">
+                                <i class="fas {{Icon}} w3-text-blue" style="font-size: 24px;"></i>
+                                <p style="margin: 8px 0;"><b>{{Name}}</b></p>
+                                <small class="w3-text-grey">{{Count}} jobs</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Jobs -->
+                <div class="w3-container w3-margin-top">
+                    <div class="w3-row w3-margin-bottom">
+                        <div class="w3-col s8">
+                            <h4><i class="fas fa-star w3-text-orange"></i> Featured Jobs</h4>
+                        </div>
+                        <div class="w3-col s4 w3-right-align">
+                            <a href="javascript:void(0)" onclick="showPage('jobs-page'); setActiveNav(1)" class="w3-text-blue">See all</a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="w3-card job-card w3-padding-16 w3-hover-light-grey" 
+                             appml-repeat="listings" appml-if="Featured == 'true'">
+                            <div class="w3-row">
+                                <div class="w3-col s2">
+                                    <img src="{{Logo}}" alt="{{Company}}" 
+                                         class="company-logo" onerror="this.src='https://via.placeholder.com/50/757575/ffffff?text=JD'">
+                                </div>
+                                <div class="w3-col s7 w3-padding-left">
+                                    <h5 style="margin: 0;"><b>{{Title}}</b></h5>
+                                    <p class="w3-text-grey" style="margin: 4px 0; font-size: 14px;">
+                                        <i class="fas fa-building"></i> {{Company}}<br>
+                                        <i class="fas fa-map-marker-alt"></i> {{Location}}
+                                    </p>
+                                </div>
+                                <div class="w3-col s3 w3-right-align">
+                                    <span class="salary">{{Salary}}</span><br>
+                                    <small class="w3-text-grey">{{PostedDate}}</small>
+                                </div>
+                            </div>
+                            <div class="w3-row w3-margin-top">
+                                <div class="w3-col s12">
+                                    <span class="w3-tag w3-blue w3-round w3-small">{{Type}}</span>
+                                    <span class="w3-tag w3-green w3-round w3-small">{{Category}}</span>
+                                    <span class="w3-tag w3-orange w3-round w3-small">{{Experience}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jobs Page -->
+        <div id="jobs-page" class="page">
+            <div class="w3-container w3-padding-16">
+                <h4><i class="fas fa-briefcase w3-text-blue"></i> All Jobs</h4>
+                
+                <!-- Filter Buttons -->
+                <div class="w3-row w3-margin-bottom">
+                    <div class="w3-col s12">
+                        <button class="w3-button w3-small w3-light-grey w3-round" onclick="filterJobs('all')">All</button>
+                        <button class="w3-button w3-small w3-light-grey w3-round" onclick="filterJobs('remote')">Remote</button>
+                        <button class="w3-button w3-small w3-light-grey w3-round" onclick="filterJobs('fulltime')">Full-time</button>
+                        <button class="w3-button w3-small w3-light-grey w3-round" onclick="filterJobs('contract')">Contract</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="w3-card job-card w3-padding-16 w3-hover-light-grey job-item" 
+                         appml-repeat="listings">
+                        <div class="w3-row">
+                            <div class="w3-col s2">
+                                <img src="{{Logo}}" alt="{{Company}}" 
+                                     class="company-logo" onerror="this.src='https://via.placeholder.com/50/757575/ffffff?text=JD'">
+                            </div>
+                            <div class="w3-col s7 w3-padding-left">
+                                <h5 style="margin: 0;"><b>{{Title}}</b></h5>
+                                <p class="w3-text-grey" style="margin: 4px 0; font-size: 14px;">
+                                    <i class="fas fa-building"></i> {{Company}}<br>
+                                    <i class="fas fa-map-marker-alt"></i> {{Location}}
+                                </p>
+                            </div>
+                            <div class="w3-col s3 w3-right-align">
+                                <span class="salary">{{Salary}}</span><br>
+                                <small class="w3-text-grey">{{PostedDate}}</small>
+                            </div>
+                        </div>
+                        <div class="w3-row w3-margin-top">
+                            <div class="w3-col s12">
+                                <span class="w3-tag w3-blue w3-round w3-small">{{Type}}</span>
+                                <span class="w3-tag w3-green w3-round w3-small">{{Category}}</span>
+                                <span class="w3-small w3-text-grey">Posted: {{PostedDate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Page -->
+        <div id="notifications-page" class="page">
+            <div class="w3-container w3-padding-16">
+                <h4><i class="fas fa-bell w3-text-blue"></i> Notifications</h4>
+                <div>
+                    <div class="w3-card job-card w3-padding notification-item" appml-repeat="notifications">
+                        <div class="w3-row">
+                            <div class="w3-col s2 w3-center">
+                                <i class="fas {{Icon}} w3-text-{{Color}} w3-large"></i>
+                            </div>
+                            <div class="w3-col s10">
+                                <p style="margin: 0;"><b>{{Title}}</b></p>
+                                <p class="w3-small w3-text-grey" style="margin: 4px 0;">{{Message}}</p>
+                                <p class="w3-tiny w3-text-grey" style="margin: 0;">{{Time}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Page -->
+        <div id="account-page" class="page">
+            <div class="w3-container w3-padding-16">
+                <div class="w3-card w3-padding-16 w3-center">
+                    <img src="https://via.placeholder.com/80/2196F3/ffffff?text=JD" class="w3-circle" alt="Profile">
+                    <h4 style="margin: 8px 0;"><b>John Doe</b></h4>
+                    <p class="w3-text-grey" style="margin: 4px 0;">Software Developer</p>
+                    <p class="w3-text-grey" style="margin: 4px 0;">San Francisco, CA</p>
+                    <button class="w3-button w3-blue w3-round w3-small w3-margin-top">Edit Profile</button>
+                </div>
+
+                <div class="w3-container w3-margin-top">
+                    <div class="w3-card">
+                        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-16">
+                            <i class="fas fa-user-edit w3-margin-right w3-text-blue"></i>Edit Profile
+                        </a>
+                        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-16">
+                            <i class="fas fa-file-alt w3-margin-right w3-text-blue"></i>My Applications
+                        </a>
+                        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-16">
+                            <i class="fas fa-heart w3-margin-right w3-text-red"></i>Saved Jobs
+                        </a>
+                        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-16">
+                            <i class="fas fa-cog w3-margin-right w3-text-blue"></i>Settings
+                        </a>
+                        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-16 w3-text-red">
+                            <i class="fas fa-sign-out-alt w3-margin-right"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed Bottom Navigation -->
+    <div class="fixed-bottom-nav">
+        <div class="w3-row w3-center">
+            <div class="w3-col s3 nav-item active" onclick="showPage('home-page'); setActiveNav(0)">
+                <div class="nav-icon"><i class="fas fa-home"></i></div>
+                <div class="w3-small">Home</div>
+            </div>
+            <div class="w3-col s3 nav-item" onclick="showPage('jobs-page'); setActiveNav(1)">
+                <div class="nav-icon"><i class="fas fa-briefcase"></i></div>
+                <div class="w3-small">Jobs</div>
+            </div>
+            <div class="w3-col s3 nav-item" onclick="showPage('notifications-page'); setActiveNav(2)">
+                <div class="nav-icon"><i class="fas fa-bell"></i></div>
+                <div class="w3-small">Alerts</div>
+            </div>
+            <div class="w3-col s3 nav-item" onclick="showPage('account-page'); setActiveNav(3)">
+                <div class="nav-icon"><i class="fas fa-user"></i></div>
+                <div class="w3-small">Account</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.w3schools.com/appml/2.0.3/appml.js"></script>
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function setActiveNav(index) {
+            // Update active nav item
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            navItems[index].classList.add('active');
+        }
+
+        // AppML Configuration with embedded data
+        const appml = new AppML({
+            model: {
+                categories: {
+                    data: [
+                        { Name: "Technology", Icon: "fa-laptop-code", Count: "124" },
+                        { Name: "Marketing", Icon: "fa-chart-line", Count: "89" },
+                        { Name: "Design", Icon: "fa-palette", Count: "67" },
+                        { Name: "Sales", Icon: "fa-handshake", Count: "45" },
+                        { Name: "Finance", Icon: "fa-chart-bar", Count: "78" },
+                        { Name: "Healthcare", Icon: "fa-heartbeat", Count: "56" },
+                        { Name: "Education", Icon: "fa-graduation-cap", Count: "34" },
+                        { Name: "Remote", Icon: "fa-globe", Count: "156" }
+                    ]
+                },
+                listings: {
+                    data: [
+                        {
+                            Title: "Frontend Developer",
+                            Company: "TechCorp",
+                            Logo: "https://via.placeholder.com/50/2196F3/FFFFFF?text=TC",
+                            Location: "San Francisco, CA",
+                            Salary: "$120k",
+                            Type: "Full-time",
+                            Category: "Technology",
+                            Experience: "Mid-level",
+                            Featured: "true",
+                            PostedDate: "2 days ago"
+                        },
+                        {
+                            Title: "Product Designer",
+                            Company: "DesignHub",
+                            Logo: "https://via.placeholder.com/50/4CAF50/FFFFFF?text=DH",
+                            Location: "Remote",
+                            Salary: "$95k",
+                            Type: "Full-time",
+                            Category: "Design",
+                            Experience: "Senior",
+                            Featured: "true",
+                            PostedDate: "1 day ago"
+                        },
+                        {
+                            Title: "Marketing Manager",
+                            Company: "GrowthInc",
+                            Logo: "https://via.placeholder.com/50/FF9800/FFFFFF?text=GI",
+                            Location: "New York, NY",
+                            Salary: "$85k",
+                            Type: "Full-time",
+                            Category: "Marketing",
+                            Experience: "Mid-level",
+                            Featured: "false",
+                            PostedDate: "3 days ago"
+                        },
+                        {
+                            Title: "Data Scientist",
+                            Company: "DataWorks",
+                            Logo: "https://via.placeholder.com/50/9C27B0/FFFFFF?text=DW",
+                            Location: "Remote",
+                            Salary: "$130k",
+                            Type: "Full-time",
+                            Category: "Technology",
+                            Experience: "Senior",
+                            Featured: "true",
+                            PostedDate: "5 hours ago"
+                        },
+                        {
+                            Title: "Sales Executive",
+                            Company: "SalesPro",
+                            Logo: "https://via.placeholder.com/50/F44336/FFFFFF?text=SP",
+                            Location: "Chicago, IL",
+                            Salary: "$75k",
+                            Type: "Full-time",
+                            Category: "Sales",
+                            Experience: "Junior",
+                            Featured: "false",
+                            PostedDate: "1 week ago"
+                        },
+                        {
+                            Title: "React Native Developer",
+                            Company: "MobileFirst",
+                            Logo: "https://via.placeholder.com/50/2196F3/FFFFFF?text=MF",
+                            Location: "Remote",
+                            Salary: "$110k",
+                            Type: "Contract",
+                            Category: "Technology",
+                            Experience: "Mid-level",
+                            Featured: "true",
+                            PostedDate: "1 day ago"
+                        }
+                    ]
+                },
+                notifications: {
+                    data: [
+                        {
+                            Icon: "fa-briefcase",
+                            Color: "blue",
+                            Title: "New Job Match",
+                            Message: "Frontend Developer at TechCorp matches your profile",
+                            Time: "2 hours ago"
+                        },
+                        {
+                            Icon: "fa-check-circle",
+                            Color: "green",
+                            Title: "Application Viewed",
+                            Message: "Your application for Product Designer was viewed",
+                            Time: "1 day ago"
+                        },
+                        {
+                            Icon: "fa-bell",
+                            Color: "orange",
+                            Title: "Reminder",
+                            Message: "Complete your profile to get better job matches",
+                            Time: "2 days ago"
+                        },
+                        {
+                            Icon: "fa-star",
+                            Color: "purple",
+                            Title: "Profile Complete",
+                            Message: "Congratulations! Your profile is 100% complete",
+                            Time: "3 days ago"
+                        }
+                    ]
+                }
+            }
+        });
+
+        // Search functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const jobCards = document.querySelectorAll('.job-item');
+                    
+                    jobCards.forEach(card => {
+                        const title = card.querySelector('h5').textContent.toLowerCase();
+                        const company = card.querySelector('.fa-building').parentNode.textContent.toLowerCase();
+                        const location = card.querySelector('.fa-map-marker-alt').parentNode.textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || company.includes(searchTerm) || location.includes(searchTerm)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        }
+
+        // Filter functionality
+        function filterJobs(filterType) {
+            const jobCards = document.querySelectorAll('.job-item');
+            
+            jobCards.forEach(card => {
+                const type = card.querySelector('.w3-tag.w3-blue').textContent.toLowerCase();
+                const location = card.querySelector('.fa-map-marker-alt').parentNode.textContent.toLowerCase();
+                
+                switch(filterType) {
+                    case 'all':
+                        card.style.display = 'block';
+                        break;
+                    case 'remote':
+                        card.style.display = location.includes('remote') ? 'block' : 'none';
+                        break;
+                    case 'fulltime':
+                        card.style.display = type.includes('full-time') ? 'block' : 'none';
+                        break;
+                    case 'contract':
+                        card.style.display = type.includes('contract') ? 'block' : 'none';
+                        break;
+                }
+            });
+        }
+
+        // Show filters (placeholder)
+        function showFilters() {
+            alert('Advanced filters would appear here!');
+        }
+
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // Create a simple service worker inline
+                const swContent = `
+                    const CACHE_NAME = 'jobs-board-v1.3';
+                    const urlsToCache = [
+                        './',
+                        'https://www.w3schools.com/w3css/4/w3.css',
+                        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+                        'https://www.w3schools.com/appml/2.0.3/appml.js'
+                    ];
+
+                    self.addEventListener('install', function(event) {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME)
+                                .then(function(cache) {
+                                    return cache.addAll(urlsToCache);
+                                })
+                        );
+                    });
+
+                    self.addEventListener('fetch', function(event) {
+                        event.respondWith(
+                            caches.match(event.request)
+                                .then(function(response) {
+                                    if (response) {
+                                        return response;
+                                    }
+                                    return fetch(event.request);
+                                })
+                        );
+                    });
+                `;
+
+                const blob = new Blob([swContent], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+
+                navigator.serviceWorker.register(swUrl)
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(error) {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('JobConnect MVP initialized');
+            setupSearch();
+            
+            // Add to Home Screen functionality
+            let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                console.log('App can be installed');
+            });
+        });
+    </script>
+</body>
+</html>
