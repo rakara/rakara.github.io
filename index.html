@@ -458,5 +458,27 @@ Managing social media platforms can be time-consuming and complex, but that's wh
                 <img src="img/projects/placeholder_800x600_1.jpg">
             </div>
         </div>
+<script>
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+        });
+    }
+
+    // Add fade-in animation to sections
+    document.addEventListener('DOMContentLoaded', function() {
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            section.classList.add('fade-in');
+        });
+    });
+</script>
     </body>
 </html>
