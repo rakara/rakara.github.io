@@ -1,60 +1,149 @@
+/* Enhanced CSS - style.css */
 html, body, h1, h2, h3, h4, h5, h6{
-	font-family: Candara !important;
+    font-family: Candara, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 body{
-	background: #252525;
+    background: #252525;
+    color: #f0f0f0;
+    line-height: 1.6;
 }
 h1, h2, h3, h4, h5, h6{
-	font-weight: bolder;
+    font-weight: bolder;
+    line-height: 1.3;
 }
+
+/* Improved Intro Section */
 .intro{
-	/*background: url("../img/intro.jpg");
-	background-size: cover;*/
+    position: relative;
 }
 .brand{
-	color: rgba(192, 192, 192, 0.9); 
-	background: rgba(0, 0, 0, 0.9); ; 
-	border: 5px solid #c0c0c0; 
-	padding: 25px 20px; 
-	font-size: 550%;
+    color: rgba(192, 192, 192, 0.9); 
+    background: rgba(0, 0, 0, 0.85); 
+    border: 3px solid #c0c0c0; 
+    padding: 20px 25px; 
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    margin-bottom: 1rem;
 }
+
+/* Enhanced About Section */
 .about{
-	background: url("../img/about_bg.jpg") bottom right;
-	background-attachment: fixed;
-	background-size: cover;
+    background: url("../img/about_bg.jpg") bottom right;
+    background-attachment: fixed;
+    background-size: cover;
+    position: relative;
 }
 .about-cover{
-	background: rgba(37, 37, 37, 0.8);
-	min-height: 100%;
-	width: 100%;
+    background: rgba(37, 37, 37, 0.85);
+    min-height: 100%;
+    width: 100%;
+    backdrop-filter: blur(2px);
 }
-.disciplines h3{
-	text-transform: uppercase;
-	text-align: center;
-}
-.referals{
 
+/* Improved Services Section */
+.disciplines h3{
+    text-transform: uppercase;
+    text-align: center;
+    color: #333;
+    margin-bottom: 1rem;
 }
-.clients, .cta, .contact{
-	background: #c0c0c0;
+.disciplines .uk-width-medium-1-4 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px 15px;
+    border-radius: 8px;
 }
-.cta{
-	background: url("../img/cta_bg.jpg") center center;
+.disciplines .uk-width-medium-1-4:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
-.referals, .footer{
-	background: #252525;
-	color: #dedede;
-}
-.team{
-	min-height: 368px;
-}
-.footer .uk-grid{
-	/*border-top: 2px solid #3399ff;*/
-}
-.panel{
-	border-top: 1px solid #3399ff;
-}
+
+/* Enhanced Buttons */
 .see-thru{
-	background: transparent;
-	border: 1px solid #c0c0c0; 
+    background: transparent;
+    border: 2px solid #c0c0c0; 
+    color: #333;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+.see-thru:hover {
+    background: #c0c0c0;
+    color: #252525;
+    transform: translateY(-2px);
+}
+
+/* Improved Work/Projects Section */
+.uk-overlay-hover {
+    transition: transform 0.3s ease;
+}
+.uk-overlay-hover:hover {
+    transform: scale(1.05);
+}
+.uk-overlay-grayscale {
+    transition: filter 0.3s ease;
+}
+.uk-overlay-hover:hover .uk-overlay-grayscale {
+    filter: grayscale(0%);
+}
+
+/* Enhanced Testimonials */
+blockquote {
+    border-left: 4px solid #c0c0c0;
+    padding-left: 20px;
+    font-style: italic;
+    background: rgba(192, 192, 192, 0.1);
+    padding: 20px;
+    border-radius: 0 8px 8px 0;
+}
+
+/* Improved Contact Form */
+.uk-form-large {
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+.uk-form-large:focus {
+    border-color: #c0c0c0;
+    box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.2);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .brand {
+        font-size: clamp(1.8rem, 8vw, 3rem);
+        padding: 15px 20px;
+        margin: 0 10px;
+    }
+    
+    .disciplines .uk-width-medium-1-4 {
+        margin-bottom: 2rem;
+        padding: 15px 10px;
+    }
+    
+    .uk-container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    /* Improve touch targets */
+    .uk-button, .uk-icon-button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .disciplines h3 {
+        color: #f0f0f0;
+    }
+}
+
+/* Loading animation */
+.fade-in {
+    animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
