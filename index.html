@@ -1,33 +1,77 @@
 <!DOCTYPE html>
 <html class="uk-height-1-1">
     <head>
+    <meta charset="UTF-8">
     <title>Rakara Abila - Web Design and Development</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rakara Abila - Web Design and Development">
-    <meta name="keywords" content="Rakara Abila - Web Design and Development">
+    <meta name="description" content="Freelance Web Designer specializing in HTML, CSS, PHP, and MySQL. Inspiration Beyond Reality.">
+    <meta name="keywords" content="web design, web development, freelance, HTML, CSS, PHP, MySQL, Kenya, Rakara Abila">
+    <meta name="author" content="Rakara Abila">
 
-<!-- PWA Meta Tags -->
-<meta name="theme-color" content="#c0c0c0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Rakara Abila">
-<link rel="apple-touch-icon" href="img/icons/icon-152x152.png">
-<link rel="manifest" href="manifest.json">
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#c0c0c0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Rakara Abila">
+    
+    <!-- Apple Touch Icon (using data URI for consistency) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUyIiBoZWlnaHQ9IjE1MiIgdmlld0JveD0iMCAwIDE1MiAxNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTIiIGhlaWdodD0iMTUyIiBmaWxsPSIjMjUyNTI1Ii8+Cjx0ZXh0IHg9Ijc2IiB5PSI4OCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjcyIiBmaWxsPSIjYzBjMGMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5SQTwvdGV4dD4KPC9zdmc+">
+    
+    <link rel="manifest" href="manifest.json">
 
-<!-- Preload critical resources -->
-<link rel="preload" href="css/uikit.min.css" as="style">
-<link rel="preload" href="js/uikit.min.js" as="script">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/uikit.min.css" as="style">
+    <link rel="preload" href="js/uikit.min.js" as="script">
+    <link rel="preload" href="https://code.jquery.com/jquery-3.7.0.js" as="script" crossorigin="anonymous">
 
-<!-- Improved SEO -->
-<meta property="og:title" content="Rakara Abila - Web Design & Development">
-<meta property="og:description" content="Freelance Web Designer specializing in HTML, CSS, PHP, and MySQL. Inspiration Beyond Reality.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://rakara.github.io">
+    <!-- Improved SEO -->
+    <meta property="og:title" content="Rakara Abila - Web Design & Development">
+    <meta property="og:description" content="Freelance Web Designer specializing in HTML, CSS, PHP, and MySQL. Inspiration Beyond Reality.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rakara.github.io">
+    <meta property="og:image" content="https://rakara.github.io/img/og-image.jpg">
+    <meta property="og:site_name" content="Rakara Abila">
 
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rakara Abila - Web Design & Development">
+    <meta name="twitter:description" content="Freelance Web Designer specializing in HTML, CSS, PHP, and MySQL. Inspiration Beyond Reality.">
+    <meta name="twitter:image" content="https://rakara.github.io/img/og-image.jpg">
+
+    <!-- Additional PWA Optimizations -->
+    <meta name="msapplication-TileColor" content="#252525">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMjUyNTI1Ii8+Cjx0ZXh0IHg9IjE2IiB5PSIyMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYzBjMGMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5SQTwvdGV4dD4KPC9zdmc+">
+    <link rel="shortcut icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMjUyNTI1Ii8+Cjx0ZXh0IHg9IjE2IiB5PSIyMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYzBjMGMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5SQTwvdGV4dD4KPC9zdmc+">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rakara.github.io">
+
+    <!-- CSS Files -->
     <link rel="stylesheet" href="css/uikit.min.css" />
     <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <script src="js/uikit.min.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
 </head>
     <body class="uk-height-1-1">
     	<!--Header-->
