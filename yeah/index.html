@@ -94,6 +94,29 @@
             margin-top: 5px;
         }
         
+        .job-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            margin-left: 5px;
+        }
+        
+        .status-pending {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .status-approved {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .status-rejected {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
         .admin-panel {
             background-color: white;
             border-radius: 5px;
@@ -313,6 +336,7 @@
     <!-- Home Page -->
     <div data-role="page" id="home">
         <div data-role="header" data-position="fixed">
+            <a href="#" data-rel="back" data-icon="arrow-l" data-iconpos="notext">Back</a>
             <h1><a href="#home" class="logo">Yeah Network</a></h1>
             <a href="#login" class="ui-btn-right" id="login-btn">Login</a>
         </div>
@@ -364,9 +388,9 @@
     
     <!-- Login Page -->
     <div data-role="page" id="login">
-        <div data-role="header">
-            <h1>Login</h1>
+        <div data-role="header" data-position="fixed">
             <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+            <h1>Login</h1>
         </div>
         
         <div data-role="main" class="ui-content">
@@ -390,9 +414,9 @@
     
     <!-- Signup Page -->
     <div data-role="page" id="signup">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
+            <a href="#login" data-icon="arrow-l" data-iconpos="notext">Back</a>
             <h1>Sign Up</h1>
-            <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
         </div>
         
         <div data-role="main" class="ui-content">
@@ -424,9 +448,9 @@
     
     <!-- Job Board Page -->
     <div data-role="page" id="job-board">
-        <div data-role="header">
-            <h1>Job Board</h1>
+        <div data-role="header" data-position="fixed">
             <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+            <h1>Job Board</h1>
         </div>
         
         <div data-role="main" class="ui-content">
@@ -438,9 +462,9 @@
     
     <!-- Job Detail Page -->
     <div data-role="page" id="job-detail">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
+            <a href="#job-board" data-icon="arrow-l" data-iconpos="notext">Back</a>
             <h1>Job Details</h1>
-            <a href="#job-board" data-icon="back" data-iconpos="notext">Back</a>
         </div>
         
         <div data-role="main" class="ui-content">
@@ -452,9 +476,9 @@
     
     <!-- Post Job Page -->
     <div data-role="page" id="post-job">
-        <div data-role="header">
-            <h1>Post a Job</h1>
+        <div data-role="header" data-position="fixed">
             <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+            <h1>Post a Job</h1>
         </div>
         
         <div data-role="main" class="ui-content">
@@ -504,9 +528,9 @@
     
     <!-- Profile Page -->
     <div data-role="page" id="profile">
-        <div data-role="header">
-            <h1>Profile</h1>
+        <div data-role="header" data-position="fixed">
             <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+            <h1>Profile</h1>
         </div>
         
         <div data-role="main" class="ui-content">
@@ -547,9 +571,9 @@
     
     <!-- Admin Dashboard -->
     <div data-role="page" id="admin">
-        <div data-role="header">
-            <h1>Admin Dashboard</h1>
+        <div data-role="header" data-position="fixed">
             <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+            <h1>Admin Dashboard</h1>
         </div>
         
         <div data-role="main" class="ui-content">
@@ -590,8 +614,13 @@
             
             <div class="admin-panel">
                 <h3>Job Listing Management</h3>
-                <div id="job-management">
-                    <!-- Job list will be populated by JavaScript -->
+                <div id="pending-jobs">
+                    <h4>Pending Approval</h4>
+                    <!-- Pending jobs will be populated by JavaScript -->
+                </div>
+                <div id="approved-jobs">
+                    <h4>Approved Jobs</h4>
+                    <!-- Approved jobs will be populated by JavaScript -->
                 </div>
             </div>
         </div>
@@ -599,7 +628,8 @@
     
     <!-- Offline Page -->
     <div data-role="page" id="offline">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
+            <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
             <h1>Yeah Network</h1>
         </div>
         
@@ -656,7 +686,7 @@
         // Online/Offline detection
         window.addEventListener('online', function() {
             // Hide offline page if it's currently active
-            if ($.mobile.activePage.attr('id') === 'offline') {
+            if ($.mobile.activePage && $.mobile.activePage.attr('id') === 'offline') {
                 $.mobile.changePage('#home');
             }
         });
@@ -668,55 +698,12 @@
 
     <!-- App Logic -->
     <script>
-        // External JSON file URLs
-        const DATA_URLS = {
-            users: './data/users.json',
-            jobs: './data/jobs.json',
-            categories: './data/categories.json',
-            locations: './data/locations.json'
-        };
-
-        // App data storage with external JSON support
+        // App data storage with localStorage
         const DataStore = {
-            // Initialize data by loading from external JSON files
+            // Initialize data
             init: function() {
-                return this.loadAllData();
-            },
-            
-            // Load all data from external JSON files
-            loadAllData: function() {
-                return Promise.all([
-                    this.loadData('users'),
-                    this.loadData('jobs'),
-                    this.loadData('categories'),
-                    this.loadData('locations')
-                ]);
-            },
-            
-            // Load data from external JSON file with fallback to localStorage
-            loadData: function(type) {
-                return fetch(DATA_URLS[type])
-                    .then(response => {
-                        if (!response.ok) throw new Error('Network response was not ok');
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Store in localStorage as backup
-                        localStorage.setItem(type, JSON.stringify(data));
-                        return data;
-                    })
-                    .catch(error => {
-                        console.warn(`Failed to load ${type} from server, using local data:`, error);
-                        // Fallback to localStorage if available
-                        const localData = localStorage.getItem(type);
-                        return localData ? JSON.parse(localData) : this.getDefaultData(type);
-                    });
-            },
-            
-            // Get default data if nothing is available
-            getDefaultData: function(type) {
-                const defaults = {
-                    users: [
+                if (!localStorage.getItem('users')) {
+                    const defaultUsers = [
                         {
                             id: 1,
                             name: 'Admin User',
@@ -725,109 +712,132 @@
                             organization: 'Yeah Network',
                             isAdmin: true
                         }
-                    ],
-                    jobs: [],
-                    categories: [
+                    ];
+                    localStorage.setItem('users', JSON.stringify(defaultUsers));
+                }
+                if (!localStorage.getItem('jobs')) {
+                    localStorage.setItem('jobs', JSON.stringify([]));
+                }
+                if (!localStorage.getItem('categories')) {
+                    const defaultCategories = [
                         { id: 1, name: 'IT' },
                         { id: 2, name: 'Marketing' },
                         { id: 3, name: 'Finance' },
                         { id: 4, name: 'HR' },
                         { id: 5, name: 'Sales' }
-                    ],
-                    locations: [
+                    ];
+                    localStorage.setItem('categories', JSON.stringify(defaultCategories));
+                }
+                if (!localStorage.getItem('locations')) {
+                    const defaultLocations = [
                         { id: 1, name: 'New York' },
                         { id: 2, name: 'Remote' },
                         { id: 3, name: 'London' },
                         { id: 4, name: 'San Francisco' },
                         { id: 5, name: 'Tokyo' }
-                    ]
-                };
-                
-                localStorage.setItem(type, JSON.stringify(defaults[type]));
-                return defaults[type];
+                    ];
+                    localStorage.setItem('locations', JSON.stringify(defaultLocations));
+                }
+                if (!localStorage.getItem('currentUser')) {
+                    localStorage.setItem('currentUser', JSON.stringify(null));
+                }
             },
             
-            // Get data (from localStorage as we've already loaded it)
+            // Get data
             getUsers: function() {
-                const data = localStorage.getItem('users');
-                return data ? JSON.parse(data) : [];
+                return JSON.parse(localStorage.getItem('users'));
             },
             
             getJobs: function() {
-                const data = localStorage.getItem('jobs');
-                return data ? JSON.parse(data) : [];
+                return JSON.parse(localStorage.getItem('jobs'));
             },
             
             getCategories: function() {
-                const data = localStorage.getItem('categories');
-                return data ? JSON.parse(data) : [];
+                return JSON.parse(localStorage.getItem('categories'));
             },
             
             getLocations: function() {
-                const data = localStorage.getItem('locations');
-                return data ? JSON.parse(data) : [];
+                return JSON.parse(localStorage.getItem('locations'));
             },
             
             getCurrentUser: function() {
-                return JSON.parse(localStorage.getItem('currentUser') || 'null');
+                return JSON.parse(localStorage.getItem('currentUser'));
             },
             
-            // Save data to external server (simulated - in a real app, you'd use a backend API)
-            saveData: function(type, data) {
-                // In a real implementation, you would send a POST/PUT request to your server
-                // For this demo, we'll just update localStorage and simulate server sync
-                localStorage.setItem(type, JSON.stringify(data));
-                
-                // Simulate server sync (in a real app, replace with actual API call)
-                console.log(`Simulating save of ${type} to server`);
-                return Promise.resolve(true);
+            // Set data
+            setUsers: function(users) {
+                localStorage.setItem('users', JSON.stringify(users));
             },
             
-            // Set current user
+            setJobs: function(jobs) {
+                localStorage.setItem('jobs', JSON.stringify(jobs));
+            },
+            
+            setCategories: function(categories) {
+                localStorage.setItem('categories', JSON.stringify(categories));
+            },
+            
+            setLocations: function(locations) {
+                localStorage.setItem('locations', JSON.stringify(locations));
+            },
+            
             setCurrentUser: function(user) {
                 localStorage.setItem('currentUser', JSON.stringify(user));
             },
             
-            // Add data with server sync simulation
+            // Add data
             addUser: function(user) {
                 const users = this.getUsers();
                 user.id = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+                user.isAdmin = false; // All new users are regular users
                 users.push(user);
-                return this.saveData('users', users).then(() => user);
+                this.setUsers(users);
+                return user;
             },
             
             addJob: function(job) {
                 const jobs = this.getJobs();
                 job.id = jobs.length > 0 ? Math.max(...jobs.map(j => j.id)) + 1 : 1;
                 job.datePosted = new Date().toISOString().split('T')[0];
-                job.isPublished = true;
+                job.status = 'pending'; // New jobs require admin approval
+                job.isPublished = false;
                 jobs.push(job);
-                return this.saveData('jobs', jobs).then(() => job);
+                this.setJobs(jobs);
+                return job;
             },
             
             addCategory: function(category) {
                 const categories = this.getCategories();
                 category.id = categories.length > 0 ? Math.max(...categories.map(c => c.id)) + 1 : 1;
                 categories.push(category);
-                return this.saveData('categories', categories).then(() => category);
+                this.setCategories(categories);
+                return category;
             },
             
             addLocation: function(location) {
                 const locations = this.getLocations();
                 location.id = locations.length > 0 ? Math.max(...locations.map(l => l.id)) + 1 : 1;
                 locations.push(location);
-                return this.saveData('locations', locations).then(() => location);
+                this.setLocations(locations);
+                return location;
             },
             
-            // Update data with server sync simulation
+            // Update data
             updateUser: function(user) {
                 const users = this.getUsers();
                 const index = users.findIndex(u => u.id === user.id);
                 if (index !== -1) {
                     users[index] = user;
-                    return this.saveData('users', users).then(() => true);
+                    this.setUsers(users);
+                    
+                    // Update current user if it's the same user
+                    const currentUser = this.getCurrentUser();
+                    if (currentUser && currentUser.id === user.id) {
+                        this.setCurrentUser(user);
+                    }
+                    return true;
                 }
-                return Promise.resolve(false);
+                return false;
             },
             
             updateJob: function(job) {
@@ -835,48 +845,53 @@
                 const index = jobs.findIndex(j => j.id === job.id);
                 if (index !== -1) {
                     jobs[index] = job;
-                    return this.saveData('jobs', jobs).then(() => true);
+                    this.setJobs(jobs);
+                    return true;
                 }
-                return Promise.resolve(false);
+                return false;
             },
             
-            // Delete data with server sync simulation
+            // Delete data
             deleteUser: function(id) {
                 const users = this.getUsers().filter(u => u.id !== id);
-                return this.saveData('users', users).then(() => users);
+                this.setUsers(users);
+                return users;
             },
             
             deleteJob: function(id) {
                 const jobs = this.getJobs().filter(j => j.id !== id);
-                return this.saveData('jobs', jobs).then(() => jobs);
+                this.setJobs(jobs);
+                return jobs;
             },
             
             deleteCategory: function(id) {
                 const categories = this.getCategories().filter(c => c.id !== id);
-                return this.saveData('categories', categories).then(() => categories);
+                this.setCategories(categories);
+                return categories;
             },
             
             deleteLocation: function(id) {
                 const locations = this.getLocations().filter(l => l.id !== id);
-                return this.saveData('locations', locations).then(() => locations);
+                this.setLocations(locations);
+                return locations;
             }
         };
 
         // App logic
         $(document).ready(function() {
-            // Initialize data and then setup the app
-            DataStore.init().then(() => {
-                // Check if user is logged in
-                checkAuthStatus();
-                
-                // Populate dropdowns and lists
-                populateCategories();
-                populateLocations();
-                loadJobListings();
-                
-                // Setup navigation
-                setupNavigation();
-            });
+            // Initialize data
+            DataStore.init();
+            
+            // Check if user is logged in
+            checkAuthStatus();
+            
+            // Populate dropdowns and lists
+            populateCategories();
+            populateLocations();
+            loadJobListings();
+            
+            // Setup navigation
+            setupNavigation();
             
             // Event handlers
             $('#login-form').on('submit', handleLogin);
@@ -889,13 +904,7 @@
             $('#location-form').on('submit', handleAddLocation);
             $('#retry-connection').on('click', function() {
                 if (navigator.onLine) {
-                    // Reload data from server
-                    DataStore.loadAllData().then(() => {
-                        populateCategories();
-                        populateLocations();
-                        loadJobListings();
-                        $.mobile.changePage('#home');
-                    });
+                    $.mobile.changePage('#home');
                 }
             });
             
@@ -936,9 +945,14 @@
                 deleteJob(jobId);
             });
             
-            $('body').on('click', '.toggle-job-status', function() {
+            $('body').on('click', '.approve-job', function() {
                 const jobId = $(this).data('id');
-                toggleJobStatus(jobId);
+                updateJobStatus(jobId, 'approved');
+            });
+            
+            $('body').on('click', '.reject-job', function() {
+                const jobId = $(this).data('id');
+                updateJobStatus(jobId, 'rejected');
             });
             
             $('body').on('click', '.toggle-admin', function() {
@@ -950,11 +964,29 @@
             $(document).on('pagebeforeshow', function(event, ui) {
                 const pageId = ui.toPage.attr('id');
                 updateNavigation(pageId);
+                
+                // Load data for specific pages
+                if (pageId === 'admin') {
+                    const currentUser = DataStore.getCurrentUser();
+                    if (!currentUser || !currentUser.isAdmin) {
+                        alert('Access denied. Admin privileges required.');
+                        $.mobile.changePage('#home');
+                        return;
+                    }
+                    loadUserManagement();
+                    loadJobManagement();
+                } else if (pageId === 'profile') {
+                    const currentUser = DataStore.getCurrentUser();
+                    if (!currentUser) {
+                        $.mobile.changePage('#login');
+                        return;
+                    }
+                    loadUserJobs();
+                }
             });
             
             // Functions
             function setupNavigation() {
-                // Initial navigation setup
                 updateNavigation('home');
             }
             
@@ -1004,8 +1036,285 @@
                 }
             }
             
-            // ... (rest of the functions remain similar but now use Promises for async operations)
-            // Note: I've truncated some repetitive functions for brevity
+            function populateCategories() {
+                const categories = DataStore.getCategories();
+                const categoryDropdowns = $('#search-category, #job-category');
+                
+                categoryDropdowns.empty();
+                categoryDropdowns.append('<option value="">All Categories</option>');
+                
+                categories.forEach(category => {
+                    categoryDropdowns.append(`<option value="${category.id}">${category.name}</option>`);
+                });
+                
+                // Populate category list for browsing
+                const categoryList = $('#category-list');
+                categoryList.empty();
+                
+                categories.forEach(category => {
+                    categoryList.append(`<div class="category-item" data-id="${category.id}">${category.name}</div>`);
+                });
+                
+                // Populate admin category list
+                const adminCategoryList = $('#category-list-admin');
+                if (adminCategoryList.length) {
+                    adminCategoryList.empty();
+                    
+                    categories.forEach(category => {
+                        adminCategoryList.append(`
+                            <div class="ui-grid-a">
+                                <div class="ui-block-a">${category.name}</div>
+                                <div class="ui-block-b">
+                                    <button class="ui-btn ui-mini delete-category" data-id="${category.id}">Delete</button>
+                                </div>
+                            </div>
+                        `);
+                    });
+                }
+            }
+            
+            function populateLocations() {
+                const locations = DataStore.getLocations();
+                const locationDropdowns = $('#search-location, #job-location');
+                
+                locationDropdowns.empty();
+                locationDropdowns.append('<option value="">All Locations</option>');
+                
+                locations.forEach(location => {
+                    locationDropdowns.append(`<option value="${location.id}">${location.name}</option>`);
+                });
+                
+                // Populate location list for browsing
+                const locationList = $('#location-list');
+                locationList.empty();
+                
+                locations.forEach(location => {
+                    locationList.append(`<div class="location-item" data-id="${location.id}">${location.name}</div>`);
+                });
+                
+                // Populate admin location list
+                const adminLocationList = $('#location-list-admin');
+                if (adminLocationList.length) {
+                    adminLocationList.empty();
+                    
+                    locations.forEach(location => {
+                        adminLocationList.append(`
+                            <div class="ui-grid-a">
+                                <div class="ui-block-a">${location.name}</div>
+                                <div class="ui-block-b">
+                                    <button class="ui-btn ui-mini delete-location" data-id="${location.id}">Delete</button>
+                                </div>
+                            </div>
+                        `);
+                    });
+                }
+            }
+            
+            function loadJobListings(jobs = null) {
+                let jobListings = jobs || DataStore.getJobs();
+                
+                // Filter: Only show approved jobs that are not expired
+                const today = new Date().toISOString().split('T')[0];
+                jobListings = jobListings.filter(job => 
+                    job.status === 'approved' && 
+                    job.deadline >= today
+                );
+                
+                const jobListingsContainer = $('#job-listings');
+                const jobBoardContainer = $('#job-board-listings');
+                
+                // Clear existing listings
+                jobListingsContainer.find('.job-card').remove();
+                if (jobBoardContainer.length) {
+                    jobBoardContainer.empty();
+                }
+                
+                if (jobListings.length === 0) {
+                    jobListingsContainer.append('<p>No job listings found.</p>');
+                    if (jobBoardContainer.length) {
+                        jobBoardContainer.append('<p>No job listings found.</p>');
+                    }
+                    return;
+                }
+                
+                jobListings.forEach(job => {
+                    const category = DataStore.getCategories().find(c => c.id === job.categoryId);
+                    const location = DataStore.getLocations().find(l => l.id === job.locationId);
+                    
+                    const jobCard = `
+                        <div class="job-card" data-id="${job.id}">
+                            <div class="job-title">${job.title}</div>
+                            <div class="job-org">${job.organization}</div>
+                            <div class="job-meta">${category ? category.name : 'N/A'} | ${location ? location.name : 'N/A'} | Posted: ${job.datePosted}</div>
+                            <div class="job-description">${job.description ? job.description.substring(0, 150) + '...' : 'No description available'}</div>
+                        </div>
+                    `;
+                    
+                    jobListingsContainer.append(jobCard);
+                    if (jobBoardContainer.length) {
+                        jobBoardContainer.append(jobCard);
+                    }
+                });
+            }
+            
+            function handleLogin(e) {
+                e.preventDefault();
+                
+                const email = $('#login-email').val();
+                const password = $('#login-password').val();
+                
+                const users = DataStore.getUsers();
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    DataStore.setCurrentUser(user);
+                    checkAuthStatus();
+                    $('#login-email, #login-password').val('');
+                    $.mobile.changePage('#home');
+                    alert('Login successful!');
+                } else {
+                    alert('Invalid email or password.');
+                }
+            }
+            
+            function handleSignup(e) {
+                e.preventDefault();
+                
+                const name = $('#signup-name').val();
+                const email = $('#signup-email').val();
+                const password = $('#signup-password').val();
+                const organization = $('#signup-organization').val();
+                
+                const users = DataStore.getUsers();
+                
+                // Check if email already exists
+                if (users.find(u => u.email === email)) {
+                    alert('Email already registered. Please use a different email.');
+                    return;
+                }
+                
+                const newUser = DataStore.addUser({
+                    name,
+                    email,
+                    password,
+                    organization
+                });
+                
+                DataStore.setCurrentUser(newUser);
+                checkAuthStatus();
+                
+                $('#signup-name, #signup-email, #signup-password, #signup-organization').val('');
+                $.mobile.changePage('#home');
+                alert('Account created successfully!');
+            }
+            
+            function handleSearch(e) {
+                e.preventDefault();
+                
+                const title = $('#search-title').val().toLowerCase();
+                const categoryId = $('#search-category').val();
+                const locationId = $('#search-location').val();
+                
+                let jobs = DataStore.getJobs();
+                
+                // Filter: Only show approved jobs that are not expired
+                const today = new Date().toISOString().split('T')[0];
+                jobs = jobs.filter(job => 
+                    job.status === 'approved' && 
+                    job.deadline >= today
+                );
+                
+                // Filter jobs based on search criteria
+                if (title) {
+                    jobs = jobs.filter(job => job.title.toLowerCase().includes(title));
+                }
+                
+                if (categoryId) {
+                    jobs = jobs.filter(job => job.categoryId == categoryId);
+                }
+                
+                if (locationId) {
+                    jobs = jobs.filter(job => job.locationId == locationId);
+                }
+                
+                loadJobListings(jobs);
+                $.mobile.changePage('#job-board');
+            }
+            
+            function handleJobPost(e) {
+                e.preventDefault();
+                
+                const currentUser = DataStore.getCurrentUser();
+                if (!currentUser) {
+                    alert('You must be logged in to post a job.');
+                    return;
+                }
+                
+                const title = $('#job-title').val();
+                const organization = $('#job-organization').val();
+                const categoryId = $('#job-category').val();
+                const locationId = $('#job-location').val();
+                const description = $('#job-description').html();
+                const requirements = $('#job-requirements').html();
+                const applyLink = $('#job-apply-link').val();
+                const deadline = $('#job-deadline').val();
+                
+                const newJob = {
+                    title,
+                    organization,
+                    categoryId: parseInt(categoryId),
+                    locationId: parseInt(locationId),
+                    description,
+                    requirements,
+                    applyLink,
+                    deadline,
+                    userId: currentUser.id
+                };
+                
+                DataStore.addJob(newJob);
+                
+                // Reset form
+                $('#job-form')[0].reset();
+                $('#job-description, #job-requirements').html('');
+                
+                alert('Job submitted for admin approval!');
+                $.mobile.changePage('#home');
+            }
+            
+            function handleProfileUpdate(e) {
+                e.preventDefault();
+                
+                const currentUser = DataStore.getCurrentUser();
+                if (!currentUser) {
+                    alert('You must be logged in to update your profile.');
+                    return;
+                }
+                
+                const name = $('#profile-name').val();
+                const email = $('#profile-email').val();
+                const organization = $('#profile-organization').val();
+                const password = $('#profile-password').val();
+                
+                // Update user
+                currentUser.name = name;
+                currentUser.email = email;
+                currentUser.organization = organization;
+                
+                if (password) {
+                    currentUser.password = password;
+                }
+                
+                DataStore.updateUser(currentUser);
+                
+                alert('Profile updated successfully!');
+            }
+            
+            function handleLogout() {
+                DataStore.setCurrentUser(null);
+                checkAuthStatus();
+                $.mobile.changePage('#home');
+                alert('Logged out successfully!');
+            }
             
             function showJobDetail(jobId) {
                 const job = DataStore.getJobs().find(j => j.id == jobId);
@@ -1046,12 +1355,12 @@
                         
                         <div class="job-detail-section">
                             <h3>Job Description</h3>
-                            <div>${job.description}</div>
+                            <div>${job.description || 'No description available'}</div>
                         </div>
                         
                         <div class="job-detail-section">
                             <h3>Job Requirements</h3>
-                            <div>${job.requirements}</div>
+                            <div>${job.requirements || 'No requirements specified'}</div>
                         </div>
                     </div>
                 `;
@@ -1067,7 +1376,7 @@
                 
                 const jobTitle = encodeURIComponent(job.title);
                 const jobOrg = encodeURIComponent(job.organization);
-                const shareUrl = encodeURIComponent(window.location.href.split('#')[0] + `#job-detail&job=${jobId}`);
+                const shareUrl = encodeURIComponent(window.location.href.split('#')[0] + `#job-detail`);
                 const text = encodeURIComponent(`Check out this job: ${job.title} at ${job.organization}`);
                 
                 let shareLink = '';
@@ -1092,8 +1401,257 @@
                 }
             };
             
-            // ... (other functions would be updated similarly to use Promises)
+            function filterByCategory(categoryId) {
+                let jobs = DataStore.getJobs();
+                
+                // Filter: Only show approved jobs that are not expired
+                const today = new Date().toISOString().split('T')[0];
+                jobs = jobs.filter(job => 
+                    job.status === 'approved' && 
+                    job.deadline >= today &&
+                    job.categoryId == categoryId
+                );
+                
+                loadJobListings(jobs);
+                $.mobile.changePage('#job-board');
+            }
             
+            function filterByLocation(locationId) {
+                let jobs = DataStore.getJobs();
+                
+                // Filter: Only show approved jobs that are not expired
+                const today = new Date().toISOString().split('T')[0];
+                jobs = jobs.filter(job => 
+                    job.status === 'approved' && 
+                    job.deadline >= today &&
+                    job.locationId == locationId
+                );
+                
+                loadJobListings(jobs);
+                $.mobile.changePage('#job-board');
+            }
+            
+            function handleAddCategory(e) {
+                e.preventDefault();
+                
+                const name = $('#category-name').val();
+                
+                if (!name) {
+                    alert('Please enter a category name.');
+                    return;
+                }
+                
+                DataStore.addCategory({ name });
+                populateCategories();
+                
+                $('#category-name').val('');
+                alert('Category added successfully!');
+            }
+            
+            function handleAddLocation(e) {
+                e.preventDefault();
+                
+                const name = $('#location-name').val();
+                
+                if (!name) {
+                    alert('Please enter a location name.');
+                    return;
+                }
+                
+                DataStore.addLocation({ name });
+                populateLocations();
+                
+                $('#location-name').val('');
+                alert('Location added successfully!');
+            }
+            
+            function loadUserManagement() {
+                const users = DataStore.getUsers();
+                const currentUser = DataStore.getCurrentUser();
+                const userManagement = $('#user-management');
+                
+                userManagement.empty();
+                
+                if (users.length === 0) {
+                    userManagement.append('<p>No users found.</p>');
+                    return;
+                }
+                
+                users.forEach(user => {
+                    const isCurrentUser = currentUser && user.id === currentUser.id;
+                    
+                    userManagement.append(`
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <div>${user.name} ${user.isAdmin ? '(Admin)' : '(User)'}</div>
+                                <div>${user.email} | ${user.organization}</div>
+                            </div>
+                            <div class="ui-block-b">
+                                ${!isCurrentUser ? 
+                                    `<div>
+                                        <button class="ui-btn ui-mini ${user.isAdmin ? 'btn-secondary' : 'btn-primary'} toggle-admin" data-id="${user.id}">
+                                            ${user.isAdmin ? 'Demote to User' : 'Promote to Admin'}
+                                        </button>
+                                        <button class="ui-btn ui-mini delete-user" data-id="${user.id}">Delete</button>
+                                    </div>` : 
+                                    '<span class="ui-btn ui-mini ui-state-disabled">Current User</span>'
+                                }
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+            
+            function loadJobManagement() {
+                const jobs = DataStore.getJobs();
+                const pendingJobs = $('#pending-jobs');
+                const approvedJobs = $('#approved-jobs');
+                
+                pendingJobs.find('.job-item').remove();
+                approvedJobs.find('.job-item').remove();
+                
+                const pending = jobs.filter(job => job.status === 'pending');
+                const approved = jobs.filter(job => job.status === 'approved');
+                
+                if (pending.length === 0) {
+                    pendingJobs.append('<p>No pending jobs for approval.</p>');
+                } else {
+                    pending.forEach(job => {
+                        const category = DataStore.getCategories().find(c => c.id === job.categoryId);
+                        const location = DataStore.getLocations().find(l => l.id === job.locationId);
+                        
+                        pendingJobs.append(`
+                            <div class="job-item ui-grid-a">
+                                <div class="ui-block-a">
+                                    <div>${job.title}</div>
+                                    <div>${job.organization} | ${category ? category.name : 'N/A'} | ${location ? location.name : 'N/A'}</div>
+                                </div>
+                                <div class="ui-block-b">
+                                    <button class="ui-btn ui-mini btn-success approve-job" data-id="${job.id}">Approve</button>
+                                    <button class="ui-btn ui-mini btn-secondary reject-job" data-id="${job.id}">Reject</button>
+                                </div>
+                            </div>
+                        `);
+                    });
+                }
+                
+                if (approved.length === 0) {
+                    approvedJobs.append('<p>No approved jobs.</p>');
+                } else {
+                    approved.forEach(job => {
+                        const category = DataStore.getCategories().find(c => c.id === job.categoryId);
+                        const location = DataStore.getLocations().find(l => l.id === job.locationId);
+                        
+                        approvedJobs.append(`
+                            <div class="job-item ui-grid-a">
+                                <div class="ui-block-a">
+                                    <div>${job.title}</div>
+                                    <div>${job.organization} | ${category ? category.name : 'N/A'} | ${location ? location.name : 'N/A'}</div>
+                                </div>
+                                <div class="ui-block-b">
+                                    <button class="ui-btn ui-mini delete-job-admin" data-id="${job.id}">Delete</button>
+                                </div>
+                            </div>
+                        `);
+                    });
+                }
+            }
+            
+            function loadUserJobs() {
+                const currentUser = DataStore.getCurrentUser();
+                if (!currentUser) return;
+                
+                const jobs = DataStore.getJobs().filter(job => job.userId === currentUser.id);
+                const myJobs = $('#my-jobs');
+                
+                myJobs.empty();
+                
+                if (jobs.length === 0) {
+                    myJobs.append('<p>You haven\'t posted any jobs yet.</p>');
+                    return;
+                }
+                
+                jobs.forEach(job => {
+                    const category = DataStore.getCategories().find(c => c.id === job.categoryId);
+                    const location = DataStore.getLocations().find(l => l.id === job.locationId);
+                    const statusClass = `status-${job.status}`;
+                    
+                    myJobs.append(`
+                        <div class="job-card">
+                            <div class="job-title">${job.title} <span class="job-status ${statusClass}">${job.status}</span></div>
+                            <div class="job-org">${job.organization}</div>
+                            <div class="job-meta">${category ? category.name : 'N/A'} | ${location ? location.name : 'N/A'} | Posted: ${job.datePosted}</div>
+                            <div class="job-meta">Deadline: ${job.deadline}</div>
+                        </div>
+                    `);
+                });
+            }
+            
+            function deleteUser(userId) {
+                if (confirm('Are you sure you want to delete this user?')) {
+                    DataStore.deleteUser(parseInt(userId));
+                    loadUserManagement();
+                    alert('User deleted successfully!');
+                }
+            }
+            
+            function deleteCategory(categoryId) {
+                if (confirm('Are you sure you want to delete this category?')) {
+                    DataStore.deleteCategory(parseInt(categoryId));
+                    populateCategories();
+                    alert('Category deleted successfully!');
+                }
+            }
+            
+            function deleteLocation(locationId) {
+                if (confirm('Are you sure you want to delete this location?')) {
+                    DataStore.deleteLocation(parseInt(locationId));
+                    populateLocations();
+                    alert('Location deleted successfully!');
+                }
+            }
+            
+            function deleteJob(jobId) {
+                if (confirm('Are you sure you want to delete this job?')) {
+                    DataStore.deleteJob(parseInt(jobId));
+                    loadJobManagement();
+                    alert('Job deleted successfully!');
+                }
+            }
+            
+            function updateJobStatus(jobId, status) {
+                const jobs = DataStore.getJobs();
+                const job = jobs.find(j => j.id == jobId);
+                
+                if (job) {
+                    job.status = status;
+                    job.isPublished = (status === 'approved');
+                    DataStore.updateJob(job);
+                    loadJobManagement();
+                    alert(`Job ${status} successfully!`);
+                }
+            }
+            
+            function toggleAdminStatus(userId) {
+                const users = DataStore.getUsers();
+                const user = users.find(u => u.id === userId);
+                
+                if (user) {
+                    user.isAdmin = !user.isAdmin;
+                    DataStore.setUsers(users);
+                    
+                    // If the toggled user is currently logged in, update their session
+                    const currentUser = DataStore.getCurrentUser();
+                    if (currentUser && currentUser.id === userId) {
+                        currentUser.isAdmin = user.isAdmin;
+                        DataStore.setCurrentUser(currentUser);
+                        checkAuthStatus();
+                    }
+                    
+                    loadUserManagement();
+                    alert(`User ${user.isAdmin ? 'promoted to admin' : 'demoted to regular user'} successfully!`);
+                }
+            }
         });
     </script>
 </body>
