@@ -1,6 +1,6 @@
 {
-    "name": "Rakara Abila - Web Design & Development",
-    "short_name": "Rakara Abila",
+    "name": "Rakara Abila - Web Design and Development",
+    "short_name": "Rakara",
     "description": "Freelance Web Designer specializing in HTML, CSS, PHP, and MySQL. Inspiration Beyond Reality.",
     "start_url": "/",
     "display": "standalone",
@@ -12,9 +12,24 @@
     "categories": ["business", "productivity", "design"],
     "icons": [
         {
-            "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjMjUyNTI1Ii8+Cjx0ZXh0IHg9IjI1NiIgeT0iMjgwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQwIiBmaWxsPSIjYzBjMGMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5SQTwvdGV4dD4KPC9zdmc+",
-            "sizes": "512x512",
-            "type": "image/svg+xml",
+            "src": "https://placehold.co/72/yellow/purple/png?text=RA&font=montserrat",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "https://placehold.co/128/yellow/purple/png?text=RA&font=montserrat",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "https://placehold.co/144/yellow/purple/png?text=RA&font=montserrat",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "https://placehold.co/192/yellow/purple/png?text=RA&font=montserrat",
+            "sizes": "192x192",
+            "type": "image/png",
             "purpose": "any maskable"
         }
     ]
