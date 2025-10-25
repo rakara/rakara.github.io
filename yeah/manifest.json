@@ -2,7 +2,7 @@
   "name": "Yeah Network",
   "short_name": "YeahNetwork",
   "description": "Job Board PWA for Yeah Network",
-  "start_url": "/",
+  "start_url": "/yeah/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#3498db",
