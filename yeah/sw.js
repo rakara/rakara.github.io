@@ -1,6 +1,6 @@
 const CACHE_NAME = 'yeah-network-v1';
 const urlsToCache = [
-  '/yeah/',
+  '/',
   '/yeah/index.html',
   '/yeah/manifest.json'
 ];
