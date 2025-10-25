@@ -1,12 +1,8 @@
-const CACHE_NAME = 'yeah-network-v2';
+const CACHE_NAME = 'yeah-network-v3';
 const urlsToCache = [
   './',
   './index.html',
-  './manifest.json',
-  './data/users.json',
-  './data/jobs.json', 
-  './data/categories.json',
-  './data/locations.json'
+  './manifest.json'
 ];
 
 self.addEventListener('install', function(event) {
@@ -47,7 +43,7 @@ self.addEventListener('fetch', function(event) {
       .catch(function() {
         // If both cache and network fail, show offline page
         if (event.request.url.indexOf('.html') > -1) {
-          return caches.match('./offline.html');
+          return caches.match('./index.html');
         }
       })
   );
