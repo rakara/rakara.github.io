@@ -1,8 +1,8 @@
 const CACHE_NAME = 'yeah-network-v3';
 const urlsToCache = [
-  './',
-  './index.html',
-  './manifest.json'
+  '/',
+  '/index.html',
+  '/manifest.json'
 ];
 
 self.addEventListener('install', function(event) {
