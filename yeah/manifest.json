@@ -2,12 +2,12 @@
   "name": "Yeah Network",
   "short_name": "YeahNetwork",
   "description": "Job Board PWA for Yeah Network",
-  "start_url": "./",
+  "start_url": "/yeah/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2c3e50",
   "orientation": "portrait",
-  "scope": "./",
+  "scope": "/yeah/",
   "icons": [
     {
       "src": "https://placehold.co/192/yellow/purple/png?text=YN&font=montserrat",
