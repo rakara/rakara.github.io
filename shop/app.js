@@ -129,11 +129,32 @@ const Actions = {
             case 'product-detail':
                 content = Pages.productDetail();
                 break;
+            case 'orders':
+                content = Pages.orders();
+                break;
+            case 'addresses':
+                content = Pages.addresses();
+                break;
+            case 'payments':
+                content = Pages.payments();
+                break;
+            case 'notifications':
+                content = Pages.notifications();
+                break;
+            case 'settings':
+                content = Pages.settings();
+                break;
+            case 'help':
+                content = Pages.help();
+                break;
+            case 'about':
+                content = Pages.about();
+                break;
             default:
                 content = Pages.home();
         }
 
-        const showBottomNav = AppState.activeTab !== 'product-detail';
+        const showBottomNav = !['product-detail', 'orders', 'addresses', 'payments', 'notifications', 'settings', 'help', 'about'].includes(AppState.activeTab);
         
         app.innerHTML = `
             <div class="max-w-md mx-auto bg-gray-50 min-h-screen ${showBottomNav ? 'pb-20' : ''}">
