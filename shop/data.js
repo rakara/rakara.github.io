@@ -26,7 +26,7 @@ const products = [
         price: 399.99, 
         rating: 4.6, 
         category: 'Electronics', 
-        image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=400&fit=crop', 
+        image: 'https://images.unsplash.com/photo-1593704212686-6d52058fb516?w=400&h=400&fit=crop', 
         description: 'Professional grade telephoto lens', 
         stock: 5 
     },
