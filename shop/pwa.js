@@ -5,8 +5,17 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         const swCode = `
             const CACHE_NAME = 'shophub-v1';
+            const BASE_PATH = '/shop/';
             const urlsToCache = [
-                '/',
+                BASE_PATH,
+                BASE_PATH + 'index.html',
+                BASE_PATH + 'styles.css',
+                BASE_PATH + 'data.js',
+                BASE_PATH + 'state.js',
+                BASE_PATH + 'components.js',
+                BASE_PATH + 'pages.js',
+                BASE_PATH + 'app.js',
+                BASE_PATH + 'pwa.js',
                 'https://cdn.tailwindcss.com',
                 'https://unpkg.com/lucide@latest'
             ];
@@ -15,14 +24,21 @@ if ('serviceWorker' in navigator) {
                 event.waitUntil(
                     caches.open(CACHE_NAME)
                         .then(cache => cache.addAll(urlsToCache))
+                        .catch(err => console.log('Cache error:', err))
                 );
             });
 
             self.addEventListener('fetch', event => {
-                event.respondWith(
-                    caches.match(event.request)
-                        .then(response => response || fetch(event.request))
-                );
+                // Only cache requests from our scope
+                if (event.request.url.includes(BASE_PATH) || 
+                    event.request.url.includes('cdn.tailwindcss.com') ||
+                    event.request.url.includes('unpkg.com/lucide')) {
+                    event.respondWith(
+                        caches.match(event.request)
+                            .then(response => response || fetch(event.request))
+                            .catch(() => caches.match(BASE_PATH + 'index.html'))
+                    );
+                }
             });
 
             self.addEventListener('activate', event => {
@@ -43,8 +59,8 @@ if ('serviceWorker' in navigator) {
         const blob = new Blob([swCode], { type: 'application/javascript' });
         const swUrl = URL.createObjectURL(blob);
         
-        navigator.serviceWorker.register(swUrl)
-            .then(reg => console.log('✅ Service Worker registered'))
+        navigator.serviceWorker.register(swUrl, { scope: '/shop/' })
+            .then(reg => console.log('✅ ShopHub Service Worker registered at /shop/'))
             .catch(err => console.log('❌ Service Worker registration failed:', err));
     });
 }
@@ -108,6 +124,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 // Listen for successful install
 window.addEventListener('appinstalled', () => {
-    console.log('✅ PWA installed successfully!');
+    console.log('✅ ShopHub PWA installed successfully!');
     deferredPrompt = null;
 });
