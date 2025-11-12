@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a0a2e">
-    <title>Rakara's Lucky 777 Slots</title>
+    <title>Rakara's Slots</title>
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTHVja3kgNzc3IFNsb3RzIiwic2hvcnRfbmFtZSI6Ikx1Y2t5IDc3NyIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMWEwYTJlIiwidGhlbWVfY29sb3IiOiIjMWEwYTJlIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IGZpbGw9JyVmZmQwMDAnIHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJy8lM0UlM0N0ZXh0IHg9JzUwJyB5PSc3MCcgZm9udC1zaXplPSc2MCcgdGV4dC1hbmNob3I9J21pZGRsZSclM0U3JTNDL3RleHQlM0UlM0Mvc3ZnJTNFIiwidHlwZSI6ImltYWdlL3N2Zyt4bWwiLCJzaXplcyI6IjUxMng1MTIifV19">
     <style>
         * {
@@ -155,7 +155,7 @@
         .bet-amount {
             font-size: 1.5em;
             color: white;
-            min-width: 80px;
+            min-width: 100px;
         }
 
         .spin-btn {
@@ -247,7 +247,7 @@
     <div class="stars" id="stars"></div>
     
     <div class="container">
-        <h1>🎰 LUCKY 777 🎰</h1>
+        <h1>🎰 Rakara's 777 🎰</h1>
         
         <div class="machine">
             <div class="reels">
@@ -375,22 +375,22 @@
             if (results[0] === results[1] && results[1] === results[2]) {
                 if (results[0] === '7️⃣') {
                     balance += bet * 50;
-                    msg.textContent = '🎉 JACKPOT! +$' + (bet * 50) + ' 🎉';
+                    msg.textContent = '🎉 JACKPOT! +KSh ' + (bet * 50) + ' 🎉';
                     msg.className = 'message jackpot';
                 } else if (results[0] === '💎') {
                     balance += bet * 25;
-                    msg.textContent = '💎 DIAMONDS! +$' + (bet * 25) + ' 💎';
+                    msg.textContent = '💎 DIAMONDS! +KSh ' + (bet * 25) + ' 💎';
                     msg.className = 'message win';
                 } else {
                     balance += bet * 10;
-                    msg.textContent = '🎊 TRIPLE! +$' + (bet * 10) + ' 🎊';
+                    msg.textContent = '🎊 TRIPLE! +KSh ' + (bet * 10) + ' 🎊';
                     msg.className = 'message win';
                 }
             }
             // Two match
             else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
                 balance += bet * 2;
-                msg.textContent = '✨ PAIR! +$' + (bet * 2) + ' ✨';
+                msg.textContent = '✨ PAIR! +KSh ' + (bet * 2) + ' ✨';
                 msg.className = 'message win';
             }
             // No match
