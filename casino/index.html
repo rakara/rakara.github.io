@@ -258,12 +258,12 @@
 
             <div class="controls">
                 <div class="balance">
-                    💰 Balance: $<span id="balance">1000</span>
+                    💰 Balance: KSh <span id="balance">1000</span>
                 </div>
 
                 <div class="bet-controls">
                     <button class="bet-btn" onclick="changeBet(-10)">-</button>
-                    <div class="bet-amount">Bet: $<span id="bet">10</span></div>
+                    <div class="bet-amount">Bet: KSh <span id="bet">10</span></div>
                     <button class="bet-btn" onclick="changeBet(10)">+</button>
                 </div>
 
@@ -404,7 +404,7 @@
             // Check if game over
             if (balance < 10) {
                 setTimeout(() => {
-                    if (confirm('Game Over! Start again with $1000?')) {
+                    if (confirm('Game Over! Start again with KSh 1000?')) {
                         balance = 1000;
                         bet = 10;
                         updateDisplay();
