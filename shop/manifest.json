@@ -10,16 +10,14 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://placehold.co/192/yellow/purple/png?text=SH&font=montserrat",
+      "src": "icon-192.svg",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/svg"
     },
     {
-      "src": "https://placehold.co/512/yellow/purple/png?text=SH&font=montserrat",
+      "src": "icon-512.svg",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/svg"
     }
   ]
 }
