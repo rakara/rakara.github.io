@@ -678,3 +678,151 @@
                             <div class="ride-name">FlowXL</div>
                             <div class="ride-details">3 min away • 6 seats</div>
                             <div class="ride-price">$18.90</div>
+                        </div>
+                    </div>
+                    <div class="ride-card">
+                        <div class="ride-card-content">
+                            <div class="ride-icon">⚡</div>
+                            <div class="ride-name">FlowPremium</div>
+                            <div class="ride-details">4 min away • Luxury</div>
+                            <div class="ride-price">$25.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="promo-section">
+                <div class="promo-content">
+                    <div class="promo-badge">Limited Offer</div>
+                    <div class="promo-title">Save 25% on your next 3 rides</div>
+                    <div class="promo-desc">New users get exclusive discount on rides this week</div>
+                    <div class="promo-code">
+                        <span>FLOW25</span>
+                        <span style="margin-left: 8px;">📋</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="cta-button">
+                <span>Request FlowX Now</span>
+            </button>
+        </main>
+
+        <nav class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">🗓️</div>
+                <div class="nav-label">Activity</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">💳</div>
+                <div class="nav-label">Payment</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">👤</div>
+                <div class="nav-label">Account</div>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed'));
+            });
+        }
+
+        // Interactive elements
+        document.querySelectorAll('.ride-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.ride-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                
+                const rideName = this.querySelector('.ride-name').textContent;
+                const price = this.querySelector('.ride-price').textContent;
+                document.querySelector('.cta-button span').textContent = `Request ${rideName} - ${price}`;
+            });
+        });
+
+        document.querySelector('.promo-code').addEventListener('click', function() {
+            const code = this.querySelector('span').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                this.style.background = 'var(--accent-primary)';
+                this.style.color = 'var(--bg-primary)';
+                setTimeout(() => {
+                    this.style.background = '';
+                    this.style.color = '';
+                }, 1000);
+            });
+        });
+
+        document.querySelector('.cta-button').addEventListener('click', function() {
+            this.innerHTML = '<span>Finding your driver... 🚗</span>';
+            this.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                this.innerHTML = '<span>Driver found! Arriving in 2 min</span>';
+                this.style.background = 'linear-gradient(135deg, #00ccff 0%, #00ff88 100%)';
+            }, 2000);
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const label = this.querySelector('.action-label').textContent;
+                console.log(`${label} clicked`);
+            });
+        });
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.location-btn, .action-card, .ride-card').forEach(element => {
+            element.addEventListener('click', function(e) {
+                const ripple = document.createElement('div');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(0, 255, 136, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                ripple.style.pointerEvents = 'none';
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
