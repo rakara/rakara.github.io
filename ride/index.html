@@ -473,6 +473,8 @@
             transition: var(--transition);
             padding: 8px 20px;
             border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
         }
 
         .nav-item:hover {
@@ -645,15 +647,15 @@
             <div class="quick-actions">
                 <h3>Quick Actions</h3>
                 <div class="actions-grid">
-                    <a href="activity.html" class="action-card" style="text-decoration: none; color: inherit;">
+                    <div class="action-card">
                         <div class="action-icon">🔄</div>
                         <div class="action-label">Repeat Trip</div>
-                    </a>
-                    <div class="action-card" id="schedule-btn">
+                    </div>
+                    <div class="action-card">
                         <div class="action-icon">🕐</div>
                         <div class="action-label">Schedule</div>
                     </div>
-                    <div class="action-card" id="share-btn">
+                    <div class="action-card">
                         <div class="action-icon">👥</div>
                         <div class="action-label">Share Ride</div>
                     </div>
@@ -815,13 +817,6 @@
                 this.style.background = 'linear-gradient(135deg, #00ccff 0%, #00ff88 100%)';
             }, 2000);
         });
-
-        /*document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });*/
 
         document.querySelectorAll('.action-card').forEach(card => {
             card.addEventListener('click', function() {
