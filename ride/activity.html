@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Activity - TickRide</title>
+    
+    <!-- PWA Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/ride/icons/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/ride/icons/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-primary: #00ff88;
+            --accent-secondary: #00ccff;
+            --accent-gradient: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+            --danger: #ff3366;
+            --warning: #ffaa00;
+            --success: #00ff88;
+            --card-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 20px;
+        }
+
+        .back-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent-primary);
+            transform: translateX(-4px);
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 24px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-tab {
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .filter-tab:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .filter-tab.active {
+            background: var(--accent-gradient);
+            color: var(--bg-primary);
+            border-color: transparent;
+        }
+
+        /* Trip Cards */
+        .trips-section h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+        }
+
+        .trip-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .trip-card:hover::before {
+            opacity: 1;
+        }
+
+        .trip-card:hover {
+            border-color: rgba(0, 255, 136, 0.2);
+            transform: translateX(4px);
+        }
+
+        .trip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .trip-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .trip-status {
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .trip-status.completed {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .trip-status.cancelled {
+            background: rgba(255, 51, 102, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(255, 51, 102, 0.2);
+        }
+
+        .trip-route {
+            margin-bottom: 16px;
+        }
+
+        .route-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .route-point:last-child {
+            margin-bottom: 0;
+        }
+
+        .route-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .route-icon.pickup {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--accent-primary);
+        }
+
+        .route-icon.dropoff {
+            background: rgba(0, 204, 255, 0.2);
+            color: var(--accent-secondary);
+        }
+
+        .route-location {
+            flex: 1;
+        }
+
+        .route-location-name {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .route-location-address {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .trip-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .trip-type {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .trip-type-icon {
+            font-size: 20px;
+        }
+
+        .trip-price {
+            font-size: 20px;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .empty-desc {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .empty-cta {
+            padding: 12px 24px;
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: 12px;
+            color: var(--bg-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .empty-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 8px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active {
+            color: var(--accent-primary);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-left">
+                <a href="index.html" class="back-btn">←</a>
+                <h1 class="page-title">Activity</h1>
+            </div>
+        </header>
+
+        <main>
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Total Rides</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">348km</div>
+                    <div class="stat-label">Distance</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">4.9★</div>
+                    <div class="stat-label">Rating</div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filter-tabs">
+                <div class="filter-tab active">All Trips</div>
+                <div class="filter-tab">Completed</div>
+                <div class="filter-tab">Cancelled</div>
+                <div class="filter-tab">This Month</div>
+                <div class="filter-tab">Last Month</div>
+            </div>
+
+            <!-- Recent Trips -->
+            <div class="trips-section">
+                <h2>Recent Trips</h2>
+                
+                <div class="trip-card">
+                    <div class="trip-header">
+                        <div class="trip-date">Today, 2:30 PM</div>
+                        <div class="trip-status completed">Completed</div>
+                    </div>
+                    
+                    <div class="trip-route">
+                        <div class="route-point">
+                            <div class="route-icon pickup">📍</div>
+                            <div class="route-location">
+                                <div class="route-location-name">Westlands</div>
+                                <div class="route-location-address">Sarit Centre, Nairobi</div>
+                            </div>
+                        </div>
+                        <div class="route-point">
+                            <div class="route-icon dropoff">🎯</div>
+                            <div class="route-location">
+                                <div class="route-location-name">CBD</div>
+                                <div class="route-location-address">Kenyatta Avenue, Nairobi</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="trip-footer">
+                        <div class="trip-type">
+                            <span class="trip-type-icon">🚗</span>
+                            <span>FlowX</span>
+                        </div>
+                        <div class="trip-price">KSh 450</div>
+                    </div>
+                </div>
+
+                <div class="trip-card">
+                    <div class="trip-header">
+                        <div class="trip-date">Yesterday, 6:45 PM</div>
+                        <div class="trip-status completed">Completed</div>
+                    </div>
+                    
+                    <div class="trip-route">
+                        <div class="route-point">
+                            <div class="route-icon pickup">📍</div>
+                            <div class="route-location">
+                                <div class="route-location-name">Kilimani</div>
+                                <div class="route-location-address">Yaya Centre</div>
+                            </div>
+                        </div>
+                        <div class="route-point">
+                            <div class="route-icon dropoff">🎯</div>
+                            <div class="route-location">
+                                <div class="route-location-name">Karen</div>
+                                <div class="route-location-address">Karen Blixen Coffee Garden</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="trip-footer">
+                        <div class="trip-type">
+                            <span class="trip-type-icon">👥</span>
+                            <span>FlowShare</span>
+                        </div>
+                        <div class="trip-price">KSh 680</div>
+                    </div>
+                </div>
+
+                <div class="trip-card">
+                    <div class="trip-header">
+                        <div class="trip-date">Feb 9, 9:15 AM</div>
+                        <div class="trip-status completed">Completed</div>
+                    </div>
+                    
+                    <div class="trip-route">
+                        <div class="route-point">
+                            <div class="route-icon pickup">📍</div>
+                            <div class="route-location">
+                                <div class="route-location-name">Parklands</div>
+                                <div class="route-location-address">Aga Khan Walk</div>
+                            </div>
+                        </div>
+                        <div class="route-point">
+                            <div class="route-icon dropoff">🎯</div>
+                            <div class="route-location">
+                                <div class="route-location-name">Upperhill</div>
+                                <div class="route-location-address">NSSF Building</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="trip-footer">
+                        <div class="trip-type">
+                            <span class="trip-type-icon">⚡</span>
+                            <span>FlowPremium</span>
+                        </div>
+                        <div class="trip-price">KSh 900</div>
+                    </div>
+                </div>
+
+                <div class="trip-card">
+                    <div class="trip-header">
+                        <div class="trip-date">Feb 8, 3:20 PM</div>
+                        <div class="trip-status cancelled">Cancelled</div>
+                    </div>
+                    
+                    <div class="trip-route">
+                        <div class="route-point">
+                            <div class="route-icon pickup">📍</div>
+                            <div class="route-location">
+                                <div class="route-location-name">Westlands</div>
+                                <div class="route-location-address">ABC Place</div>
+                            </div>
+                        </div>
+                        <div class="route-point">
+                            <div class="route-icon dropoff">🎯</div>
+                            <div class="route-location">
+                                <div class="route-location-name">Gigiri</div>
+                                <div class="route-location-address">UN Complex</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="trip-footer">
+                        <div class="trip-type">
+                            <span class="trip-type-icon">🚙</span>
+                            <span>FlowXL</span>
+                        </div>
+                        <div class="trip-price" style="opacity: 0.5;">KSh 350</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
+            </a>
+            <a href="activity.html" class="nav-item active">
+                <div class="nav-icon">🗓️</div>
+                <div class="nav-label">Activity</div>
+            </a>
+            <a href="payment.html" class="nav-item">
+                <div class="nav-icon">💳</div>
+                <div class="nav-label">Payment</div>
+            </a>
+            <a href="account.html" class="nav-item">
+                <div class="nav-icon">👤</div>
+                <div class="nav-label">Account</div>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        // Filter tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Trip cards
+        document.querySelectorAll('.trip-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Navigate to trip details
+                console.log('View trip details');
+            });
+        });
+    </script>
+</body>
+</html>

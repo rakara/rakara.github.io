@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Account - TickRide</title>
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/ride/icons/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/ride/icons/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-primary: #00ff88;
+            --accent-secondary: #00ccff;
+            --accent-gradient: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+            --card-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 16px; }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 20px;
+        }
+
+        .back-btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent-primary);
+        }
+
+        .page-title { font-size: 24px; font-weight: 700; }
+
+        main { flex: 1; padding: 24px; }
+
+        /* Profile Card */
+        .profile-card {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .profile-info { flex: 1; }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .profile-phone {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .profile-rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .edit-profile-btn {
+            padding: 10px 20px;
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            color: var(--accent-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .edit-profile-btn:hover {
+            background: var(--accent-gradient);
+            color: var(--bg-primary);
+            border-color: transparent;
+        }
+
+        /* Menu Sections */
+        .menu-section {
+            margin-bottom: 32px;
+        }
+
+        .menu-section-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+
+        .menu-item {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .menu-item:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent-primary);
+            transform: translateX(4px);
+        }
+
+        .menu-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .menu-content { flex: 1; }
+
+        .menu-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .menu-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .menu-arrow {
+            font-size: 20px;
+            color: var(--text-secondary);
+        }
+
+        .logout-btn {
+            background: rgba(255, 51, 102, 0.1);
+            border: 1px solid rgba(255, 51, 102, 0.2);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 51, 102, 0.2);
+        }
+
+        .logout-btn .menu-title {
+            color: #ff3366;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .nav-item:hover { background: rgba(255, 255, 255, 0.05); }
+        .nav-item.active { color: var(--accent-primary); }
+        .nav-icon { font-size: 24px; }
+        .nav-label { font-size: 12px; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-left">
+                <a href="index.html" class="back-btn">←</a>
+                <h1 class="page-title">Account</h1>
+            </div>
+        </header>
+
+        <main>
+            <!-- Profile -->
+            <div class="profile-card">
+                <div class="profile-avatar">WK</div>
+                <div class="profile-info">
+                    <div class="profile-name">Wanjiku</div>
+                    <div class="profile-phone">+254 712 345 678</div>
+                    <div class="profile-rating">⭐ 4.9</div>
+                </div>
+            </div>
+
+            <button class="edit-profile-btn" style="width: 100%; margin-bottom: 32px;">✏️ Edit Profile</button>
+
+            <!-- Account Settings -->
+            <div class="menu-section">
+                <div class="menu-section-title">Account Settings</div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">👤</div>
+                    <div class="menu-content">
+                        <div class="menu-title">Personal Information</div>
+                        <div class="menu-subtitle">Name, email, phone</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-icon">📍</div>
+                    <div class="menu-content">
+                        <div class="menu-title">Saved Places</div>
+                        <div class="menu-subtitle">Home, Work, favorites</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-icon">🔔</div>
+                    <div class="menu-content">
+                        <div class="menu-title">Notifications</div>
+                        <div class="menu-subtitle">Push, email, SMS</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-icon">🔒</div>
+                    <div class="menu-content">
+                        <div class="menu-title">Privacy & Security</div>
+                        <div class="menu-subtitle">Password, 2FA, data</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+            </div>
+
+            <!-- Ride Preferences -->
+            <div class="menu-section">
+                <div class="menu-section-title">Ride Preferences</div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">⚙️</div>
+                    <div class="menu-content">
+                        <div class="menu-title">Ride Settings</div>
+                        <div class="menu-subtitle">Preferences, accessibility</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-icon">🎵</div>
+                    <div class="menu-content">
+                        <div class="menu-title">Music Preferences</div>
+                        <div class="menu-subtitle">Your favorite genres</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+            </div>
+
+            <!-- Support & Legal -->
+            <div class="menu-section">
+                <div class="menu-section-title">Support & Legal</div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon">💬</div>
+                    <div class="menu-content">
+                        <div class="menu-title">Help & Support</div>
+                        <div class="menu-subtitle">FAQs, contact us</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-icon">📄</div>
+                    <div class="menu-content">
+                        <div class="menu-title">Legal</div>
+                        <div class="menu-subtitle">Terms, privacy policy</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="menu-icon">ℹ️</div>
+                    <div class="menu-content">
+                        <div class="menu-title">About TickRide</div>
+                        <div class="menu-subtitle">Version 1.0.0</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+            </div>
+
+            <!-- Logout -->
+            <div class="menu-item logout-btn">
+                <div class="menu-icon">🚪</div>
+                <div class="menu-content">
+                    <div class="menu-title">Logout</div>
+                </div>
+                <div class="menu-arrow">→</div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
+            </a>
+            <a href="activity.html" class="nav-item">
+                <div class="nav-icon">🗓️</div>
+                <div class="nav-label">Activity</div>
+            </a>
+            <a href="payment.html" class="nav-item">
+                <div class="nav-icon">💳</div>
+                <div class="nav-label">Payment</div>
+            </a>
+            <a href="account.html" class="nav-item active">
+                <div class="nav-icon">👤</div>
+                <div class="nav-label">Account</div>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        document.querySelector('.logout-btn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>
