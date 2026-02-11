@@ -1,8 +1,13 @@
-const CACHE_NAME = 'rideflow-v1';
+const CACHE_NAME = 'tickride-v1';
+const BASE_PATH = '/ride';
 const urlsToCache = [
-  '/',
-  '/uber-pwa.html',
-  '/manifest.json',
+  `${BASE_PATH}/`,
+  `${BASE_PATH}/index.html`,
+  `${BASE_PATH}/manifest.json`,
+  `${BASE_PATH}/icons/icon-192x192.png`,
+  `${BASE_PATH}/icons/icon-512x512.png`,
+  `${BASE_PATH}/icons/favicon.png`,
+  `${BASE_PATH}/icons/apple-touch-icon.png`,
   'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap'
 ];
 
@@ -49,7 +54,7 @@ self.addEventListener('fetch', event => {
       })
       .catch(() => {
         // Return offline page if available
-        return caches.match('/uber-pwa.html');
+        return caches.match(`${BASE_PATH}/index.html`);
       })
   );
 });
@@ -75,8 +80,8 @@ self.addEventListener('activate', event => {
 self.addEventListener('push', event => {
   const options = {
     body: event.data ? event.data.text() : 'Your ride is arriving soon!',
-    icon: '/icon-192.png',
-    badge: '/badge-72.png',
+    icon: `${BASE_PATH}/icons/icon-192x192.png`,
+    badge: `${BASE_PATH}/icons/icon-96x96.png`,
     vibrate: [200, 100, 200],
     data: {
       dateOfArrival: Date.now(),
@@ -97,7 +102,7 @@ self.addEventListener('push', event => {
   };
 
   event.waitUntil(
-    self.registration.showNotification('RideFlow Update', options)
+    self.registration.showNotification('TickRide Update', options)
   );
 });
 
@@ -106,6 +111,6 @@ self.addEventListener('notificationclick', event => {
   event.notification.close();
 
   event.waitUntil(
-    clients.openWindow('/')
+    clients.openWindow(`${BASE_PATH}/`)
   );
 });
