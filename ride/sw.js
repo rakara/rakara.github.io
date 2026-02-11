@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tickride-v1';
+const CACHE_NAME = 'tickride-v1.0.1';
 const BASE_PATH = '/ride';
 const urlsToCache = [
   `${BASE_PATH}/`,
