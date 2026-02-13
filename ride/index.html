@@ -13,6 +13,10 @@
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -473,8 +477,6 @@
             transition: var(--transition);
             padding: 8px 20px;
             border-radius: 12px;
-            text-decoration: none;
-            color: var(--text-primary);
         }
 
         .nav-item:hover {
@@ -563,25 +565,35 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
-        /* Map placeholder */
+        /* Map preview */
         .map-preview {
             background: var(--bg-secondary);
             border-radius: 20px;
-            height: 200px;
+            height: 300px;
             margin-bottom: 24px;
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .map-preview::before {
-            content: '🗺️';
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        .map-loading {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 48px;
-            opacity: 0.3;
+            font-size: 14px;
+            color: var(--text-secondary);
+            z-index: 1000;
+            background: var(--bg-secondary);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
         }
 
         .map-overlay {
@@ -594,12 +606,22 @@
             border-radius: 12px;
             padding: 12px 16px;
             border: 1px solid rgba(0, 255, 136, 0.2);
+            z-index: 1000;
         }
 
         .map-overlay-text {
             font-size: 14px;
             font-weight: 500;
             color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .location-accuracy {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-left: auto;
         }
     </style>
 </head>
@@ -617,8 +639,13 @@
             </div>
 
             <div class="map-preview">
-                <div class="map-overlay">
-                    <div class="map-overlay-text">📍 Current location: Westlands, Nairobi</div>
+                <div id="map"></div>
+                <div class="map-loading" id="map-loading">📍 Getting your location...</div>
+                <div class="map-overlay" id="map-overlay" style="display: none;">
+                    <div class="map-overlay-text">
+                        <span id="location-text">📍 Locating...</span>
+                        <span class="location-accuracy" id="location-accuracy"></span>
+                    </div>
                 </div>
             </div>
 
@@ -635,7 +662,7 @@
                         <circle cx="12" cy="12" r="10"></circle>
                         <circle cx="12" cy="12" r="1"></circle>
                     </svg>
-                    <input type="text" placeholder="Pickup location" value="Current location" />
+                    <input type="text" id="pickup-input" placeholder="Pickup location" value="Getting location..." readonly />
                 </div>
                 <div class="location-options">
                     <button class="location-btn">🏠 Home</button>
@@ -647,15 +674,15 @@
             <div class="quick-actions">
                 <h3>Quick Actions</h3>
                 <div class="actions-grid">
-                    <div class="action-card">
+                    <a href="activity.html" class="action-card" style="text-decoration: none; color: inherit;">
                         <div class="action-icon">🔄</div>
                         <div class="action-label">Repeat Trip</div>
-                    </div>
-                    <div class="action-card">
+                    </a>
+                    <div class="action-card" id="schedule-btn">
                         <div class="action-icon">🕐</div>
                         <div class="action-label">Schedule</div>
                     </div>
-                    <div class="action-card">
+                    <div class="action-card" id="share-btn">
                         <div class="action-icon">👥</div>
                         <div class="action-label">Share Ride</div>
                     </div>
@@ -718,30 +745,38 @@
         </main>
 
         <nav class="bottom-nav">
-            <a href="index.html" class="nav-item active">
+            <div class="nav-item active">
                 <div class="nav-icon">🏠</div>
                 <div class="nav-label">Home</div>
-            </a>
-            <a href="activity.html" class="nav-item">
+            </div>
+            <div class="nav-item">
                 <div class="nav-icon">🗓️</div>
                 <div class="nav-label">Activity</div>
-            </a>
-            <a href="payment.html" class="nav-item">
+            </div>
+            <div class="nav-item">
                 <div class="nav-icon">💳</div>
                 <div class="nav-label">Payment</div>
-            </a>
-            <a href="account.html" class="nav-item">
+            </div>
+            <div class="nav-item">
                 <div class="nav-icon">👤</div>
                 <div class="nav-label">Account</div>
-            </a>
+            </div>
         </nav>
     </div>
+
+    <!-- Leaflet JS for Interactive Maps -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
         // Kenyan locale settings
         const LOCALE = 'en-KE';
         const CURRENCY = 'KES';
         const TIMEZONE = 'Africa/Nairobi';
+
+        // Global variables for map and location
+        let map;
+        let userMarker;
+        let userLocation = null;
 
         // Format currency for Kenyan market
         function formatKES(amount) {
@@ -773,13 +808,172 @@
             }).format(date);
         }
 
+        // Reverse geocode coordinates to address using OpenStreetMap Nominatim
+        async function reverseGeocode(lat, lng) {
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
+                    { headers: { 'User-Agent': 'TickRide/1.0' } }
+                );
+                const data = await response.json();
+                
+                const address = data.address;
+                const neighborhood = address.suburb || address.neighbourhood || address.residential;
+                const area = address.city || address.town || address.county;
+                
+                if (neighborhood && area) {
+                    return `${neighborhood}, ${area}`;
+                } else if (area) {
+                    return area;
+                } else {
+                    return data.display_name.split(',').slice(0, 2).join(',');
+                }
+            } catch (error) {
+                console.error('Reverse geocoding error:', error);
+                return 'Location found';
+            }
+        }
+
+        // Initialize interactive map
+        function initMap(lat, lng) {
+            map = L.map('map', {
+                zoomControl: true,
+                scrollWheelZoom: false
+            }).setView([lat, lng], 15);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Custom user marker with gradient and pulse animation
+            const userIcon = L.divIcon({
+                className: 'custom-marker',
+                html: `<div style="
+                    width: 40px;
+                    height: 40px;
+                    background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+                    border-radius: 50%;
+                    border: 3px solid #0a0a0a;
+                    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 18px;
+                    animation: markerPulse 2s infinite;
+                ">📍</div>`,
+                iconSize: [40, 40],
+                iconAnchor: [20, 20]
+            });
+
+            userMarker = L.marker([lat, lng], { icon: userIcon })
+                .addTo(map)
+                .bindPopup('<b>📍 You are here</b>')
+                .openPopup();
+
+            // Accuracy circle
+            L.circle([lat, lng], {
+                color: '#00ff88',
+                fillColor: '#00ff88',
+                fillOpacity: 0.1,
+                radius: 100
+            }).addTo(map);
+
+            // Add pulse animation
+            const pulseStyle = document.createElement('style');
+            pulseStyle.textContent = `
+                @keyframes markerPulse {
+                    0%, 100% { transform: scale(1); opacity: 1; }
+                    50% { transform: scale(1.1); opacity: 0.8; }
+                }
+            `;
+            document.head.appendChild(pulseStyle);
+        }
+
+        // Get user's current location
+        function getUserLocation() {
+            const mapLoading = document.getElementById('map-loading');
+            const mapOverlay = document.getElementById('map-overlay');
+            const locationText = document.getElementById('location-text');
+            const locationAccuracy = document.getElementById('location-accuracy');
+            const pickupInput = document.getElementById('pickup-input');
+
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    async (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        const accuracy = position.coords.accuracy;
+
+                        userLocation = { lat, lng };
+                        initMap(lat, lng);
+
+                        const address = await reverseGeocode(lat, lng);
+
+                        mapLoading.style.display = 'none';
+                        mapOverlay.style.display = 'block';
+                        locationText.innerHTML = `📍 ${address}`;
+                        locationAccuracy.textContent = `±${Math.round(accuracy)}m`;
+                        pickupInput.value = address;
+                        pickupInput.removeAttribute('readonly');
+
+                        console.log(`Location: ${lat}, ${lng} (±${accuracy}m)`);
+                    },
+                    (error) => {
+                        console.error('Geolocation error:', error);
+                        
+                        // Fallback to Nairobi CBD
+                        const fallbackLat = -1.2864;
+                        const fallbackLng = 36.8172;
+                        
+                        userLocation = { lat: fallbackLat, lng: fallbackLng };
+                        initMap(fallbackLat, fallbackLng);
+                        
+                        mapLoading.style.display = 'none';
+                        mapOverlay.style.display = 'block';
+                        locationText.innerHTML = '📍 Nairobi CBD (Default)';
+                        locationAccuracy.textContent = 'Location access denied';
+                        pickupInput.value = 'Nairobi CBD, Kenya';
+                        pickupInput.removeAttribute('readonly');
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                // Geolocation not supported
+                const fallbackLat = -1.2864;
+                const fallbackLng = 36.8172;
+                
+                userLocation = { lat: fallbackLat, lng: fallbackLng };
+                initMap(fallbackLat, fallbackLng);
+                
+                mapLoading.textContent = '⚠️ Geolocation not supported';
+                setTimeout(() => {
+                    mapLoading.style.display = 'none';
+                    mapOverlay.style.display = 'block';
+                    locationText.innerHTML = '📍 Nairobi CBD (Default)';
+                    pickupInput.value = 'Nairobi CBD, Kenya';
+                    pickupInput.removeAttribute('readonly');
+                }, 2000);
+            }
+        }
+
         // PWA functionality
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/ride/sw.js')
                     .then(reg => console.log('Service Worker registered'))
                     .catch(err => console.log('Service Worker registration failed'));
+                
+                // Initialize geolocation and map
+                getUserLocation();
             });
+        } else {
+            // If no service worker support, still initialize map
+            window.addEventListener('load', getUserLocation);
         }
 
         // Interactive elements
@@ -816,6 +1010,13 @@
                 this.innerHTML = `<span>Driver found! Arriving at ${formattedTime}</span>`;
                 this.style.background = 'linear-gradient(135deg, #00ccff 0%, #00ff88 100%)';
             }, 2000);
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
 
         document.querySelectorAll('.action-card').forEach(card => {
