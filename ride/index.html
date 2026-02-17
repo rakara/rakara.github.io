@@ -162,7 +162,7 @@
         .search-card {
             background: var(--bg-secondary);
             border-radius: 24px;
-            padding: 24px;
+            padding: 20px;
             margin-bottom: 24px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: var(--card-shadow);
@@ -171,18 +171,36 @@
 
         .search-card:hover {
             border-color: rgba(0, 255, 136, 0.2);
-            transform: translateY(-2px);
+        }
+
+        /* Route input stack */
+        .route-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            position: relative;
+        }
+
+        .route-line {
+            position: absolute;
+            left: 19px;
+            top: 46px;
+            bottom: 46px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+            z-index: 0;
         }
 
         .search-input {
             display: flex;
             align-items: center;
             background: var(--bg-tertiary);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
-            border: 1px solid transparent;
+            border-radius: 14px;
+            padding: 14px 14px 14px 16px;
+            border: 1px solid rgba(255,255,255,0.06);
             transition: var(--transition);
+            position: relative;
+            z-index: 1;
         }
 
         .search-input:focus-within {
@@ -190,12 +208,19 @@
             box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
         }
 
-        .search-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 12px;
-            color: var(--text-secondary);
+        .search-input + .search-input {
+            margin-top: 8px;
         }
+
+        /* Dot indicators */
+        .route-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-right: 12px;
+        }
+        .route-dot.pickup  { background: var(--accent-primary); box-shadow: 0 0 8px rgba(0,255,136,.5); }
+        .route-dot.dropoff { background: var(--accent-secondary); box-shadow: 0 0 8px rgba(0,204,255,.5); }
 
         .search-input input {
             flex: 1;
@@ -203,31 +228,115 @@
             border: none;
             outline: none;
             color: var(--text-primary);
-            font-size: 16px;
+            font-size: 15px;
             font-family: 'Outfit', sans-serif;
+            min-width: 0;
         }
 
-        .search-input input::placeholder {
-            color: var(--text-secondary);
+        .search-input input::placeholder { color: var(--text-secondary); }
+
+        .input-clear {
+            background: none; border: none; color: var(--text-secondary);
+            font-size: 18px; cursor: pointer; padding: 0 4px; line-height: 1;
+            transition: var(--transition); flex-shrink: 0;
+        }
+        .input-clear:hover { color: var(--accent-primary); }
+
+        /* Swap button */
+        .swap-btn {
+            width: 32px; height: 32px;
+            background: var(--bg-primary);
+            border: 1px solid rgba(0,255,136,.3);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: var(--transition);
+            position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+            font-size: 15px; z-index: 10;
+        }
+        .swap-btn:hover { background: rgba(0,255,136,.1); border-color: var(--accent-primary); transform: translateY(-50%) rotate(180deg); }
+
+        /* Autocomplete dropdown */
+        .autocomplete-dropdown {
+            position: absolute;
+            left: 0; right: 0;
+            top: calc(100% + 6px);
+            background: var(--bg-secondary);
+            border: 1px solid rgba(0,255,136,.2);
+            border-radius: 16px;
+            overflow: hidden;
+            z-index: 9999;
+            box-shadow: 0 16px 40px rgba(0,0,0,.6);
+            display: none;
+        }
+        .autocomplete-dropdown.visible { display: block; }
+
+        .ac-item {
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(255,255,255,.04);
+        }
+        .ac-item:last-child { border-bottom: none; }
+        .ac-item:hover { background: rgba(0,255,136,.06); }
+
+        .ac-icon {
+            width: 32px; height: 32px; border-radius: 10px;
+            background: var(--bg-tertiary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; flex-shrink: 0; margin-top: 2px;
+        }
+        .ac-name { font-size: 14px; font-weight: 600; line-height: 1.3; }
+        .ac-address { font-size: 12px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
+
+        .ac-loading, .ac-empty {
+            padding: 16px; text-align: center;
+            color: var(--text-secondary); font-size: 13px;
         }
 
+        /* Route summary strip */
+        .route-summary {
+            display: none;
+            background: linear-gradient(135deg, rgba(0,255,136,.08), rgba(0,204,255,.08));
+            border: 1px solid rgba(0,255,136,.2);
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            gap: 0;
+        }
+        .route-summary.visible { display: flex; justify-content: space-between; align-items: center; }
+
+        .rs-item { text-align: center; flex: 1; }
+        .rs-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px; font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .rs-label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; text-transform: uppercase; letter-spacing: .4px; }
+        .rs-divider { width: 1px; height: 36px; background: rgba(255,255,255,.08); }
+
+        /* Quick saved places */
         .location-options {
             display: flex;
-            gap: 12px;
+            gap: 10px;
+            margin-top: 14px;
         }
 
         .location-btn {
             flex: 1;
-            padding: 12px;
+            padding: 10px 8px;
             background: var(--bg-tertiary);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Outfit', sans-serif;
+            white-space: nowrap;
         }
 
         .location-btn:hover {
@@ -650,24 +759,57 @@
             </div>
 
             <div class="search-card">
-                <div class="search-input">
-                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                    <input type="text" placeholder="Where to?" />
+                <!-- Route inputs -->
+                <div class="route-inputs" id="route-inputs">
+                    <div class="route-line"></div>
+
+                    <!-- Pickup -->
+                    <div class="search-input" id="pickup-wrap" style="position:relative">
+                        <div class="route-dot pickup"></div>
+                        <input type="text" id="pickup-input" placeholder="Pickup location" value="Getting location…" autocomplete="off" />
+                        <button class="input-clear" id="pickup-clear" style="display:none" title="Clear">×</button>
+                        <!-- Autocomplete -->
+                        <div class="autocomplete-dropdown" id="pickup-dropdown"></div>
+                    </div>
+
+                    <!-- Swap button -->
+                    <div style="position:relative; height:0; z-index:10">
+                        <button class="swap-btn" id="swap-btn" title="Swap pickup & destination">⇅</button>
+                    </div>
+
+                    <!-- Destination -->
+                    <div class="search-input" id="dest-wrap" style="position:relative">
+                        <div class="route-dot dropoff"></div>
+                        <input type="text" id="dest-input" placeholder="Where to?" autocomplete="off" />
+                        <button class="input-clear" id="dest-clear" style="display:none" title="Clear">×</button>
+                        <!-- Autocomplete -->
+                        <div class="autocomplete-dropdown" id="dest-dropdown"></div>
+                    </div>
                 </div>
-                <div class="search-input">
-                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <circle cx="12" cy="12" r="1"></circle>
-                    </svg>
-                    <input type="text" id="pickup-input" placeholder="Pickup location" value="Getting location..." readonly />
+
+                <!-- Route summary (distance / time / fare) -->
+                <div class="route-summary" id="route-summary">
+                    <div class="rs-item">
+                        <div class="rs-value" id="rs-distance">—</div>
+                        <div class="rs-label">Distance</div>
+                    </div>
+                    <div class="rs-divider"></div>
+                    <div class="rs-item">
+                        <div class="rs-value" id="rs-time">—</div>
+                        <div class="rs-label">Est. Time</div>
+                    </div>
+                    <div class="rs-divider"></div>
+                    <div class="rs-item">
+                        <div class="rs-value" id="rs-fare">—</div>
+                        <div class="rs-label">From</div>
+                    </div>
                 </div>
+
+                <!-- Saved places -->
                 <div class="location-options">
-                    <button class="location-btn">🏠 Home</button>
-                    <button class="location-btn">💼 Work</button>
-                    <button class="location-btn">⭐ Saved</button>
+                    <button class="location-btn" data-lat="-1.2897" data-lng="36.7826" data-name="Home — Westlands">🏠 Home</button>
+                    <button class="location-btn" data-lat="-1.2921" data-lng="36.8219" data-name="Work — CBD">💼 Work</button>
+                    <button class="location-btn" data-lat="-1.3192" data-lng="36.7072" data-name="Karen">⭐ Karen</button>
                 </div>
             </div>
 
@@ -692,7 +834,7 @@
             <div class="ride-options">
                 <h2>Choose Your Ride</h2>
                 <div class="ride-grid">
-                    <div class="ride-card active">
+                    <div class="ride-card active" id="card-tickx">
                         <div class="ride-card-content">
                             <div class="ride-icon">🚗</div>
                             <div class="ride-name">TickX</div>
@@ -700,7 +842,7 @@
                             <div class="ride-price">KSh 450</div>
                         </div>
                     </div>
-                    <div class="ride-card">
+                    <div class="ride-card" id="card-tickshare">
                         <div class="ride-card-content">
                             <div class="ride-icon">👥</div>
                             <div class="ride-name">TickShare</div>
@@ -708,7 +850,7 @@
                             <div class="ride-price">KSh 280</div>
                         </div>
                     </div>
-                    <div class="ride-card">
+                    <div class="ride-card" id="card-tickxl">
                         <div class="ride-card-content">
                             <div class="ride-icon">🚙</div>
                             <div class="ride-name">TickXL</div>
@@ -716,7 +858,7 @@
                             <div class="ride-price">KSh 680</div>
                         </div>
                     </div>
-                    <div class="ride-card">
+                    <div class="ride-card" id="card-tickpremium">
                         <div class="ride-card-content">
                             <div class="ride-icon">⚡</div>
                             <div class="ride-name">TickPremium</div>
@@ -768,301 +910,445 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // Kenyan locale settings
-        const LOCALE = 'en-KE';
-        const CURRENCY = 'KES';
-        const TIMEZONE = 'Africa/Nairobi';
+    // ─── CONSTANTS ─────────────────────────────────────────────────────
+    const LOCALE    = 'en-KE';
+    const CURRENCY  = 'KES';
+    const NAIROBI   = { lat: -1.2921, lng: 36.8219 };
 
-        // Global variables for map and location
-        let map;
-        let userMarker;
-        let userLocation = null;
+    // Fare structure: base + per-km rate (KSh)
+    const TIERS = [
+        { id: 'tickx',       name: 'TickX',       icon: '🚗', seats: '4 seats', baseKm: 80, rateKm: 55,  etaMult: 1.0 },
+        { id: 'tickshare',   name: 'TickShare',   icon: '👥', seats: 'Shared',  baseKm: 50, rateKm: 35,  etaMult: 1.3 },
+        { id: 'tickxl',      name: 'TickXL',      icon: '🚙', seats: '6 seats', baseKm: 100,rateKm: 75,  etaMult: 1.1 },
+        { id: 'tickpremium', name: 'TickPremium', icon: '⚡', seats: 'Luxury',  baseKm: 150,rateKm: 110, etaMult: 1.15 },
+    ];
 
-        // Format currency for Kenyan market
-        function formatKES(amount) {
-            return new Intl.NumberFormat(LOCALE, {
-                style: 'currency',
-                currency: CURRENCY,
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(amount).replace('KES', 'KSh');
+    const SAVED_PLACES = {
+        home: { lat: -1.2897, lng: 36.7826, name: 'Home — Westlands' },
+        work: { lat: -1.2921, lng: 36.8219, name: 'Work — CBD'        },
+        karen:{ lat: -1.3192, lng: 36.7072, name: 'Karen'              },
+    };
+
+    // ─── STATE ─────────────────────────────────────────────────────────
+    let map, pickupMarker, destMarker, routePolyline;
+    let pickup  = { lat: null, lng: null, name: '' };
+    let dest    = { lat: null, lng: null, name: '' };
+    let selectedTier = 'tickx';
+    let acTimers = {};
+
+    // ─── UTILS ─────────────────────────────────────────────────────────
+    function fmt(n) {
+        return new Intl.NumberFormat(LOCALE, { style:'currency', currency:CURRENCY,
+            minimumFractionDigits:0, maximumFractionDigits:0 }).format(n).replace('KES','KSh');
+    }
+
+    // Haversine distance in km
+    function haversine(lat1, lng1, lat2, lng2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLng = (lng2 - lng1) * Math.PI / 180;
+        const a = Math.sin(dLat/2)**2 +
+                  Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2;
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    // Road distance ≈ straight-line × 1.35 (Nairobi factor)
+    function roadDist(km) { return km * 1.35; }
+
+    function calcFare(tier, km) {
+        return Math.round(tier.baseKm + tier.rateKm * km);
+    }
+
+    function calcETA(km, mult) {
+        // avg 25 km/h in Nairobi traffic
+        const mins = Math.round((km / 25) * 60 * mult);
+        return mins < 60 ? `${mins} min` : `${Math.floor(mins/60)}h ${mins%60}m`;
+    }
+
+    // ─── MAP ───────────────────────────────────────────────────────────
+    function initMap(lat, lng) {
+        map = L.map('map', { zoomControl: false, scrollWheelZoom: false }).setView([lat, lng], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap', maxZoom: 19
+        }).addTo(map);
+
+        L.control.zoom({ position: 'topright' }).addTo(map);
+
+        setPickupMarker(lat, lng);
+    }
+
+    function setPickupMarker(lat, lng) {
+        const icon = L.divIcon({
+            className: '',
+            html: `<div style="width:38px;height:38px;background:linear-gradient(135deg,#00ff88,#00ccff);border-radius:50%;border:3px solid #0a0a0a;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 4px 14px rgba(0,255,136,.5);animation:markerPulse 2s infinite">📍</div>`,
+            iconSize: [38,38], iconAnchor: [19,19]
+        });
+        if (pickupMarker) map.removeLayer(pickupMarker);
+        pickupMarker = L.marker([lat, lng], { icon }).addTo(map).bindPopup('<b>📍 Your pickup</b>');
+    }
+
+    function setDestMarker(lat, lng, name) {
+        const icon = L.divIcon({
+            className: '',
+            html: `<div style="width:38px;height:38px;background:linear-gradient(135deg,#00ccff,#0066ff);border-radius:50%;border:3px solid #0a0a0a;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 4px 14px rgba(0,204,255,.5)">🎯</div>`,
+            iconSize: [38,38], iconAnchor: [19,19]
+        });
+        if (destMarker) map.removeLayer(destMarker);
+        destMarker = L.marker([lat, lng], { icon }).addTo(map).bindPopup(`<b>🎯 ${name}</b>`).openPopup();
+    }
+
+    function drawRoute(p, d) {
+        if (routePolyline) map.removeLayer(routePolyline);
+
+        // Curve simulation: midpoint slightly offset for visual interest
+        const midLat = (p.lat + d.lat) / 2 + (d.lng - p.lng) * 0.06;
+        const midLng = (p.lng + d.lng) / 2 - (d.lat - p.lat) * 0.06;
+
+        const pts = [];
+        for (let i = 0; i <= 20; i++) {
+            const t = i / 20;
+            pts.push([
+                (1-t)**2 * p.lat + 2*(1-t)*t * midLat + t**2 * d.lat,
+                (1-t)**2 * p.lng + 2*(1-t)*t * midLng + t**2 * d.lng
+            ]);
         }
 
-        // Format time in Kenyan timezone
-        function formatTime(date) {
-            return new Intl.DateTimeFormat(LOCALE, {
-                timeZone: TIMEZONE,
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
-            }).format(date);
-        }
+        routePolyline = L.polyline(pts, {
+            color: '#00ff88', weight: 4, opacity: .85,
+            dashArray: '8 5', lineCap: 'round', lineJoin: 'round'
+        }).addTo(map);
 
-        // Format date in Kenyan format
-        function formatDate(date) {
-            return new Intl.DateTimeFormat(LOCALE, {
-                timeZone: TIMEZONE,
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric'
-            }).format(date);
-        }
+        map.fitBounds(routePolyline.getBounds(), { padding: [48, 48] });
+    }
 
-        // Reverse geocode coordinates to address using OpenStreetMap Nominatim
-        async function reverseGeocode(lat, lng) {
-            try {
-                const response = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
-                    { headers: { 'User-Agent': 'TickRide/1.0' } }
-                );
-                const data = await response.json();
-                
-                const address = data.address;
-                const neighborhood = address.suburb || address.neighbourhood || address.residential;
-                const area = address.city || address.town || address.county;
-                
-                if (neighborhood && area) {
-                    return `${neighborhood}, ${area}`;
-                } else if (area) {
-                    return area;
-                } else {
-                    return data.display_name.split(',').slice(0, 2).join(',');
-                }
-            } catch (error) {
-                console.error('Reverse geocoding error:', error);
-                return 'Location found';
-            }
-        }
+    // ─── FARES & SUMMARY ───────────────────────────────────────────────
+    function updateFares() {
+        if (!pickup.lat || !dest.lat) return;
 
-        // Initialize interactive map
-        function initMap(lat, lng) {
-            map = L.map('map', {
-                zoomControl: true,
-                scrollWheelZoom: false
-            }).setView([lat, lng], 15);
+        const straight = haversine(pickup.lat, pickup.lng, dest.lat, dest.lng);
+        const km       = roadDist(straight);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap',
-                maxZoom: 19
-            }).addTo(map);
+        // Update route summary strip
+        document.getElementById('rs-distance').textContent =
+            km < 1 ? `${Math.round(km*1000)} m` : `${km.toFixed(1)} km`;
+        document.getElementById('rs-time').textContent = calcETA(km, 1.0);
+        document.getElementById('rs-fare').textContent  = fmt(calcFare(TIERS[0], km));
+        document.getElementById('route-summary').classList.add('visible');
 
-            // Custom user marker with gradient and pulse animation
-            const userIcon = L.divIcon({
-                className: 'custom-marker',
-                html: `<div style="
-                    width: 40px;
-                    height: 40px;
-                    background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
-                    border-radius: 50%;
-                    border: 3px solid #0a0a0a;
-                    box-shadow: 0 4px 12px rgba(0, 255, 136, 0.5);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 18px;
-                    animation: markerPulse 2s infinite;
-                ">📍</div>`,
-                iconSize: [40, 40],
-                iconAnchor: [20, 20]
-            });
+        // Update every ride card
+        TIERS.forEach(tier => {
+            const fare = calcFare(tier, km);
+            const eta  = calcETA(km, tier.etaMult);
+            const card = document.getElementById(`card-${tier.id}`);
+            if (!card) return;
+            card.querySelector('.ride-price').textContent   = fmt(fare);
+            card.querySelector('.ride-details').textContent = `${eta} · ${tier.seats}`;
+        });
 
-            userMarker = L.marker([lat, lng], { icon: userIcon })
-                .addTo(map)
-                .bindPopup('<b>📍 You are here</b>')
-                .openPopup();
+        // Update CTA
+        updateCTA();
+    }
 
-            // Accuracy circle
-            L.circle([lat, lng], {
-                color: '#00ff88',
-                fillColor: '#00ff88',
-                fillOpacity: 0.1,
-                radius: 100
-            }).addTo(map);
-
-            // Add pulse animation
-            const pulseStyle = document.createElement('style');
-            pulseStyle.textContent = `
-                @keyframes markerPulse {
-                    0%, 100% { transform: scale(1); opacity: 1; }
-                    50% { transform: scale(1.1); opacity: 0.8; }
-                }
-            `;
-            document.head.appendChild(pulseStyle);
-        }
-
-        // Get user's current location
-        function getUserLocation() {
-            const mapLoading = document.getElementById('map-loading');
-            const mapOverlay = document.getElementById('map-overlay');
-            const locationText = document.getElementById('location-text');
-            const locationAccuracy = document.getElementById('location-accuracy');
-            const pickupInput = document.getElementById('pickup-input');
-
-            if ('geolocation' in navigator) {
-                navigator.geolocation.getCurrentPosition(
-                    async (position) => {
-                        const lat = position.coords.latitude;
-                        const lng = position.coords.longitude;
-                        const accuracy = position.coords.accuracy;
-
-                        userLocation = { lat, lng };
-                        initMap(lat, lng);
-
-                        const address = await reverseGeocode(lat, lng);
-
-                        mapLoading.style.display = 'none';
-                        mapOverlay.style.display = 'block';
-                        locationText.innerHTML = `📍 ${address}`;
-                        locationAccuracy.textContent = `±${Math.round(accuracy)}m`;
-                        pickupInput.value = address;
-                        pickupInput.removeAttribute('readonly');
-
-                        console.log(`Location: ${lat}, ${lng} (±${accuracy}m)`);
-                    },
-                    (error) => {
-                        console.error('Geolocation error:', error);
-                        
-                        // Fallback to Nairobi CBD
-                        const fallbackLat = -1.2864;
-                        const fallbackLng = 36.8172;
-                        
-                        userLocation = { lat: fallbackLat, lng: fallbackLng };
-                        initMap(fallbackLat, fallbackLng);
-                        
-                        mapLoading.style.display = 'none';
-                        mapOverlay.style.display = 'block';
-                        locationText.innerHTML = '📍 Nairobi CBD (Default)';
-                        locationAccuracy.textContent = 'Location access denied';
-                        pickupInput.value = 'Nairobi CBD, Kenya';
-                        pickupInput.removeAttribute('readonly');
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 10000,
-                        maximumAge: 0
-                    }
-                );
-            } else {
-                // Geolocation not supported
-                const fallbackLat = -1.2864;
-                const fallbackLng = 36.8172;
-                
-                userLocation = { lat: fallbackLat, lng: fallbackLng };
-                initMap(fallbackLat, fallbackLng);
-                
-                mapLoading.textContent = '⚠️ Geolocation not supported';
-                setTimeout(() => {
-                    mapLoading.style.display = 'none';
-                    mapOverlay.style.display = 'block';
-                    locationText.innerHTML = '📍 Nairobi CBD (Default)';
-                    pickupInput.value = 'Nairobi CBD, Kenya';
-                    pickupInput.removeAttribute('readonly');
-                }, 2000);
-            }
-        }
-
-        // PWA functionality
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/ride/sw.js')
-                    .then(reg => console.log('Service Worker registered'))
-                    .catch(err => console.log('Service Worker registration failed'));
-                
-                // Initialize geolocation and map
-                getUserLocation();
-            });
+    function updateCTA() {
+        const tier = TIERS.find(t => t.id === selectedTier);
+        if (!tier) return;
+        const btn = document.querySelector('.cta-button span');
+        if (pickup.lat && dest.lat) {
+            const km   = roadDist(haversine(pickup.lat, pickup.lng, dest.lat, dest.lng));
+            const fare = fmt(calcFare(tier, km));
+            btn.textContent = `Request ${tier.name} — ${fare}`;
+        } else if (!dest.lat) {
+            btn.textContent = 'Enter destination to continue';
         } else {
-            // If no service worker support, still initialize map
-            window.addEventListener('load', getUserLocation);
+            btn.textContent = `Request ${tier.name}`;
         }
+    }
 
-        // Interactive elements
-        document.querySelectorAll('.ride-card').forEach(card => {
-            card.addEventListener('click', function() {
-                document.querySelectorAll('.ride-card').forEach(c => c.classList.remove('active'));
-                this.classList.add('active');
-                
-                const rideName = this.querySelector('.ride-name').textContent;
-                const price = this.querySelector('.ride-price').textContent;
-                document.querySelector('.cta-button span').textContent = `Request ${rideName} - ${price}`;
-            });
-        });
+    // ─── AUTOCOMPLETE ──────────────────────────────────────────────────
+    function showDropdown(id, html) {
+        const el = document.getElementById(id);
+        el.innerHTML = html;
+        el.classList.add('visible');
+    }
+    function hideDropdown(id) {
+        const el = document.getElementById(id);
+        if (el) { el.classList.remove('visible'); el.innerHTML = ''; }
+    }
 
-        document.querySelector('.promo-code').addEventListener('click', function() {
-            const code = this.querySelector('span').textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                this.style.background = 'var(--accent-primary)';
-                this.style.color = 'var(--bg-primary)';
-                setTimeout(() => {
-                    this.style.background = '';
-                    this.style.color = '';
-                }, 1000);
-            });
-        });
+    async function searchPlaces(query, dropdownId, onSelect) {
+        if (query.length < 2) { hideDropdown(dropdownId); return; }
 
-        document.querySelector('.cta-button').addEventListener('click', function() {
-            this.innerHTML = '<span>Finding your driver... 🚗</span>';
-            this.style.pointerEvents = 'none';
-            
-            setTimeout(() => {
-                const arrivalTime = new Date(Date.now() + 2 * 60000); // 2 minutes from now
-                const formattedTime = formatTime(arrivalTime);
-                this.innerHTML = `<span>Driver found! Arriving at ${formattedTime}</span>`;
-                this.style.background = 'linear-gradient(135deg, #00ccff 0%, #00ff88 100%)';
-            }, 2000);
-        });
+        showDropdown(dropdownId, '<div class="ac-loading">🔍 Searching…</div>');
 
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
+        clearTimeout(acTimers[dropdownId]);
+        acTimers[dropdownId] = setTimeout(async () => {
+            try {
+                const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=ke&viewbox=36.6,−1.0,37.2,−1.5&bounded=0&addressdetails=1`;
+                const res  = await fetch(url, { headers: { 'User-Agent': 'TickRide/1.0 (rakara.github.io)' } });
+                const data = await res.json();
 
-        document.querySelectorAll('.action-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const label = this.querySelector('.action-label').textContent;
-                console.log(`${label} clicked`);
-            });
-        });
-
-        // Add ripple effect to buttons
-        document.querySelectorAll('.location-btn, .action-card, .ride-card').forEach(element => {
-            element.addEventListener('click', function(e) {
-                const ripple = document.createElement('div');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.style.position = 'absolute';
-                ripple.style.borderRadius = '50%';
-                ripple.style.background = 'rgba(0, 255, 136, 0.3)';
-                ripple.style.transform = 'scale(0)';
-                ripple.style.animation = 'ripple 0.6s ease-out';
-                ripple.style.pointerEvents = 'none';
-                
-                this.style.position = 'relative';
-                this.style.overflow = 'hidden';
-                this.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
-
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
+                if (!data.length) {
+                    showDropdown(dropdownId, '<div class="ac-empty">No results found. Try a different name.</div>');
+                    return;
                 }
+
+                const html = data.map(item => {
+                    const addr  = item.address;
+                    const short = addr.suburb || addr.neighbourhood || addr.town || addr.city || '';
+                    const long  = [addr.city || addr.county, 'Kenya'].filter(Boolean).join(', ');
+                    const icon  = item.type === 'hospital' ? '🏥' :
+                                  item.type === 'school'   ? '🏫' :
+                                  item.type === 'mall'     ? '🏬' :
+                                  item.class === 'highway' ? '🛣️' : '📍';
+                    return `<div class="ac-item" data-lat="${item.lat}" data-lng="${item.lon}" data-name="${short || item.display_name.split(',')[0]}">
+                        <div class="ac-icon">${icon}</div>
+                        <div>
+                            <div class="ac-name">${short || item.display_name.split(',')[0]}</div>
+                            <div class="ac-address">${item.display_name.split(',').slice(0,3).join(', ')}</div>
+                        </div>
+                    </div>`;
+                }).join('');
+                showDropdown(dropdownId, html);
+
+                // Bind clicks
+                document.querySelectorAll(`#${dropdownId} .ac-item`).forEach(el => {
+                    el.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        onSelect(
+                            parseFloat(el.dataset.lat),
+                            parseFloat(el.dataset.lng),
+                            el.dataset.name
+                        );
+                        hideDropdown(dropdownId);
+                    });
+                });
+
+            } catch (err) {
+                showDropdown(dropdownId, '<div class="ac-empty">Search unavailable. Check connection.</div>');
             }
-        `;
-        document.head.appendChild(style);
+        }, 380);
+    }
+
+    // ─── GEOCODING ─────────────────────────────────────────────────────
+    async function reverseGeocode(lat, lng) {
+        try {
+            const res  = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
+                { headers: { 'User-Agent': 'TickRide/1.0' } });
+            const data = await res.json();
+            const a    = data.address;
+            const sub  = a.suburb || a.neighbourhood || a.residential;
+            const city = a.city || a.town || a.county;
+            return sub && city ? `${sub}, ${city}` : city || data.display_name.split(',').slice(0,2).join(',');
+        } catch { return 'Nairobi, Kenya'; }
+    }
+
+    // ─── SET LOCATIONS ─────────────────────────────────────────────────
+    function setPickup(lat, lng, name) {
+        pickup = { lat, lng, name };
+        document.getElementById('pickup-input').value = name;
+        document.getElementById('pickup-clear').style.display = 'block';
+        if (map) setPickupMarker(lat, lng);
+        if (dest.lat) { drawRoute(pickup, dest); updateFares(); }
+        hideDropdown('pickup-dropdown');
+    }
+
+    function setDestination(lat, lng, name) {
+        dest = { lat, lng, name };
+        document.getElementById('dest-input').value   = name;
+        document.getElementById('dest-clear').style.display = 'block';
+        if (map) {
+            setDestMarker(lat, lng, name);
+            if (pickup.lat) { drawRoute(pickup, dest); updateFares(); }
+            else map.setView([lat, lng], 14);
+        }
+        hideDropdown('dest-dropdown');
+        updateCTA();
+    }
+
+    // ─── GEOLOCATION ───────────────────────────────────────────────────
+    function getUserLocation() {
+        const loading = document.getElementById('map-loading');
+        const overlay = document.getElementById('map-overlay');
+        const locText = document.getElementById('location-text');
+        const locAcc  = document.getElementById('location-accuracy');
+
+        const success = async (pos) => {
+            const { latitude: lat, longitude: lng, accuracy } = pos.coords;
+            initMap(lat, lng);
+            const name = await reverseGeocode(lat, lng);
+            loading.style.display = 'none';
+            overlay.style.display = 'block';
+            locText.innerHTML = `📍 ${name}`;
+            locAcc.textContent  = `±${Math.round(accuracy)}m`;
+            setPickup(lat, lng, name);
+        };
+
+        const fail = () => {
+            const { lat, lng } = NAIROBI;
+            initMap(lat, lng);
+            loading.style.display = 'none';
+            overlay.style.display = 'block';
+            locText.innerHTML = '📍 Nairobi CBD';
+            locAcc.textContent = 'Default location';
+            setPickup(lat, lng, 'Nairobi CBD');
+        };
+
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(success, fail, { enableHighAccuracy: true, timeout: 10000 });
+        } else { fail(); }
+    }
+
+    // ─── WIRE UP INPUTS ────────────────────────────────────────────────
+    function wireInput(inputId, clearId, dropdownId, onSelect) {
+        const input = document.getElementById(inputId);
+        const clear = document.getElementById(clearId);
+
+        input.addEventListener('input', () => {
+            clear.style.display = input.value ? 'block' : 'none';
+            searchPlaces(input.value, dropdownId, onSelect);
+        });
+
+        input.addEventListener('focus', () => {
+            if (input.value.length >= 2) searchPlaces(input.value, dropdownId, onSelect);
+        });
+
+        input.addEventListener('blur', () => {
+            // Slight delay so mousedown on item fires first
+            setTimeout(() => hideDropdown(dropdownId), 200);
+        });
+
+        clear.addEventListener('click', () => {
+            input.value = '';
+            clear.style.display = 'none';
+            hideDropdown(dropdownId);
+            if (inputId === 'dest-input') {
+                dest = { lat: null, lng: null, name: '' };
+                if (destMarker) { map.removeLayer(destMarker); destMarker = null; }
+                if (routePolyline) { map.removeLayer(routePolyline); routePolyline = null; }
+                document.getElementById('route-summary').classList.remove('visible');
+                if (pickup.lat) map.setView([pickup.lat, pickup.lng], 14);
+                // Reset fares to defaults
+                resetFares();
+            } else {
+                pickup = { lat: null, lng: null, name: '' };
+                if (pickupMarker) { map.removeLayer(pickupMarker); pickupMarker = null; }
+            }
+            updateCTA();
+        });
+    }
+
+    function resetFares() {
+        const defaults = [450, 280, 680, 900];
+        const etas     = ['2 min · 4 seats', '5 min · Shared', '3 min · 6 seats', '4 min · Luxury'];
+        TIERS.forEach((tier, i) => {
+            const card = document.getElementById(`card-${tier.id}`);
+            if (!card) return;
+            card.querySelector('.ride-price').textContent   = `KSh ${defaults[i]}`;
+            card.querySelector('.ride-details').textContent = etas[i];
+        });
+        updateCTA();
+    }
+
+    // ─── SWAP ──────────────────────────────────────────────────────────
+    document.getElementById('swap-btn').addEventListener('click', () => {
+        if (!pickup.lat || !dest.lat) return;
+        const tmp = { ...pickup };
+        setPickup(dest.lat, dest.lng, dest.name);
+        setDestination(tmp.lat, tmp.lng, tmp.name);
+    });
+
+    // ─── SAVED PLACE BUTTONS ───────────────────────────────────────────
+    document.querySelectorAll('.location-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lat  = parseFloat(btn.dataset.lat);
+            const lng  = parseFloat(btn.dataset.lng);
+            const name = btn.dataset.name;
+            setDestination(lat, lng, name);
+        });
+    });
+
+    // ─── RIDE CARD SELECTION ───────────────────────────────────────────
+    document.querySelectorAll('.ride-card').forEach(card => {
+        card.addEventListener('click', function() {
+            document.querySelectorAll('.ride-card').forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            selectedTier = this.id.replace('card-', '');
+            updateCTA();
+        });
+    });
+
+    // ─── CTA BUTTON ────────────────────────────────────────────────────
+    document.querySelector('.cta-button').addEventListener('click', function() {
+        if (!dest.lat) {
+            document.getElementById('dest-input').focus();
+            document.getElementById('dest-input').style.borderColor = 'var(--accent-primary)';
+            return;
+        }
+        this.innerHTML = '<span>Finding your driver… 🚗</span>';
+        this.style.pointerEvents = 'none';
+        setTimeout(() => {
+            const eta = new Date(Date.now() + 2*60000);
+            const t   = new Intl.DateTimeFormat(LOCALE, { timeZone:'Africa/Nairobi', hour:'numeric', minute:'2-digit', hour12:true }).format(eta);
+            this.innerHTML = `<span>Driver found! Arriving at ${t} ✓</span>`;
+            this.style.background = 'linear-gradient(135deg, #00ccff 0%, #00ff88 100%)';
+        }, 2000);
+    });
+
+    // ─── PROMO CODE ────────────────────────────────────────────────────
+    document.querySelector('.promo-code').addEventListener('click', function() {
+        const code = this.querySelector('span').textContent;
+        navigator.clipboard?.writeText(code).then(() => {
+            this.style.background = 'var(--accent-primary)';
+            this.style.color = 'var(--bg-primary)';
+            setTimeout(() => { this.style.background=''; this.style.color=''; }, 1000);
+        });
+    });
+
+    // ─── PULSE ANIMATION ───────────────────────────────────────────────
+    const s = document.createElement('style');
+    s.textContent = `
+        @keyframes markerPulse {
+            0%,100% { transform: scale(1); }
+            50%      { transform: scale(1.12); }
+        }
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(s);
+
+    // Ripple on buttons
+    document.querySelectorAll('.location-btn, .action-card, .ride-card').forEach(el => {
+        el.addEventListener('click', function(e) {
+            const r    = document.createElement('div');
+            const rect = this.getBoundingClientRect();
+            const sz   = Math.max(rect.width, rect.height);
+            Object.assign(r.style, {
+                width: sz+'px', height: sz+'px',
+                left: (e.clientX - rect.left - sz/2)+'px',
+                top:  (e.clientY - rect.top  - sz/2)+'px',
+                position:'absolute', borderRadius:'50%',
+                background:'rgba(0,255,136,.25)',
+                transform:'scale(0)', animation:'ripple .6s ease-out',
+                pointerEvents:'none'
+            });
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(r);
+            setTimeout(() => r.remove(), 600);
+        });
+    });
+
+    // ─── BOOT ──────────────────────────────────────────────────────────
+    wireInput('pickup-input', 'pickup-clear', 'pickup-dropdown',
+        (lat, lng, name) => setPickup(lat, lng, name));
+    wireInput('dest-input', 'dest-clear', 'dest-dropdown',
+        (lat, lng, name) => setDestination(lat, lng, name));
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/ride/sw.js').catch(()=>{});
+    }
+    window.addEventListener('load', getUserLocation);
     </script>
 </body>
 </html>
