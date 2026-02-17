@@ -820,10 +820,10 @@
                         <div class="action-icon">🔄</div>
                         <div class="action-label">Repeat Trip</div>
                     </a>
-                    <div class="action-card" id="schedule-btn">
+                    <a href="schedule.html" class="action-card" style="text-decoration:none; color:inherit;">
                         <div class="action-icon">🕐</div>
                         <div class="action-label">Schedule</div>
-                    </div>
+                    </a>
                     <div class="action-card" id="share-btn">
                         <div class="action-icon">👥</div>
                         <div class="action-label">Share Ride</div>
@@ -1083,7 +1083,7 @@
         clearTimeout(acTimers[dropdownId]);
         acTimers[dropdownId] = setTimeout(async () => {
             try {
-                const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=ke&viewbox=36.6,−1.0,37.2,−1.5&bounded=0&addressdetails=1`;
+                const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=ke&viewbox=36.6,-1.5,37.2,-1.0&bounded=0&addressdetails=1`;
                 const res  = await fetch(url, { headers: { 'User-Agent': 'TickRide/1.0 (rakara.github.io)' } });
                 const data = await res.json();
 
@@ -1284,14 +1284,23 @@
             document.getElementById('dest-input').style.borderColor = 'var(--accent-primary)';
             return;
         }
-        this.innerHTML = '<span>Finding your driver… 🚗</span>';
-        this.style.pointerEvents = 'none';
-        setTimeout(() => {
-            const eta = new Date(Date.now() + 2*60000);
-            const t   = new Intl.DateTimeFormat(LOCALE, { timeZone:'Africa/Nairobi', hour:'numeric', minute:'2-digit', hour12:true }).format(eta);
-            this.innerHTML = `<span>Driver found! Arriving at ${t} ✓</span>`;
-            this.style.background = 'linear-gradient(135deg, #00ccff 0%, #00ff88 100%)';
-        }, 2000);
+        
+        // Save trip data to localStorage for confirmation screen
+        const km    = roadDist(haversine(pickup.lat, pickup.lng, dest.lat, dest.lng));
+        const tier  = TIERS.find(t => t.id === selectedTier);
+        const fare  = calcFare(tier, km);
+        const time  = calcETA(km, tier.etaMult);
+        const dist  = km < 1 ? `${Math.round(km*1000)} m` : `${km.toFixed(1)} km`;
+        
+        localStorage.setItem('tripPickup', JSON.stringify(pickup));
+        localStorage.setItem('tripDest', JSON.stringify(dest));
+        localStorage.setItem('tripTier', tier.name);
+        localStorage.setItem('tripFare', fmt(fare));
+        localStorage.setItem('tripDistance', dist);
+        localStorage.setItem('tripTime', time);
+        
+        // Navigate to confirmation
+        window.location.href = 'trip-confirm.html';
     });
 
     // ─── PROMO CODE ────────────────────────────────────────────────────

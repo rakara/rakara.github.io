@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Help & Support - TickRide</title>
+    <link rel="icon" href="/ride/icons/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root { --bg0:#0a0a0a; --bg1:#141414; --bg2:#1e1e1e; --text1:#ffffff; --text2:#a0a0a0; --accent:#00ff88; }
+        body { font-family:'Outfit',sans-serif; background:var(--bg0); color:var(--text1); max-width:480px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; }
+        .header { padding:16px 20px; background:rgba(10,10,10,.95); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,.05); display:flex; align-items:center; gap:16px; position:sticky; top:0; z-index:100; }
+        .back-btn { width:36px; height:36px; border-radius:50%; background:var(--bg1); border:1px solid rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:18px; text-decoration:none; color:var(--text1); }
+        .header-title { flex:1; font-size:18px; font-weight:700; }
+        main { flex:1; padding:20px; }
+        .search-box { position:relative; margin-bottom:24px; }
+        .search-input { width:100%; padding:14px 16px 14px 44px; background:var(--bg1); border:1px solid rgba(255,255,255,.05); border-radius:14px; outline:none; color:var(--text1); font-size:15px; }
+        .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:18px; color:var(--text2); }
+        .section-title { font-size:13px; font-weight:600; color:var(--text2); text-transform:uppercase; letter-spacing:.6px; margin:24px 0 12px; }
+        .faq-item { background:var(--bg1); border:1px solid rgba(255,255,255,.05); border-radius:16px; padding:16px; margin-bottom:10px; cursor:pointer; transition:all .2s; }
+        .faq-item:hover { border-color:rgba(0,255,136,.2); }
+        .faq-question { font-size:15px; font-weight:600; display:flex; justify-content:space-between; align-items:center; }
+        .faq-arrow { font-size:12px; color:var(--text2); transition:transform .2s; }
+        .faq-item.open .faq-arrow { transform:rotate(180deg); }
+        .faq-answer { font-size:14px; color:var(--text2); margin-top:12px; line-height:1.6; display:none; }
+        .faq-item.open .faq-answer { display:block; }
+        .contact-card { background:var(--bg1); border:1px solid rgba(255,255,255,.05); border-radius:18px; padding:18px; margin-bottom:12px; display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--text1); }
+        .contact-icon { width:48px; height:48px; border-radius:50%; background:var(--bg2); display:flex; align-items:center; justify-content:center; font-size:22px; }
+        .contact-info { flex:1; }
+        .contact-label { font-size:15px; font-weight:700; }
+        .contact-detail { font-size:13px; color:var(--text2); margin-top:2px; }
+    </style>
+</head>
+<body>
+    <div class="header"><a href="account.html" class="back-btn">←</a><div class="header-title">Help & Support</div></div>
+    <main>
+        <div class="search-box"><span class="search-icon">🔍</span><input type="text" class="search-input" placeholder="Search for help..." id="search"></div>
+        
+        <div class="section-title">Frequently Asked Questions</div>
+        <div class="faq-list">
+            <div class="faq-item"><div class="faq-question">How do I request a ride? <span class="faq-arrow">▼</span></div><div class="faq-answer">Enter your destination on the home screen, select your preferred ride type, and tap "Request Ride". You'll be matched with a nearby driver.</div></div>
+            <div class="faq-item"><div class="faq-question">What payment methods are accepted? <span class="faq-arrow">▼</span></div><div class="faq-answer">We accept M-PESA, credit/debit cards, and TickRide Wallet. You can manage your payment methods in the Payment tab.</div></div>
+            <div class="faq-item"><div class="faq-question">How do I cancel a trip? <span class="faq-arrow">▼</span></div><div class="faq-answer">You can cancel before the driver arrives through the active trip screen. Note that cancellation fees may apply after 2 minutes.</div></div>
+            <div class="faq-item"><div class="faq-question">How is the fare calculated? <span class="faq-arrow">▼</span></div><div class="faq-answer">Fares are based on distance, time, and demand. You'll see the estimated fare before requesting. Surge pricing may apply during peak hours.</div></div>
+            <div class="faq-item"><div class="faq-question">What if I left something in the car? <span class="faq-arrow">▼</span></div><div class="faq-answer">Go to your trip history, find the relevant trip, and tap "Report Issue". Select "Lost Item" and we'll help you connect with your driver.</div></div>
+            <div class="faq-item"><div class="faq-question">How do I add a promo code? <span class="faq-arrow">▼</span></div><div class="faq-answer">On the trip confirmation screen, tap the promo code field and enter your code. The discount will be applied automatically.</div></div>
+        </div>
+        
+        <div class="section-title">Contact Support</div>
+        <a href="tel:+254700000000" class="contact-card"><div class="contact-icon">📞</div><div class="contact-info"><div class="contact-label">Call Us</div><div class="contact-detail">+254 700 000 000</div></div></a>
+        <a href="mailto:support@tickride.ke" class="contact-card"><div class="contact-icon">✉️</div><div class="contact-info"><div class="contact-label">Email Support</div><div class="contact-detail">support@tickride.ke</div></div></a>
+        <a href="#" class="contact-card" onclick="alert('Chat feature coming soon!');return false"><div class="contact-icon">💬</div><div class="contact-info"><div class="contact-label">Live Chat</div><div class="contact-detail">Available 24/7</div></div></a>
+    </main>
+    <script>
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => item.classList.toggle('open'));
+        });
+        document.getElementById('search').addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase();
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(q) ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

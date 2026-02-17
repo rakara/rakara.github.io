@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Saved Places - TickRide</title>
+    <link rel="icon" href="/ride/icons/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+        
+        * { margin:0; padding:0; box-sizing:border-box; }
+        
+        :root {
+            --bg0:#0a0a0a; --bg1:#141414; --bg2:#1e1e1e;
+            --text1:#ffffff; --text2:#a0a0a0;
+            --accent:#00ff88;
+        }
+        
+        body {
+            font-family:'Outfit',sans-serif;
+            background:var(--bg0); color:var(--text1);
+            max-width:480px; margin:0 auto; min-height:100vh;
+            display:flex; flex-direction:column;
+        }
+        
+        .header {
+            padding:16px 20px;
+            background:rgba(10,10,10,.95);
+            backdrop-filter:blur(20px);
+            border-bottom:1px solid rgba(255,255,255,.05);
+            display:flex; align-items:center; gap:16px;
+            position:sticky; top:0; z-index:100;
+        }
+        
+        .back-btn {
+            width:36px; height:36px; border-radius:50%;
+            background:var(--bg1); border:1px solid rgba(255,255,255,.1);
+            display:flex; align-items:center; justify-content:center;
+            cursor:pointer; font-size:18px;
+            text-decoration:none; color:var(--text1);
+        }
+        
+        .header-title { flex:1; font-size:18px; font-weight:700; }
+        
+        main { flex:1; padding:20px; }
+        
+        .intro {
+            font-size:14px; color:var(--text2);
+            margin-bottom:24px; line-height:1.6;
+        }
+        
+        .place-card {
+            background:var(--bg1);
+            border:1px solid rgba(255,255,255,.05);
+            border-radius:18px; padding:18px;
+            margin-bottom:12px; display:flex;
+            align-items:center; gap:14px;
+        }
+        
+        .place-icon {
+            width:48px; height:48px; border-radius:50%;
+            background:var(--bg2);
+            display:flex; align-items:center; justify-content:center;
+            font-size:22px; flex-shrink:0;
+        }
+        
+        .place-info { flex:1; }
+        .place-label { font-size:15px; font-weight:700; margin-bottom:3px; }
+        .place-address { font-size:13px; color:var(--text2); }
+        .place-empty { font-size:13px; color:var(--text2); font-style:italic; }
+        
+        .place-actions {
+            display:flex; gap:8px;
+        }
+        
+        .icon-btn {
+            width:36px; height:36px; border-radius:50%;
+            background:var(--bg2);
+            border:1px solid rgba(255,255,255,.08);
+            display:flex; align-items:center; justify-content:center;
+            cursor:pointer; transition:all .2s;
+            font-size:16px;
+        }
+        .icon-btn:hover { border-color:var(--accent); color:var(--accent); }
+        
+        .add-btn {
+            width:100%; padding:16px;
+            background:linear-gradient(135deg,var(--accent),#00ccff);
+            border:none; border-radius:14px;
+            color:#000; font-size:15px; font-weight:700;
+            cursor:pointer; transition:all .2s;
+            margin-top:20px;
+        }
+        .add-btn:hover { opacity:.9; transform:translateY(-1px); }
+        
+        .modal {
+            display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+            background:rgba(0,0,0,.85); backdrop-filter:blur(8px);
+            z-index:1000; align-items:center; justify-content:center;
+            padding:20px;
+        }
+        .modal.visible { display:flex; }
+        
+        .modal-content {
+            background:var(--bg1); border:1px solid rgba(255,255,255,.1);
+            border-radius:24px; padding:24px; width:100%;
+            max-width:400px;
+        }
+        
+        .modal-title { font-size:20px; font-weight:800; margin-bottom:20px; }
+        
+        .form-group { margin-bottom:16px; }
+        .form-label { font-size:13px; color:var(--text2); margin-bottom:6px; display:block; font-weight:600; }
+        .form-input {
+            width:100%; padding:14px 16px;
+            background:var(--bg2);
+            border:1px solid rgba(255,255,255,.05);
+            border-radius:12px; outline:none;
+            color:var(--text1); font-size:15px;
+        }
+        .form-input::placeholder { color:var(--text2); }
+        .form-input:focus { border-color:var(--accent); }
+        
+        .modal-actions {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:10px; margin-top:20px;
+        }
+        
+        .btn-save {
+            padding:14px; background:var(--accent);
+            border:none; border-radius:12px;
+            color:#000; font-weight:700; cursor:pointer;
+        }
+        .btn-cancel {
+            padding:14px; background:transparent;
+            border:1px solid rgba(255,255,255,.15);
+            border-radius:12px; color:var(--text1);
+            font-weight:600; cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="account.html" class="back-btn">←</a>
+        <div class="header-title">Saved Places</div>
+    </div>
+    
+    <main>
+        <p class="intro">
+            Save your frequently visited places for faster booking.
+            Tap a place to edit or remove it.
+        </p>
+        
+        <div class="place-card" data-place="home">
+            <div class="place-icon">🏠</div>
+            <div class="place-info">
+                <div class="place-label">Home</div>
+                <div class="place-address" id="home-address">Westlands, Nairobi</div>
+            </div>
+            <div class="place-actions">
+                <button class="icon-btn" onclick="editPlace('home')">✏️</button>
+            </div>
+        </div>
+        
+        <div class="place-card" data-place="work">
+            <div class="place-icon">💼</div>
+            <div class="place-info">
+                <div class="place-label">Work</div>
+                <div class="place-address" id="work-address">CBD, Nairobi</div>
+            </div>
+            <div class="place-actions">
+                <button class="icon-btn" onclick="editPlace('work')">✏️</button>
+            </div>
+        </div>
+        
+        <div id="fav-list">
+            <!-- Favorite places will be inserted here -->
+        </div>
+        
+        <button class="add-btn" onclick="addPlace()">
+            ➕ Add Favorite Place
+        </button>
+    </main>
+    
+    <!-- Edit Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-title" id="modal-title">Edit Place</div>
+            <div class="form-group">
+                <label class="form-label">Label</label>
+                <input type="text" class="form-input" id="input-label" placeholder="e.g., Gym, Mom's House">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-input" id="input-address" placeholder="Enter location">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-save" onclick="savePlace()">Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let editingPlace = null;
+        let favorites = JSON.parse(localStorage.getItem('favoritePlaces') || '[]');
+        
+        function renderFavorites() {
+            const list = document.getElementById('fav-list');
+            list.innerHTML = favorites.map((fav, i) => `
+                <div class="place-card" data-index="${i}">
+                    <div class="place-icon">⭐</div>
+                    <div class="place-info">
+                        <div class="place-label">${fav.label}</div>
+                        <div class="place-address">${fav.address}</div>
+                    </div>
+                    <div class="place-actions">
+                        <button class="icon-btn" onclick="editFavorite(${i})">✏️</button>
+                        <button class="icon-btn" onclick="deleteFavorite(${i})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function editPlace(type) {
+            editingPlace = type;
+            document.getElementById('modal-title').textContent = `Edit ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            document.getElementById('input-label').value = type.charAt(0).toUpperCase() + type.slice(1);
+            document.getElementById('input-label').disabled = true;
+            document.getElementById('input-address').value = document.getElementById(`${type}-address`).textContent;
+            document.getElementById('modal').classList.add('visible');
+        }
+        
+        function addPlace() {
+            editingPlace = 'new';
+            document.getElementById('modal-title').textContent = 'Add Favorite Place';
+            document.getElementById('input-label').value = '';
+            document.getElementById('input-label').disabled = false;
+            document.getElementById('input-address').value = '';
+            document.getElementById('modal').classList.add('visible');
+        }
+        
+        function editFavorite(index) {
+            editingPlace = `fav-${index}`;
+            const fav = favorites[index];
+            document.getElementById('modal-title').textContent = 'Edit Favorite';
+            document.getElementById('input-label').value = fav.label;
+            document.getElementById('input-label').disabled = false;
+            document.getElementById('input-address').value = fav.address;
+            document.getElementById('modal').classList.add('visible');
+        }
+        
+        function deleteFavorite(index) {
+            if (confirm('Remove this favorite place?')) {
+                favorites.splice(index, 1);
+                localStorage.setItem('favoritePlaces', JSON.stringify(favorites));
+                renderFavorites();
+            }
+        }
+        
+        function savePlace() {
+            const label = document.getElementById('input-label').value;
+            const address = document.getElementById('input-address').value;
+            
+            if (!label || !address) {
+                alert('Please fill in both fields');
+                return;
+            }
+            
+            if (editingPlace === 'home' || editingPlace === 'work') {
+                document.getElementById(`${editingPlace}-address`).textContent = address;
+                localStorage.setItem(`saved-${editingPlace}`, address);
+            } else if (editingPlace === 'new') {
+                favorites.push({ label, address });
+                localStorage.setItem('favoritePlaces', JSON.stringify(favorites));
+                renderFavorites();
+            } else if (editingPlace.startsWith('fav-')) {
+                const index = parseInt(editingPlace.split('-')[1]);
+                favorites[index] = { label, address };
+                localStorage.setItem('favoritePlaces', JSON.stringify(favorites));
+                renderFavorites();
+            }
+            
+            closeModal();
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').classList.remove('visible');
+            editingPlace = null;
+        }
+        
+        // Load saved addresses
+        const savedHome = localStorage.getItem('saved-home');
+        const savedWork = localStorage.getItem('saved-work');
+        if (savedHome) document.getElementById('home-address').textContent = savedHome;
+        if (savedWork) document.getElementById('work-address').textContent = savedWork;
+        
+        renderFavorites();
+    </script>
+</body>
+</html>

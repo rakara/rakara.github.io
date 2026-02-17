@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Trip Complete - TickRide</title>
+    <link rel="icon" href="/ride/icons/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        * { margin:0; padding:0; box-sizing:border-box; }
+        
+        :root {
+            --bg0:#0a0a0a; --bg1:#141414; --bg2:#1e1e1e;
+            --text1:#ffffff; --text2:#a0a0a0;
+            --accent:#00ff88; --accent2:#00ccff;
+        }
+        
+        body {
+            font-family:'Outfit',sans-serif;
+            background:var(--bg0); color:var(--text1);
+            max-width:480px; margin:0 auto; min-height:100vh;
+            padding:24px 20px 32px;
+        }
+        
+        .success-icon {
+            width:80px; height:80px; margin:0 auto 20px;
+            background:linear-gradient(135deg,var(--accent),var(--accent2));
+            border-radius:50%; display:flex; align-items:center;
+            justify-content:center; font-size:40px;
+            box-shadow:0 8px 24px rgba(0,255,136,.3);
+            animation:scaleIn .4s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            from { transform:scale(0); opacity:0; }
+            to { transform:scale(1); opacity:1; }
+        }
+        
+        .title {
+            text-align:center; font-size:26px; font-weight:800;
+            margin-bottom:8px;
+        }
+        
+        .subtitle {
+            text-align:center; font-size:15px; color:var(--text2);
+            margin-bottom:32px;
+        }
+        
+        .driver-card {
+            background:var(--bg1);
+            border:1px solid rgba(255,255,255,.05);
+            border-radius:20px; padding:20px;
+            margin-bottom:24px; text-align:center;
+        }
+        
+        .driver-avatar {
+            width:64px; height:64px; margin:0 auto 14px;
+            background:linear-gradient(135deg,var(--accent),var(--accent2));
+            border-radius:50%; display:flex; align-items:center;
+            justify-content:center; font-size:24px; font-weight:800;
+            color:#000;
+        }
+        
+        .driver-name {
+            font-size:20px; font-weight:700; margin-bottom:4px;
+        }
+        
+        .driver-vehicle {
+            font-size:14px; color:var(--text2);
+        }
+        
+        .rating-section {
+            margin-bottom:28px;
+        }
+        
+        .section-title {
+            font-size:15px; font-weight:700; margin-bottom:16px;
+            text-align:center;
+        }
+        
+        .stars {
+            display:flex; justify-content:center; gap:12px;
+            margin-bottom:16px;
+        }
+        
+        .star {
+            font-size:42px; cursor:pointer;
+            transition:all .2s; filter:grayscale(100%);
+            opacity:.3;
+        }
+        
+        .star.active {
+            filter:grayscale(0%);
+            opacity:1; transform:scale(1.15);
+        }
+        
+        .star:hover {
+            transform:scale(1.2);
+        }
+        
+        .feedback-badges {
+            display:flex; flex-wrap:wrap; gap:8px;
+            justify-content:center; margin-bottom:16px;
+        }
+        
+        .badge {
+            padding:10px 18px; background:var(--bg2);
+            border:1px solid rgba(255,255,255,.08);
+            border-radius:12px; font-size:13px; font-weight:600;
+            cursor:pointer; transition:all .2s;
+        }
+        
+        .badge:hover, .badge.selected {
+            background:rgba(0,255,136,.12);
+            border-color:var(--accent);
+            color:var(--accent);
+        }
+        
+        .comment-box {
+            width:100%; padding:14px 16px;
+            background:var(--bg1);
+            border:1px solid rgba(255,255,255,.05);
+            border-radius:14px; outline:none;
+            color:var(--text1); font-size:14px;
+            font-family:'Outfit',sans-serif;
+            resize:vertical; min-height:80px;
+        }
+        .comment-box::placeholder { color:var(--text2); }
+        .comment-box:focus { border-color:var(--accent); }
+        
+        .receipt-card {
+            background:var(--bg1);
+            border:1px solid rgba(255,255,255,.05);
+            border-radius:20px; padding:20px;
+            margin-bottom:24px;
+        }
+        
+        .receipt-title {
+            font-size:15px; font-weight:700; margin-bottom:16px;
+        }
+        
+        .receipt-row {
+            display:flex; justify-content:space-between;
+            padding:10px 0; border-bottom:1px solid rgba(255,255,255,.03);
+        }
+        
+        .receipt-row:last-child { border-bottom:none; }
+        
+        .receipt-label { font-size:14px; color:var(--text2); }
+        .receipt-value { font-size:14px; font-weight:600; }
+        
+        .receipt-total {
+            display:flex; justify-content:space-between;
+            padding-top:16px; margin-top:16px;
+            border-top:1px solid rgba(255,255,255,.1);
+        }
+        
+        .total-label { font-size:16px; font-weight:700; }
+        .total-value {
+            font-family:'JetBrains Mono',monospace;
+            font-size:22px; font-weight:800;
+            background:linear-gradient(135deg,var(--accent),var(--accent2));
+            -webkit-background-clip:text; background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+        
+        .cta-button {
+            width:100%; padding:18px;
+            background:linear-gradient(135deg,var(--accent),var(--accent2));
+            border:none; border-radius:16px;
+            color:#000; font-size:17px; font-weight:800;
+            cursor:pointer; transition:all .3s;
+            box-shadow:0 8px 24px rgba(0,255,136,.3);
+            margin-bottom:12px;
+        }
+        
+        .cta-button:hover {
+            transform:translateY(-2px);
+            box-shadow:0 12px 32px rgba(0,255,136,.4);
+        }
+        
+        .secondary-btn {
+            width:100%; padding:16px;
+            background:transparent;
+            border:1px solid rgba(255,255,255,.1);
+            border-radius:14px;
+            color:var(--text2); font-size:15px; font-weight:600;
+            cursor:pointer; transition:all .2s;
+            margin-bottom:12px;
+        }
+        .secondary-btn:hover { border-color:var(--accent); color:var(--accent); }
+        
+        .link-btn {
+            width:100%; padding:14px;
+            background:transparent; border:none;
+            color:var(--text2); font-size:14px;
+            cursor:pointer; transition:all .2s;
+        }
+        .link-btn:hover { color:var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="success-icon">✓</div>
+    <h1 class="title">Trip Complete!</h1>
+    <p class="subtitle">Thank you for riding with TickRide</p>
+    
+    <div class="driver-card">
+        <div class="driver-avatar">BM</div>
+        <div class="driver-name">Brian Mwangi</div>
+        <div class="driver-vehicle">Toyota Fielder · KCB 123A</div>
+    </div>
+    
+    <div class="rating-section">
+        <div class="section-title">How was your ride?</div>
+        <div class="stars" id="stars">
+            <span class="star" data-rating="1">⭐</span>
+            <span class="star" data-rating="2">⭐</span>
+            <span class="star" data-rating="3">⭐</span>
+            <span class="star" data-rating="4">⭐</span>
+            <span class="star" data-rating="5">⭐</span>
+        </div>
+        
+        <div class="feedback-badges" id="badges">
+            <div class="badge">Clean car</div>
+            <div class="badge">Safe driving</div>
+            <div class="badge">Friendly</div>
+            <div class="badge">On time</div>
+            <div class="badge">Great conversation</div>
+            <div class="badge">Quiet ride</div>
+        </div>
+        
+        <textarea class="comment-box" placeholder="Add a comment for your driver (optional)" id="comment"></textarea>
+    </div>
+    
+    <div class="receipt-card">
+        <div class="receipt-title">Trip Summary</div>
+        <div class="receipt-row">
+            <span class="receipt-label">Pickup</span>
+            <span class="receipt-value" id="receipt-pickup">Westlands, Nairobi</span>
+        </div>
+        <div class="receipt-row">
+            <span class="receipt-label">Destination</span>
+            <span class="receipt-value" id="receipt-dest">CBD, Nairobi</span>
+        </div>
+        <div class="receipt-row">
+            <span class="receipt-label">Distance</span>
+            <span class="receipt-value" id="receipt-distance">8.4 km</span>
+        </div>
+        <div class="receipt-row">
+            <span class="receipt-label">Duration</span>
+            <span class="receipt-value" id="receipt-time">18 min</span>
+        </div>
+        <div class="receipt-row">
+            <span class="receipt-label">Ride Type</span>
+            <span class="receipt-value" id="receipt-type">TickX</span>
+        </div>
+        <div class="receipt-row">
+            <span class="receipt-label">Payment</span>
+            <span class="receipt-value">M-PESA</span>
+        </div>
+        <div class="receipt-total">
+            <span class="total-label">Total Paid</span>
+            <span class="total-value" id="receipt-total">KSh 450</span>
+        </div>
+    </div>
+    
+    <button class="cta-button" id="submit-rating">
+        Submit Rating & Return Home
+    </button>
+    
+    <button class="secondary-btn" onclick="window.print()">
+        📄 Download Receipt
+    </button>
+    
+    <button class="link-btn" id="report-issue">
+        Report an Issue
+    </button>
+    
+    <script>
+        // Load trip data
+        const trip = JSON.parse(localStorage.getItem('activeTrip') || '{}');
+        if (trip.pickup) {
+            document.getElementById('receipt-pickup').textContent   = trip.pickup.name;
+            document.getElementById('receipt-dest').textContent     = trip.dest.name;
+            document.getElementById('receipt-distance').textContent = trip.distance || '8.4 km';
+            document.getElementById('receipt-time').textContent     = trip.time || '18 min';
+            document.getElementById('receipt-type').textContent     = trip.tier || 'TickX';
+            document.getElementById('receipt-total').textContent    = trip.fare || 'KSh 450';
+        }
+        
+        // Star rating
+        let selectedRating = 0;
+        const stars = document.querySelectorAll('.star');
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                selectedRating = parseInt(this.dataset.rating);
+                stars.forEach((s, i) => {
+                    if (i < selectedRating) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // Feedback badges
+        const badges = document.querySelectorAll('.badge');
+        badges.forEach(badge => {
+            badge.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+        });
+        
+        // Submit rating
+        document.getElementById('submit-rating').addEventListener('click', () => {
+            if (selectedRating === 0) {
+                alert('Please select a star rating before submitting.');
+                return;
+            }
+            
+            const selectedBadges = Array.from(document.querySelectorAll('.badge.selected'))
+                .map(b => b.textContent);
+            const comment = document.getElementById('comment').value;
+            
+            // Save rating (in real app, send to backend)
+            const rating = {
+                stars: selectedRating,
+                badges: selectedBadges,
+                comment,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log('Rating submitted:', rating);
+            
+            // Clear active trip
+            localStorage.removeItem('activeTrip');
+            
+            // Show success and redirect
+            alert(`✓ Thank you! Your ${selectedRating}-star rating has been submitted.`);
+            window.location.href = 'index.html';
+        });
+        
+        // Report issue
+        document.getElementById('report-issue').addEventListener('click', () => {
+            window.location.href = 'help.html?issue=trip';
+        });
+    </script>
+</body>
+</html>

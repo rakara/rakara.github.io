@@ -17,10 +17,10 @@ This document provides an overview of all pages in the TickRide Progressive Web 
   - Schedule (for booking future rides)
   - Share Ride (for carpooling)
 - Ride type selector with 4 options:
-  - FlowX (Economy) - KSh 450
-  - FlowShare (Shared) - KSh 280
-  - FlowXL (6 seats) - KSh 680
-  - FlowPremium (Luxury) - KSh 900
+  - TickX (Economy) - KSh 450
+  - TickShare (Shared) - KSh 280
+  - TickXL (6 seats) - KSh 680
+  - TickPremium (Luxury) - KSh 900
 - Promotional offers with copy-to-clipboard code
 - Main CTA button to request selected ride
 - Bottom navigation to all sections
@@ -56,10 +56,10 @@ This document provides an overview of all pages in the TickRide Progressive Web 
 - Visual indicators (green for pickup, blue for dropoff)
 
 **Sample Trips Displayed**:
-1. Westlands → CBD (FlowX, KSh 450) - Today
-2. Kilimani → Karen (FlowShare, KSh 680) - Yesterday
-3. Parklands → Upperhill (FlowPremium, KSh 900) - Feb 9
-4. Westlands → Gigiri (FlowXL, KSh 350) - Cancelled
+1. Westlands → CBD (TickX, KSh 450) - Today
+2. Kilimani → Karen (TickShare, KSh 680) - Yesterday
+3. Parklands → Upperhill (TickPremium, KSh 900) - Feb 9
+4. Westlands → Gigiri (TickXL, KSh 350) - Cancelled
 
 **Key Interactions**:
 - Filter trips by status or date

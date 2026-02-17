@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Schedule Ride - TickRide</title>
+    <link rel="icon" href="/ride/icons/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root { --bg0:#0a0a0a; --bg1:#141414; --bg2:#1e1e1e; --text1:#ffffff; --text2:#a0a0a0; --accent:#00ff88; }
+        body { font-family:'Outfit',sans-serif; background:var(--bg0); color:var(--text1); max-width:480px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; }
+        .header { padding:16px 20px; background:rgba(10,10,10,.95); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,.05); display:flex; align-items:center; gap:16px; position:sticky; top:0; z-index:100; }
+        .back-btn { width:36px; height:36px; border-radius:50%; background:var(--bg1); border:1px solid rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:18px; text-decoration:none; color:var(--text1); }
+        .header-title { flex:1; font-size:18px; font-weight:700; }
+        main { flex:1; padding:20px; }
+        .intro { font-size:14px; color:var(--text2); margin-bottom:24px; line-height:1.6; }
+        .form-group { margin-bottom:18px; }
+        .form-label { font-size:13px; color:var(--text2); margin-bottom:8px; display:block; font-weight:600; text-transform:uppercase; letter-spacing:.4px; }
+        .form-input { width:100%; padding:14px 16px; background:var(--bg1); border:1px solid rgba(255,255,255,.05); border-radius:12px; outline:none; color:var(--text1); font-size:15px; }
+        .form-input::placeholder { color:var(--text2); }
+        .form-input:focus { border-color:var(--accent); }
+        .datetime-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+        .cta-button { width:100%; padding:18px; background:linear-gradient(135deg,var(--accent),#00ccff); border:none; border-radius:16px; color:#000; font-size:17px; font-weight:800; cursor:pointer; transition:all .3s; box-shadow:0 8px 24px rgba(0,255,136,.3); margin-top:28px; }
+        .cta-button:hover { transform:translateY(-2px); }
+        .note { background:rgba(0,255,136,.05); border:1px solid rgba(0,255,136,.2); border-radius:14px; padding:14px; font-size:13px; color:var(--text2); line-height:1.6; margin-top:20px; }
+    </style>
+</head>
+<body>
+    <div class="header"><a href="index.html" class="back-btn">←</a><div class="header-title">Schedule a Ride</div></div>
+    <main>
+        <p class="intro">Schedule a ride up to 7 days in advance. We'll send you a reminder 15 minutes before pickup.</p>
+        
+        <div class="form-group"><label class="form-label">Pickup Location</label><input type="text" class="form-input" placeholder="Enter pickup address" value="Westlands, Nairobi"></div>
+        <div class="form-group"><label class="form-label">Destination</label><input type="text" class="form-input" placeholder="Enter destination"></div>
+        <div class="form-group"><label class="form-label">Ride Type</label><select class="form-input"><option>TickX - Economy</option><option>TickShare - Shared</option><option>TickXL - 6 seats</option><option>TickPremium - Luxury</option></select></div>
+        
+        <div class="datetime-row">
+            <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input" id="date"></div>
+            <div class="form-group"><label class="form-label">Time</label><input type="time" class="form-input" id="time"></div>
+        </div>
+        
+        <button class="cta-button" onclick="scheduleRide()">Schedule Ride</button>
+        
+        <div class="note">💡 <b>Note:</b> Scheduled rides are subject to driver availability. You'll be charged at the time of pickup, not when scheduling.</div>
+    </main>
+    <script>
+        // Set min date to today, max to 7 days from now
+        const today = new Date();
+        const maxDate = new Date(today);
+        maxDate.setDate(maxDate.getDate() + 7);
+        document.getElementById('date').min = today.toISOString().split('T')[0];
+        document.getElementById('date').max = maxDate.toISOString().split('T')[0];
+        document.getElementById('date').value = today.toISOString().split('T')[0];
+        
+        // Set default time to 1 hour from now
+        const defaultTime = new Date(today.getTime() + 60*60000);
+        document.getElementById('time').value = defaultTime.toTimeString().slice(0,5);
+        
+        function scheduleRide() {
+            alert('✓ Your ride has been scheduled! We'll send you a reminder 15 minutes before pickup.');
+            setTimeout(() => window.location.href = 'index.html', 1000);
+        }
+    </script>
+</body>
+</html>

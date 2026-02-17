@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Trip in Progress - TickRide</title>
+    <link rel="icon" href="/ride/icons/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        * { margin:0; padding:0; box-sizing:border-box; }
+        
+        :root {
+            --bg0:#0a0a0a; --bg1:#141414; --bg2:#1e1e1e;
+            --text1:#ffffff; --text2:#a0a0a0;
+            --accent:#00ff88; --accent2:#00ccff;
+            --danger:#ff3366;
+        }
+        
+        body {
+            font-family:'Outfit',sans-serif;
+            background:var(--bg0); color:var(--text1);
+            max-width:480px; margin:0 auto;
+            height:100vh; display:flex; flex-direction:column;
+            overflow:hidden;
+        }
+        
+        .map-section {
+            flex:1; position:relative;
+        }
+        
+        #map { width:100%; height:100%; }
+        
+        .status-overlay {
+            position:absolute; top:16px; left:16px; right:16px;
+            background:rgba(10,10,10,.94); backdrop-filter:blur(16px);
+            border-radius:18px; padding:16px 18px;
+            border:1px solid rgba(0,255,136,.2);
+        }
+        
+        .status-badge {
+            display:inline-flex; align-items:center; gap:6px;
+            padding:6px 14px; background:rgba(0,255,136,.15);
+            border:1px solid rgba(0,255,136,.3);
+            border-radius:10px; font-size:12px; font-weight:700;
+            color:var(--accent); margin-bottom:10px;
+        }
+        
+        .status-badge .pulse {
+            width:8px; height:8px; border-radius:50%;
+            background:var(--accent);
+            animation:pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%,100% { opacity:1; transform:scale(1); }
+            50% { opacity:.5; transform:scale(1.3); }
+        }
+        
+        .status-eta {
+            font-size:24px; font-weight:800;
+            font-family:'JetBrains Mono',monospace;
+            background:linear-gradient(135deg,var(--accent),var(--accent2));
+            -webkit-background-clip:text; background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+        
+        .status-desc { font-size:13px; color:var(--text2); margin-top:4px; }
+        
+        .bottom-sheet {
+            background:var(--bg0);
+            border-top-left-radius:28px;
+            border-top-right-radius:28px;
+            border-top:1px solid rgba(255,255,255,.08);
+            padding:24px 20px 32px;
+        }
+        
+        .sheet-handle {
+            width:40px; height:4px; background:rgba(255,255,255,.2);
+            border-radius:2px; margin:0 auto 20px;
+        }
+        
+        .driver-card {
+            background:var(--bg1);
+            border:1px solid rgba(255,255,255,.05);
+            border-radius:20px; padding:18px;
+            margin-bottom:16px;
+        }
+        
+        .driver-header {
+            display:flex; align-items:center; gap:14px;
+            margin-bottom:14px;
+        }
+        
+        .driver-avatar {
+            width:52px; height:52px; border-radius:50%;
+            background:linear-gradient(135deg,var(--accent),var(--accent2));
+            display:flex; align-items:center; justify-content:center;
+            font-size:20px; font-weight:800; color:#000;
+            flex-shrink:0;
+        }
+        
+        .driver-info { flex:1; }
+        .driver-name { font-size:17px; font-weight:700; }
+        .driver-details {
+            font-size:13px; color:var(--text2);
+            margin-top:3px;
+        }
+        
+        .driver-rating {
+            display:flex; align-items:center; gap:4px;
+            font-size:15px; font-weight:700;
+        }
+        
+        .car-info {
+            display:flex; align-items:center; gap:10px;
+            padding:12px 14px; background:var(--bg2);
+            border-radius:14px; margin-bottom:14px;
+        }
+        
+        .car-icon { font-size:24px; }
+        .car-model { font-size:14px; font-weight:600; flex:1; }
+        .car-plate {
+            font-family:'JetBrains Mono',monospace;
+            font-size:13px; font-weight:700;
+            padding:4px 10px; background:var(--bg0);
+            border-radius:8px;
+        }
+        
+        .action-row {
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:10px;
+        }
+        
+        .action-btn {
+            padding:14px; border-radius:14px;
+            font-size:14px; font-weight:700;
+            cursor:pointer; transition:all .2s;
+            display:flex; align-items:center; justify-content:center;
+            gap:8px; text-decoration:none;
+        }
+        
+        .btn-call {
+            background:var(--accent);
+            border:none; color:#000;
+        }
+        .btn-call:hover { opacity:.85; transform:translateY(-1px); }
+        
+        .btn-msg {
+            background:transparent;
+            border:1px solid rgba(255,255,255,.15);
+            color:var(--text1);
+        }
+        .btn-msg:hover { border-color:var(--accent); color:var(--accent); }
+        
+        .trip-route {
+            margin:16px 0;
+        }
+        
+        .route-item {
+            display:flex; gap:12px; margin-bottom:12px;
+        }
+        .route-item:last-child { margin-bottom:0; }
+        
+        .route-dot {
+            width:10px; height:10px; border-radius:50%;
+            margin-top:4px; flex-shrink:0;
+        }
+        .route-dot.pickup { background:var(--accent); }
+        .route-dot.dropoff { background:var(--accent2); }
+        
+        .route-text { font-size:14px; font-weight:600; }
+        .route-sub { font-size:12px; color:var(--text2); margin-top:2px; }
+        
+        .cancel-btn {
+            width:100%; padding:14px;
+            background:transparent;
+            border:1px solid rgba(255,59,92,.3);
+            border-radius:14px;
+            color:var(--danger); font-size:14px; font-weight:600;
+            cursor:pointer; transition:all .2s;
+            margin-top:12px;
+        }
+        .cancel-btn:hover {
+            background:rgba(255,59,92,.08);
+            border-color:var(--danger);
+        }
+    </style>
+</head>
+<body>
+    <div class="map-section">
+        <div id="map"></div>
+        <div class="status-overlay">
+            <div class="status-badge">
+                <span class="pulse"></span>
+                <span id="status-text">Driver Arriving</span>
+            </div>
+            <div class="status-eta" id="eta">2 min away</div>
+            <div class="status-desc" id="status-desc">Brian is on the way to pick you up</div>
+        </div>
+    </div>
+    
+    <div class="bottom-sheet">
+        <div class="sheet-handle"></div>
+        
+        <div class="driver-card">
+            <div class="driver-header">
+                <div class="driver-avatar" id="driver-initials">BM</div>
+                <div class="driver-info">
+                    <div class="driver-name" id="driver-name">Brian Mwangi</div>
+                    <div class="driver-details" id="driver-trips">842 trips</div>
+                </div>
+                <div class="driver-rating">
+                    ⭐ <span id="driver-rating">4.9</span>
+                </div>
+            </div>
+            
+            <div class="car-info">
+                <div class="car-icon">🚗</div>
+                <div class="car-model" id="car-model">Toyota Fielder · White</div>
+                <div class="car-plate" id="car-plate">KCB 123A</div>
+            </div>
+            
+            <div class="action-row">
+                <a href="tel:+254711001001" class="action-btn btn-call">
+                    📞 Call Driver
+                </a>
+                <button class="action-btn btn-msg" id="msg-btn">
+                    💬 Message
+                </button>
+            </div>
+        </div>
+        
+        <div class="trip-route">
+            <div class="route-item">
+                <div class="route-dot pickup"></div>
+                <div>
+                    <div class="route-text" id="pickup-location">Westlands, Nairobi</div>
+                    <div class="route-sub">Pickup</div>
+                </div>
+            </div>
+            <div class="route-item">
+                <div class="route-dot dropoff"></div>
+                <div>
+                    <div class="route-text" id="dropoff-location">CBD, Nairobi</div>
+                    <div class="route-sub">Destination</div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="cancel-btn" id="cancel-trip">
+            Cancel Trip
+        </button>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Load trip data
+        const trip = JSON.parse(localStorage.getItem('activeTrip') || '{}');
+        if (!trip.pickup) {
+            // Default demo data if no trip
+            trip.pickup = { lat:-1.2897, lng:36.7826, name:'Westlands, Nairobi' };
+            trip.dest   = { lat:-1.2921, lng:36.8219, name:'CBD, Nairobi' };
+        }
+        
+        document.getElementById('pickup-location').textContent  = trip.pickup.name;
+        document.getElementById('dropoff-location').textContent = trip.dest.name;
+        
+        // Initialize map
+        const map = L.map('map', { zoomControl:false, scrollWheelZoom:false });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'© OSM' }).addTo(map);
+        
+        // Markers
+        const pickupIcon = L.divIcon({
+            html: '<div style="width:34px;height:34px;background:linear-gradient(135deg,#00ff88,#00ccff);border-radius:50%;border:3px solid #0a0a0a;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 4px 12px rgba(0,255,136,.5)">📍</div>',
+            iconSize:[34,34], iconAnchor:[17,17]
+        });
+        const destIcon = L.divIcon({
+            html: '<div style="width:34px;height:34px;background:linear-gradient(135deg,#00ccff,#0066ff);border-radius:50%;border:3px solid #0a0a0a;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 4px 12px rgba(0,204,255,.5)">🎯</div>',
+            iconSize:[34,34], iconAnchor:[17,17]
+        });
+        const driverIcon = L.divIcon({
+            html: '<div style="width:40px;height:40px;background:#000;border:3px solid #00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 16px rgba(0,255,136,.6);animation:driverPulse 2s infinite">🚗</div>',
+            iconSize:[40,40], iconAnchor:[20,20]
+        });
+        
+        L.marker([trip.pickup.lat, trip.pickup.lng], {icon:pickupIcon}).addTo(map).bindPopup('Pickup');
+        L.marker([trip.dest.lat, trip.dest.lng], {icon:destIcon}).addTo(map).bindPopup('Destination');
+        
+        // Driver location (simulated - in between)
+        const driverLat = trip.pickup.lat + (trip.dest.lat - trip.pickup.lat) * 0.3;
+        const driverLng = trip.pickup.lng + (trip.dest.lng - trip.pickup.lng) * 0.3;
+        const driverMarker = L.marker([driverLat, driverLng], {icon:driverIcon}).addTo(map);
+        
+        // Route line
+        const routePts = [];
+        for(let i=0; i<=20; i++) {
+            const t = i/20;
+            routePts.push([
+                trip.pickup.lat + (trip.dest.lat - trip.pickup.lat)*t,
+                trip.pickup.lng + (trip.dest.lng - trip.pickup.lng)*t
+            ]);
+        }
+        L.polyline(routePts, { color:'#00ff88', weight:3, opacity:.6, dashArray:'6 4' }).addTo(map);
+        
+        // Driver to pickup line
+        L.polyline([[driverLat, driverLng], [trip.pickup.lat, trip.pickup.lng]], {
+            color:'#00ccff', weight:3, opacity:.8
+        }).addTo(map);
+        
+        map.fitBounds([
+            [trip.pickup.lat, trip.pickup.lng],
+            [trip.dest.lat, trip.dest.lng],
+            [driverLat, driverLng]
+        ], { padding:[50,50] });
+        
+        // Pulse animation
+        const s = document.createElement('style');
+        s.textContent = '@keyframes driverPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }';
+        document.head.appendChild(s);
+        
+        // Simulate ETA countdown
+        let eta = 120; // seconds
+        const etaEl = document.getElementById('eta');
+        setInterval(() => {
+            if (eta > 0) {
+                eta -= 1;
+                const mins = Math.floor(eta/60);
+                const secs = eta % 60;
+                etaEl.textContent = mins > 0 ? `${mins} min away` : `${secs} sec away`;
+                
+                // When driver arrives
+                if (eta === 30) {
+                    document.getElementById('status-text').textContent = 'Driver Arrived';
+                    document.getElementById('status-desc').textContent = 'Brian is waiting at pickup location';
+                }
+                if (eta === 0) {
+                    document.getElementById('status-text').textContent = 'Trip Started';
+                    document.getElementById('status-desc').textContent = 'On the way to destination';
+                    setTimeout(() => {
+                        window.location.href = 'trip-complete.html';
+                    }, 3000);
+                }
+            }
+        }, 1000);
+        
+        // Message button
+        document.getElementById('msg-btn').addEventListener('click', () => {
+            alert('💬 Messaging feature coming soon!');
+        });
+        
+        // Cancel trip
+        document.getElementById('cancel-trip').addEventListener('click', () => {
+            if (confirm('Are you sure you want to cancel this trip? A cancellation fee may apply.')) {
+                localStorage.removeItem('activeTrip');
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>
