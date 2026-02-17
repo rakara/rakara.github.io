@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeedoh Sports</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .animation-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-end;
+            margin-bottom: 60px;
+            perspective: 1000px;
+        }
+
+        .sport-figure {
+            width: 60px;
+            height: 80px;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .sport-figure:nth-child(1) { animation-delay: 0s; }
+        .sport-figure:nth-child(2) { animation-delay: 0.2s; }
+        .sport-figure:nth-child(3) { animation-delay: 0.4s; }
+        .sport-figure:nth-child(4) { animation-delay: 0.6s; }
+        .sport-figure:nth-child(5) { animation-delay: 0.8s; }
+        .sport-figure:nth-child(6) { animation-delay: 1s; }
+        .sport-figure:nth-child(7) { animation-delay: 1.2s; }
+
+        /* Soccer Player */
+        .soccer .head {
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .soccer .body {
+            width: 30px;
+            height: 35px;
+            background: #FF6B6B;
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .soccer .legs {
+            width: 8px;
+            height: 25px;
+            background: #4ECDC4;
+            position: absolute;
+            top: 57px;
+            border-radius: 4px;
+        }
+
+        .soccer .leg-left { left: 18px; animation: kickLeft 2s ease-in-out infinite; }
+        .soccer .leg-right { right: 18px; animation: kickRight 2s ease-in-out infinite; }
+
+        .soccer .ball {
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* Basketball Player */
+        .basketball .head {
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .basketball .body {
+            width: 30px;
+            height: 35px;
+            background: #FF8C42;
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .basketball .legs {
+            width: 8px;
+            height: 25px;
+            background: #2C3E50;
+            position: absolute;
+            top: 57px;
+            border-radius: 4px;
+        }
+
+        .basketball .leg-left { left: 18px; }
+        .basketball .leg-right { right: 18px; }
+
+        .basketball .arm {
+            width: 6px;
+            height: 30px;
+            background: #FF8C42;
+            position: absolute;
+            top: 25px;
+            right: -8px;
+            border-radius: 3px;
+            animation: shoot 2s ease-in-out infinite;
+            transform-origin: top;
+        }
+
+        .basketball .ball {
+            width: 14px;
+            height: 14px;
+            background: #FF6B35;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            right: -20px;
+            animation: basketballBounce 2s ease-in-out infinite;
+        }
+
+        /* Swimmer */
+        .swimmer {
+            animation: swim 2s ease-in-out infinite !important;
+        }
+
+        .swimmer .head {
+            width: 18px;
+            height: 18px;
+            background: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 30px;
+            left: 10px;
+        }
+
+        .swimmer .body {
+            width: 40px;
+            height: 20px;
+            background: #4A90E2;
+            position: absolute;
+            top: 32px;
+            left: 10px;
+            border-radius: 10px;
+            transform: rotate(-10deg);
+        }
+
+        .swimmer .arm {
+            width: 25px;
+            height: 6px;
+            background: #4A90E2;
+            position: absolute;
+            top: 25px;
+            left: 0;
+            border-radius: 3px;
+            animation: swimArm 2s ease-in-out infinite;
+            transform-origin: right;
+        }
+
+        .swimmer .legs {
+            width: 20px;
+            height: 6px;
+            background: #4A90E2;
+            position: absolute;
+            top: 45px;
+            right: 5px;
+            border-radius: 3px;
+            animation: swimKick 2s ease-in-out infinite;
+        }
+
+        /* Hockey Player */
+        .hockey .head {
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hockey .body {
+            width: 28px;
+            height: 35px;
+            background: #E74C3C;
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .hockey .legs {
+            width: 8px;
+            height: 25px;
+            background: #34495E;
+            position: absolute;
+            top: 57px;
+            border-radius: 4px;
+        }
+
+        .hockey .leg-left { left: 18px; }
+        .hockey .leg-right { right: 18px; }
+
+        .hockey .stick {
+            width: 4px;
+            height: 45px;
+            background: #8B4513;
+            position: absolute;
+            bottom: 0;
+            right: -10px;
+            border-radius: 2px;
+            animation: swingStick 2s ease-in-out infinite;
+            transform-origin: top;
+        }
+
+        .hockey .puck {
+            width: 10px;
+            height: 6px;
+            background: #2C3E50;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            right: -25px;
+        }
+
+        /* Rugby Player */
+        .rugby .head {
+            width: 22px;
+            height: 22px;
+            background: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .rugby .body {
+            width: 35px;
+            height: 38px;
+            background: #27AE60;
+            position: absolute;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .rugby .legs {
+            width: 10px;
+            height: 25px;
+            background: #16A085;
+            position: absolute;
+            top: 62px;
+            border-radius: 5px;
+        }
+
+        .rugby .leg-left { left: 15px; animation: runLeft 2s ease-in-out infinite; }
+        .rugby .leg-right { right: 15px; animation: runRight 2s ease-in-out infinite; }
+
+        .rugby .ball {
+            width: 12px;
+            height: 18px;
+            background: #8B4513;
+            border-radius: 50%;
+            position: absolute;
+            top: 35px;
+            left: -8px;
+            transform: rotate(-20deg);
+        }
+
+        /* Netball Player */
+        .netball .head {
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .netball .body {
+            width: 28px;
+            height: 35px;
+            background: #E91E63;
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .netball .skirt {
+            width: 32px;
+            height: 12px;
+            background: #E91E63;
+            position: absolute;
+            top: 52px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .netball .legs {
+            width: 7px;
+            height: 25px;
+            background: #C2185B;
+            position: absolute;
+            top: 64px;
+            border-radius: 4px;
+        }
+
+        .netball .leg-left { left: 20px; }
+        .netball .leg-right { right: 20px; }
+
+        .netball .arms {
+            width: 6px;
+            height: 25px;
+            background: #E91E63;
+            position: absolute;
+            top: 20px;
+            border-radius: 3px;
+        }
+
+        .netball .arm-left { left: -8px; animation: reachUp 2s ease-in-out infinite; transform-origin: top; }
+
+        .netball .ball {
+            width: 13px;
+            height: 13px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: -15px;
+            animation: netballPass 2s ease-in-out infinite;
+        }
+
+        /* Athletics (Runner) */
+        .athletics .head {
+            width: 20px;
+            height: 20px;
+            background: #FFD700;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .athletics .body {
+            width: 26px;
+            height: 35px;
+            background: #9B59B6;
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .athletics .legs {
+            width: 7px;
+            height: 28px;
+            background: #8E44AD;
+            position: absolute;
+            top: 57px;
+            border-radius: 4px;
+        }
+
+        .athletics .leg-left { left: 19px; animation: sprintLeft 2s ease-in-out infinite; }
+        .athletics .leg-right { right: 19px; animation: sprintRight 2s ease-in-out infinite; }
+
+        .athletics .arm {
+            width: 6px;
+            height: 25px;
+            background: #9B59B6;
+            position: absolute;
+            top: 25px;
+            border-radius: 3px;
+        }
+
+        .athletics .arm-left { left: -8px; animation: pumpLeft 2s ease-in-out infinite; transform-origin: top; }
+        .athletics .arm-right { right: -8px; animation: pumpRight 2s ease-in-out infinite; transform-origin: top; }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes swim {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(-5deg); }
+        }
+
+        @keyframes kickLeft {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-30deg); }
+            75% { transform: rotate(15deg); }
+        }
+
+        @keyframes kickRight {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            75% { transform: rotate(-30deg); }
+        }
+
+        @keyframes shoot {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-90deg); }
+        }
+
+        @keyframes basketballBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-40px); }
+        }
+
+        @keyframes swimArm {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-90deg); }
+        }
+
+        @keyframes swimKick {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-5px); }
+            75% { transform: translateY(5px); }
+        }
+
+        @keyframes swingStick {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-45deg); }
+        }
+
+        @keyframes runLeft {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-40deg); }
+        }
+
+        @keyframes runRight {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(40deg); }
+        }
+
+        @keyframes reachUp {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-120deg); }
+        }
+
+        @keyframes netballPass {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-10px, -30px); }
+        }
+
+        @keyframes sprintLeft {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-50deg); }
+        }
+
+        @keyframes sprintRight {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(50deg); }
+        }
+
+        @keyframes pumpLeft {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-60deg); }
+        }
+
+        @keyframes pumpRight {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(60deg); }
+        }
+
+        .branding {
+            text-align: center;
+            color: white;
+        }
+
+        hr {
+            width: 300px;
+            border: none;
+            border-top: 2px solid rgba(255, 255, 255, 0.5);
+            margin: 20px 0;
+        }
+
+        .brand-name {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="animation-container">
+        <!-- Soccer Player -->
+        <div class="sport-figure soccer">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="legs leg-left"></div>
+            <div class="legs leg-right"></div>
+            <div class="ball"></div>
+        </div>
+
+        <!-- Basketball Player -->
+        <div class="sport-figure basketball">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="legs leg-left"></div>
+            <div class="legs leg-right"></div>
+            <div class="arm"></div>
+            <div class="ball"></div>
+        </div>
+
+        <!-- Swimmer -->
+        <div class="sport-figure swimmer">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="arm"></div>
+            <div class="legs"></div>
+        </div>
+
+        <!-- Hockey Player -->
+        <div class="sport-figure hockey">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="legs leg-left"></div>
+            <div class="legs leg-right"></div>
+            <div class="stick"></div>
+            <div class="puck"></div>
+        </div>
+
+        <!-- Rugby Player -->
+        <div class="sport-figure rugby">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="legs leg-left"></div>
+            <div class="legs leg-right"></div>
+            <div class="ball"></div>
+        </div>
+
+        <!-- Netball Player -->
+        <div class="sport-figure netball">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="skirt"></div>
+            <div class="legs leg-left"></div>
+            <div class="legs leg-right"></div>
+            <div class="arms arm-left"></div>
+            <div class="ball"></div>
+        </div>
+
+        <!-- Athletics Runner -->
+        <div class="sport-figure athletics">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="legs leg-left"></div>
+            <div class="legs leg-right"></div>
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+        </div>
+    </div>
+
+    <div class="branding">
+        <hr>
+        <div class="brand-name">Zeedoh</div>
+    </div>
+</body>
+</html>
