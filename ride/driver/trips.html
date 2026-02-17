@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>TickRide Driver — My Trips</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="driver.css"/>
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-logo">My Trips</div>
+    <div class="header-right">
+      <a href="index.html" class="icon-btn">🏠</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Stats -->
+    <div class="earnings-row">
+      <div class="earn-tile"><div class="earn-value">842</div><div class="earn-label">Total Trips</div></div>
+      <div class="earn-tile"><div class="earn-value">4.92⭐</div><div class="earn-label">Avg Rating</div></div>
+      <div class="earn-tile"><div class="earn-value">98%</div><div class="earn-label">Completion</div></div>
+    </div>
+
+    <!-- Filters -->
+    <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px">
+      <button class="badge blue" style="padding:8px 16px;cursor:pointer;border:none;font-family:var(--font);font-size:13px">All</button>
+      <button class="badge" style="padding:8px 16px;cursor:pointer;border:1px solid var(--border);background:var(--bg1);color:var(--text2);border-radius:6px;font-family:var(--font);font-size:13px">Today</button>
+      <button class="badge" style="padding:8px 16px;cursor:pointer;border:1px solid var(--border);background:var(--bg1);color:var(--text2);border-radius:6px;font-family:var(--font);font-size:13px">This Week</button>
+      <button class="badge" style="padding:8px 16px;cursor:pointer;border:1px solid var(--border);background:var(--bg1);color:var(--text2);border-radius:6px;font-family:var(--font);font-size:13px">This Month</button>
+    </div>
+
+    <!-- Trip list -->
+    <div class="card">
+      <div class="card-title">Recent Trips</div>
+
+      <div class="trip-row">
+        <div class="trip-row-icon" style="background:rgba(0,230,118,.1)">✅</div>
+        <div class="trip-row-info">
+          <div class="trip-row-route">Westlands → CBD</div>
+          <div class="trip-row-meta">Today 2:30 PM · 18 min · TickX · Wanjiku K. ⭐ 5.0</div>
+        </div>
+        <div class="trip-row-fare">+KSh 450</div>
+      </div>
+
+      <div class="trip-row">
+        <div class="trip-row-icon" style="background:rgba(0,230,118,.1)">✅</div>
+        <div class="trip-row-info">
+          <div class="trip-row-route">Karen → Upperhill</div>
+          <div class="trip-row-meta">Today 11:10 AM · 34 min · TickPremium · Amina S. ⭐ 5.0</div>
+        </div>
+        <div class="trip-row-fare">+KSh 980</div>
+      </div>
+
+      <div class="trip-row">
+        <div class="trip-row-icon" style="background:rgba(0,230,118,.1)">✅</div>
+        <div class="trip-row-info">
+          <div class="trip-row-route">Kilimani → Gigiri</div>
+          <div class="trip-row-meta">Today 9:15 AM · 28 min · TickXL · Kipchoge R. ⭐ 4.8</div>
+        </div>
+        <div class="trip-row-fare">+KSh 1,200</div>
+      </div>
+
+      <div class="trip-row">
+        <div class="trip-row-icon" style="background:rgba(255,59,92,.1)">❌</div>
+        <div class="trip-row-info">
+          <div class="trip-row-route">CBD → Parklands</div>
+          <div class="trip-row-meta">Yesterday 4:50 PM · Cancelled by rider</div>
+        </div>
+        <div class="trip-row-fare" style="color:var(--text2)">KSh 0</div>
+      </div>
+
+      <div class="trip-row">
+        <div class="trip-row-icon" style="background:rgba(0,230,118,.1)">✅</div>
+        <div class="trip-row-info">
+          <div class="trip-row-route">Langata → Westlands</div>
+          <div class="trip-row-meta">Yesterday 2:20 PM · 41 min · TickShare · David K. ⭐ 4.9</div>
+        </div>
+        <div class="trip-row-fare">+KSh 720</div>
+      </div>
+
+      <div class="trip-row">
+        <div class="trip-row-icon" style="background:rgba(0,230,118,.1)">✅</div>
+        <div class="trip-row-info">
+          <div class="trip-row-route">Parklands → Upperhill</div>
+          <div class="trip-row-meta">Yesterday 9:30 AM · 22 min · TickX · Njeri W. ⭐ 5.0</div>
+        </div>
+        <div class="trip-row-fare">+KSh 540</div>
+      </div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></a>
+    <a href="trips.html" class="nav-item active"><div class="nav-icon">🗺</div><div class="nav-label">Trips</div></a>
+    <a href="earnings.html" class="nav-item"><div class="nav-icon">💰</div><div class="nav-label">Earnings</div></a>
+    <a href="profile.html" class="nav-item"><div class="nav-icon">👤</div><div class="nav-label">Profile</div></a>
+  </nav>
+</body>
+</html>

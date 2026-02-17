@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>TickRide Driver — Login</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="driver.css"/>
+  <style>
+    body { display:flex; flex-direction:column; justify-content:center; min-height:100vh; padding:32px 24px; }
+    .login-logo { text-align:center; margin-bottom:40px; }
+    .login-logo .big-logo { font-size:52px; font-weight:900; background:linear-gradient(135deg,#1e90ff,#00d4ff); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .login-logo .sub { font-size:16px; color:var(--text2); margin-top:4px; }
+    .login-title { font-size:28px; font-weight:800; margin-bottom:6px; }
+    .login-sub { color:var(--text2); font-size:14px; margin-bottom:32px; }
+    .link-text { text-align:center; margin-top:20px; font-size:13px; color:var(--text2); }
+    .link-text a { color:var(--blue); text-decoration:none; font-weight:700; }
+  </style>
+</head>
+<body>
+  <div class="login-logo">
+    <div class="big-logo">TickRide</div>
+    <div class="sub">Driver Portal</div>
+  </div>
+  <h1 class="login-title">Welcome back</h1>
+  <p class="login-sub">Sign in to start accepting trips</p>
+  <div class="form-group">
+    <label class="form-label">Phone Number</label>
+    <input type="tel" class="form-input" placeholder="+254 711 001 001"/>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Password</label>
+    <input type="password" class="form-input" placeholder="••••••••"/>
+  </div>
+  <button class="btn-primary" onclick="window.location.href='index.html'">Sign In</button>
+  <button class="btn-outline" onclick="window.location.href='signup.html'">New driver? Register →</button>
+  <div class="link-text"><a href="../login.html">← Rider login</a> · <a href="../admin/login.html">Admin →</a></div>
+</body>
+</html>

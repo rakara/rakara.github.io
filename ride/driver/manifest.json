@@ -1,0 +1,19 @@
+{
+  "name": "TickRide Driver",
+  "short_name": "TR Driver",
+  "description": "Accept trips, track earnings and manage your TickRide driver account",
+  "start_url": "/ride/driver/",
+  "scope": "/ride/driver/",
+  "display": "standalone",
+  "background_color": "#080c14",
+  "theme_color": "#080c14",
+  "orientation": "portrait",
+  "categories": ["transportation", "business"],
+  "prefer_related_applications": false,
+  "lang": "en-KE",
+  "icons": [
+    { "src": "/ride/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/ride/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/ride/icons/icon-512x512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="theme-color" content="#080c14"/>
+  <title>TickRide Driver — Notifications</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="driver.css"/>
+  <style>
+    .notif-item {
+      display:flex; align-items:flex-start; gap:14px;
+      padding:16px 20px; border-bottom:1px solid var(--border);
+      cursor:pointer; transition:var(--t);
+    }
+    .notif-item:hover { background:var(--bg1); }
+    .notif-item.unread { background:rgba(30,144,255,.04); border-left:3px solid var(--blue); }
+    .notif-dot-icon {
+      width:44px; height:44px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px; flex-shrink:0;
+    }
+    .notif-body { flex:1; }
+    .notif-title { font-size:14px; font-weight:600; margin-bottom:3px; }
+    .notif-desc  { font-size:13px; color:var(--text2); line-height:1.5; }
+    .notif-time  { font-size:11px; color:var(--text3); margin-top:4px; font-family:var(--mono); }
+    .notif-group-label {
+      font-size:11px; text-transform:uppercase; letter-spacing:.8px;
+      color:var(--text3); padding:14px 20px 6px;
+    }
+    .clear-btn {
+      font-size:13px; color:var(--blue); background:none; border:none;
+      cursor:pointer; padding:0; font-family:var(--font); font-weight:600;
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div style="display:flex;align-items:center;gap:12px">
+      <a href="index.html" class="icon-btn">←</a>
+      <div class="app-logo">Notifications</div>
+    </div>
+    <div class="header-right">
+      <button class="clear-btn">Mark all read</button>
+    </div>
+  </header>
+
+  <div style="background:var(--bg1);border-bottom:1px solid var(--border)">
+    <!-- Today -->
+    <div class="notif-group-label">Today</div>
+
+    <div class="notif-item unread">
+      <div class="notif-dot-icon" style="background:rgba(0,230,118,.12)">✅</div>
+      <div class="notif-body">
+        <div class="notif-title">Trip Completed — KSh 1,200 earned</div>
+        <div class="notif-desc">Kilimani → Gigiri with Kipchoge R. Your rating: ⭐ 4.8</div>
+        <div class="notif-time">9:43 AM</div>
+      </div>
+    </div>
+
+    <div class="notif-item unread">
+      <div class="notif-dot-icon" style="background:rgba(30,144,255,.12)">🚗</div>
+      <div class="notif-body">
+        <div class="notif-title">New Trip Request</div>
+        <div class="notif-desc">Westlands → CBD · KSh 450 · 2.1 km away · 4.9★ rider</div>
+        <div class="notif-time">2:28 PM</div>
+      </div>
+    </div>
+
+    <div class="notif-item unread">
+      <div class="notif-dot-icon" style="background:rgba(255,180,0,.12)">⚡</div>
+      <div class="notif-body">
+        <div class="notif-title">Surge Pricing Active — CBD Zone</div>
+        <div class="notif-desc">Earnings boosted 1.8× in CBD. Head there now to maximise income.</div>
+        <div class="notif-time">1:15 PM</div>
+      </div>
+    </div>
+
+    <div class="notif-item">
+      <div class="notif-dot-icon" style="background:rgba(0,230,118,.12)">💰</div>
+      <div class="notif-body">
+        <div class="notif-title">Payout Processed — KSh 9,920</div>
+        <div class="notif-desc">Your weekly earnings have been sent to M-PESA +254 711 *** 001</div>
+        <div class="notif-time">8:00 AM</div>
+      </div>
+    </div>
+
+    <!-- Yesterday -->
+    <div class="notif-group-label">Yesterday</div>
+
+    <div class="notif-item">
+      <div class="notif-dot-icon" style="background:rgba(255,59,92,.12)">❌</div>
+      <div class="notif-body">
+        <div class="notif-title">Trip Cancelled by Rider</div>
+        <div class="notif-desc">CBD → Parklands trip was cancelled. KSh 50 cancellation fee applied.</div>
+        <div class="notif-time">4:52 PM</div>
+      </div>
+    </div>
+
+    <div class="notif-item">
+      <div class="notif-dot-icon" style="background:rgba(180,80,255,.12)">⭐</div>
+      <div class="notif-body">
+        <div class="notif-title">New Rating Received</div>
+        <div class="notif-desc">Njeri W. rated your trip 5 stars and left a comment: "Very professional!"</div>
+        <div class="notif-time">2:41 PM</div>
+      </div>
+    </div>
+
+    <div class="notif-item">
+      <div class="notif-dot-icon" style="background:rgba(255,180,0,.12)">🎁</div>
+      <div class="notif-body">
+        <div class="notif-title">Weekend Bonus Activated</div>
+        <div class="notif-desc">Complete 20+ trips this weekend and earn an extra KSh 500 bonus.</div>
+        <div class="notif-time">8:00 AM</div>
+      </div>
+    </div>
+
+    <!-- Earlier -->
+    <div class="notif-group-label">Earlier this week</div>
+
+    <div class="notif-item">
+      <div class="notif-dot-icon" style="background:rgba(255,180,0,.12)">⚠️</div>
+      <div class="notif-body">
+        <div class="notif-title">Insurance Expiring Soon</div>
+        <div class="notif-desc">Your vehicle insurance expires on 30 Apr 2026. Please renew to continue driving.</div>
+        <div class="notif-time">Feb 15, 10:00 AM</div>
+      </div>
+    </div>
+
+    <div class="notif-item">
+      <div class="notif-dot-icon" style="background:rgba(0,230,118,.12)">🏆</div>
+      <div class="notif-body">
+        <div class="notif-title">Top Driver This Week!</div>
+        <div class="notif-desc">You ranked #1 in your zone with 18 trips and a 4.92★ rating. Keep it up!</div>
+        <div class="notif-time">Feb 14, 8:00 AM</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></a>
+    <a href="trips.html" class="nav-item"><div class="nav-icon">🗺</div><div class="nav-label">Trips</div></a>
+    <a href="earnings.html" class="nav-item"><div class="nav-icon">💰</div><div class="nav-label">Earnings</div></a>
+    <a href="profile.html" class="nav-item"><div class="nav-icon">👤</div><div class="nav-label">Profile</div></a>
+  </nav>
+
+  <script>
+    document.querySelector('.clear-btn').addEventListener('click', () => {
+      document.querySelectorAll('.notif-item.unread').forEach(n => n.classList.remove('unread'));
+    });
+  </script>
+</body>
+</html>

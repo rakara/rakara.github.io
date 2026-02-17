@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>TickRide Driver — Register</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="driver.css"/>
+  <style>
+    body { padding:24px 24px 40px; }
+    .page-head { margin-bottom:28px; }
+    .page-head h1 { font-size:26px; font-weight:900; }
+    .page-head p  { color:var(--text2); font-size:13px; margin-top:4px; }
+    .section-label { font-size:11px; text-transform:uppercase; letter-spacing:.8px; color:var(--text3); margin:20px 0 12px; }
+    .upload-box { background:var(--bg2); border:2px dashed var(--border); border-radius:14px; padding:24px; text-align:center; cursor:pointer; transition:var(--t); margin-bottom:10px; }
+    .upload-box:hover { border-color:var(--blue); }
+    .upload-icon { font-size:32px; margin-bottom:8px; opacity:.4; }
+    .upload-label { font-size:13px; color:var(--text2); }
+    .link-text { text-align:center; margin-top:20px; font-size:13px; color:var(--text2); }
+    .link-text a { color:var(--blue); text-decoration:none; font-weight:700; }
+  </style>
+</head>
+<body>
+  <div class="page-head"><h1>Driver Registration</h1><p>Complete all steps to start earning with TickRide</p></div>
+  <div class="section-label">Personal Information</div>
+  <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" placeholder="Brian Mwangi"/></div>
+  <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-input" placeholder="+254 711 001 001"/></div>
+  <div class="form-group"><label class="form-label">National ID Number</label><input type="text" class="form-input" placeholder="12345678"/></div>
+  <div class="form-group"><label class="form-label">Password</label><input type="password" class="form-input" placeholder="Create password"/></div>
+  <div class="section-label">Vehicle Details</div>
+  <div class="form-group"><label class="form-label">Vehicle Make & Model</label><input type="text" class="form-input" placeholder="Toyota Fielder 2018"/></div>
+  <div class="form-group"><label class="form-label">Number Plate</label><input type="text" class="form-input" placeholder="KCB 123A"/></div>
+  <div class="form-group"><label class="form-label">Vehicle Type</label>
+    <select class="form-input"><option>TickX (Sedan/Hatchback)</option><option>TickXL (7-seater)</option><option>TickShare</option><option>TickPremium</option></select>
+  </div>
+  <div class="section-label">Documents Upload</div>
+  <div class="upload-box"><div class="upload-icon">📄</div><div class="upload-label">Driving Licence (front & back)</div></div>
+  <div class="upload-box"><div class="upload-icon">📋</div><div class="upload-label">PSV Licence / Good Conduct Certificate</div></div>
+  <div class="upload-box"><div class="upload-icon">🚗</div><div class="upload-label">Vehicle Inspection Certificate</div></div>
+  <div class="upload-box"><div class="upload-icon">🛡️</div><div class="upload-label">Insurance Certificate</div></div>
+  <button class="btn-primary" style="margin-top:20px" onclick="window.location.href='index.html'">Submit Application</button>
+  <div class="link-text">Already registered? <a href="login.html">Login</a></div>
+</body>
+</html>

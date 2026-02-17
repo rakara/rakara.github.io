@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>TickRide Driver — Profile</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="driver.css"/>
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-logo">Profile</div>
+    <div class="header-right">
+      <a href="index.html" class="icon-btn">🏠</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="profile-card">
+      <div class="profile-ava">BM</div>
+      <div>
+        <div class="profile-name">Brian Mwangi</div>
+        <div class="profile-sub">+254 711 001 001 · KCB 123A</div>
+        <div class="profile-badges">
+          <span class="pbadge verified">✓ Verified</span>
+          <span class="pbadge tier">TickX Driver</span>
+          <span class="pbadge" style="background:rgba(255,180,0,.12);color:#ffb400;border:1px solid rgba(255,180,0,.25)">⭐ 4.92</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Perf stats -->
+    <div class="earnings-row">
+      <div class="earn-tile"><div class="earn-value">842</div><div class="earn-label">Trips</div></div>
+      <div class="earn-tile"><div class="earn-value">98%</div><div class="earn-label">Acceptance</div></div>
+      <div class="earn-tile"><div class="earn-value">2.1yr</div><div class="earn-label">On Platform</div></div>
+    </div>
+
+    <!-- Vehicle -->
+    <div class="card">
+      <div class="card-title">Vehicle</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px">Make & Model</div><div style="font-size:14px;font-weight:600;margin-top:4px">Toyota Fielder 2018</div></div>
+        <div><div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px">Plate</div><div style="font-size:14px;font-weight:600;margin-top:4px;font-family:var(--mono)">KCB 123A</div></div>
+        <div><div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px">Tier</div><div style="font-size:14px;font-weight:600;margin-top:4px">TickX</div></div>
+        <div><div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px">Insurance Expiry</div><div style="font-size:14px;font-weight:600;margin-top:4px;color:var(--amber)">30 Apr 2026</div></div>
+      </div>
+    </div>
+
+    <!-- Documents status -->
+    <div class="card">
+      <div class="card-title">Documents</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Driving Licence</span><span class="badge green">Valid</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">PSV Licence</span><span class="badge green">Valid</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Insurance Certificate</span><span class="badge amber">Expiring Soon</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Inspection Certificate</span><span class="badge green">Valid</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Good Conduct</span><span class="badge green">Valid</span></div>
+      </div>
+    </div>
+
+    <!-- Settings menu -->
+    <a href="#" class="menu-item"><div class="menu-icon">✏️</div><div class="menu-text"><div class="menu-title">Edit Profile</div><div class="menu-sub">Name, phone, photo</div></div><div class="menu-arrow">→</div></a>
+    <a href="#" class="menu-item"><div class="menu-icon">💳</div><div class="menu-text"><div class="menu-title">Payout Settings</div><div class="menu-sub">M-PESA number, bank</div></div><div class="menu-arrow">→</div></a>
+    <a href="notifications.html" class="menu-item"><div class="menu-icon">🔔</div><div class="menu-text"><div class="menu-title">Notifications</div><div class="menu-sub">Trip alerts, promotions</div></div><div class="menu-arrow">→</div></a>
+    <a href="#" class="menu-item"><div class="menu-icon">❓</div><div class="menu-text"><div class="menu-title">Help & Support</div><div class="menu-sub">FAQs, contact us</div></div><div class="menu-arrow">→</div></a>
+    <a href="#" class="menu-item"><div class="menu-icon">📄</div><div class="menu-text"><div class="menu-title">Legal</div><div class="menu-sub">Terms, privacy</div></div><div class="menu-arrow">→</div></a>
+    <a href="login.html" class="menu-item danger"><div class="menu-icon">🚪</div><div class="menu-text"><div class="menu-title">Logout</div></div><div class="menu-arrow">→</div></a>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></a>
+    <a href="trips.html" class="nav-item"><div class="nav-icon">🗺</div><div class="nav-label">Trips</div></a>
+    <a href="earnings.html" class="nav-item"><div class="nav-icon">💰</div><div class="nav-label">Earnings</div></a>
+    <a href="profile.html" class="nav-item active"><div class="nav-icon">👤</div><div class="nav-label">Profile</div></a>
+  </nav>
+</body>
+</html>

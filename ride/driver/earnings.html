@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>TickRide Driver — Earnings</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="driver.css"/>
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-logo">Earnings</div>
+    <div class="header-right">
+      <a href="index.html" class="icon-btn">🏠</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Big number -->
+    <div class="earn-chart-card">
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <button class="badge blue" style="padding:7px 16px;cursor:pointer;border:none;font-family:var(--font)">Today</button>
+        <button class="badge" style="padding:7px 14px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text2);border-radius:6px;font-family:var(--font)">Week</button>
+        <button class="badge" style="padding:7px 14px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text2);border-radius:6px;font-family:var(--font)">Month</button>
+      </div>
+      <div class="earn-summary-big">
+        <div class="earn-big-val">KSh 4,280</div>
+        <div class="earn-big-label">Net Earnings Today (after 20% commission)</div>
+      </div>
+      <canvas id="earningsChart" height="100"></canvas>
+    </div>
+
+    <!-- Breakdown -->
+    <div class="earnings-row">
+      <div class="earn-tile"><div class="earn-value">KSh 5,350</div><div class="earn-label">Gross Fare</div></div>
+      <div class="earn-tile"><div class="earn-value">KSh 1,070</div><div class="earn-label">Commission</div></div>
+      <div class="earn-tile"><div class="earn-value">18</div><div class="earn-label">Trips</div></div>
+    </div>
+
+    <!-- Payout -->
+    <div class="card">
+      <div class="card-title">Payout Status</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div>
+          <div style="font-size:22px;font-weight:800;font-family:var(--mono);color:var(--green)">KSh 28,400</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:3px">Available for withdrawal</div>
+        </div>
+        <button style="padding:11px 20px;background:var(--grad);border:none;border-radius:12px;color:#000;font-family:var(--font);font-weight:800;font-size:14px;cursor:pointer">Withdraw</button>
+      </div>
+      <div style="background:var(--bg2);border-radius:12px;padding:14px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text2);margin-bottom:8px"><span>Last payout</span><span style="color:var(--text1);font-family:var(--mono)">KSh 12,800</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text2)"><span>Date</span><span style="color:var(--text1)">13 Feb 2026, M-PESA</span></div>
+      </div>
+    </div>
+
+    <!-- Weekly performance -->
+    <div class="card">
+      <div class="card-title">This Week</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:13px">Mon</div>
+          <div style="flex:1;margin:0 12px;height:8px;background:var(--bg2);border-radius:4px"><div style="width:60%;height:100%;background:var(--grad);border-radius:4px"></div></div>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--green)">KSh 6,200</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:13px">Tue</div>
+          <div style="flex:1;margin:0 12px;height:8px;background:var(--bg2);border-radius:4px"><div style="width:80%;height:100%;background:var(--grad);border-radius:4px"></div></div>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--green)">KSh 8,100</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:13px">Wed</div>
+          <div style="flex:1;margin:0 12px;height:8px;background:var(--bg2);border-radius:4px"><div style="width:45%;height:100%;background:var(--grad);border-radius:4px"></div></div>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--green)">KSh 4,600</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:13px">Thu</div>
+          <div style="flex:1;margin:0 12px;height:8px;background:var(--bg2);border-radius:4px"><div style="width:90%;height:100%;background:var(--grad);border-radius:4px"></div></div>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--green)">KSh 9,400</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:13px">Today</div>
+          <div style="flex:1;margin:0 12px;height:8px;background:var(--bg2);border-radius:4px"><div style="width:42%;height:100%;background:linear-gradient(135deg,#1e90ff,#00d4ff);border-radius:4px;animation:barGrow .8s ease-out"></div></div>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--green)">KSh 4,280</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></a>
+    <a href="trips.html" class="nav-item"><div class="nav-icon">🗺</div><div class="nav-label">Trips</div></a>
+    <a href="earnings.html" class="nav-item active"><div class="nav-icon">💰</div><div class="nav-label">Earnings</div></a>
+    <a href="profile.html" class="nav-item"><div class="nav-icon">👤</div><div class="nav-label">Profile</div></a>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    Chart.defaults.color = '#7a90b8';
+    Chart.defaults.borderColor = '#1a2435';
+    new Chart(document.getElementById('earningsChart'), {
+      type: 'line',
+      data: {
+        labels: ['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm'],
+        datasets: [{
+          data: [0, 450, 950, 2150, 2150, 3130, 3130, 3130, 3580, 4280],
+          borderColor: '#1e90ff',
+          backgroundColor: 'rgba(30,144,255,0.08)',
+          tension: 0.4, fill: true,
+          pointBackgroundColor: '#00d4ff', pointRadius: 4
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#3d5070' } },
+          y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#3d5070', callback: v => 'KSh '+(v/1000).toFixed(1)+'k' } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

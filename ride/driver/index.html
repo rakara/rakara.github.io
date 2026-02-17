@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="theme-color" content="#080c14" />
+  <title>TickRide Driver — Dashboard</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="driver.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <div class="app-logo">TickRide <sub>Driver</sub></div>
+    </div>
+    <div class="header-right">
+      <a href="notifications.html" class="icon-btn" style="position:relative">🔔<span style="position:absolute;top:2px;right:2px;width:7px;height:7px;background:#ff3b5c;border-radius:50%;border:2px solid #080c14"></span></a>
+      <a href="profile.html" class="icon-btn">👤</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Status Toggle -->
+    <div class="status-panel">
+      <div class="status-label">Driver Status</div>
+      <div class="status-badge offline" id="status-badge">
+        <span class="dot"></span>
+        <span id="status-text">Offline</span>
+      </div>
+      <button class="toggle-btn go-online" id="toggle-btn">Go Online</button>
+    </div>
+
+    <!-- Earnings snapshot -->
+    <div class="earnings-row">
+      <div class="earn-tile">
+        <div class="earn-value">KSh 4,280</div>
+        <div class="earn-label">Today</div>
+      </div>
+      <div class="earn-tile">
+        <div class="earn-value">18</div>
+        <div class="earn-label">Trips</div>
+      </div>
+      <div class="earn-tile">
+        <div class="earn-value">4.92 ⭐</div>
+        <div class="earn-label">Rating</div>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="active-trip-card">
+      <div class="map-area">
+        <div id="driver-map"></div>
+      </div>
+    </div>
+
+    <!-- Incoming trip request (shown when online) -->
+    <div class="trip-request" id="trip-request" style="display:none">
+      <div class="tr-header">
+        <span class="tr-badge">New Request</span>
+        <span class="tr-fare">KSh 680</span>
+      </div>
+      <div class="tr-route">
+        <div class="tr-point">
+          <div class="tr-point-icon pickup">📍</div>
+          <div><div class="tr-point-text">Westlands</div><div class="tr-point-sub">Sarit Centre, Westlands Rd</div></div>
+        </div>
+        <div class="tr-point">
+          <div class="tr-point-icon dropoff">🎯</div>
+          <div><div class="tr-point-text">CBD</div><div class="tr-point-sub">Kenyatta Avenue, Nairobi</div></div>
+        </div>
+      </div>
+      <div class="tr-meta">
+        <div class="tr-meta-item">📏 <b>8.4 km</b></div>
+        <div class="tr-meta-item">⏱ <b>~22 min</b></div>
+        <div class="tr-meta-item">💳 <b>M-PESA</b></div>
+        <div class="tr-meta-item">⭐ <b>4.9 rider</b></div>
+      </div>
+      <div class="tr-actions">
+        <button class="btn-accept" id="btn-accept">✓ Accept</button>
+        <button class="btn-decline" id="btn-decline">✕ Decline</button>
+      </div>
+    </div>
+
+    <!-- Today's quick trips -->
+    <div class="card">
+      <div class="card-title">Today's Trips</div>
+      <div class="trip-row">
+        <div class="trip-row-icon" style="background:rgba(0,230,118,.1)">🚗</div>
+        <div class="trip-row-info">
+          <div class="trip-row-route">Westlands → CBD</div>
+          <div class="trip-row-meta">2:30 PM · 18 min · TickX · ⭐ 5.0</div>
+        </div>
+        <div class="trip-row-fare">+KSh 450</div>
+      </div>
+      <div class="trip-row">
+        <div class="trip-row-icon" style="background:rgba(0,230,118,.1)">🚗</div>
+        <div class="trip-row-info">
+          <div class="trip-row-route">Karen → Upperhill</div>
+          <div class="trip-row-meta">11:10 AM · 34 min · TickPremium · ⭐ 5.0</div>
+        </div>
+        <div class="trip-row-fare">+KSh 980</div>
+      </div>
+      <div class="trip-row">
+        <div class="trip-row-icon" style="background:rgba(0,230,118,.1)">🚗</div>
+        <div class="trip-row-info">
+          <div class="trip-row-route">Kilimani → Gigiri</div>
+          <div class="trip-row-meta">9:15 AM · 28 min · TickXL · ⭐ 4.8</div>
+        </div>
+        <div class="trip-row-fare">+KSh 1,200</div>
+      </div>
+      <a href="trips.html" style="display:block;text-align:center;color:var(--blue);font-size:13px;font-weight:700;text-decoration:none;padding-top:14px;border-top:1px solid var(--border);margin-top:4px">View All Trips →</a>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item active"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></a>
+    <a href="trips.html" class="nav-item"><div class="nav-icon">🗺</div><div class="nav-label">Trips</div></a>
+    <a href="earnings.html" class="nav-item"><div class="nav-icon">💰</div><div class="nav-label">Earnings</div></a>
+    <a href="profile.html" class="nav-item"><div class="nav-icon">👤</div><div class="nav-label">Profile</div></a>
+  </nav>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("/ride/driver/sw.js").then(()=>console.log("Driver SW registered")).catch(e=>console.log(e));</script>
+  <script>
+    // Map
+    let map, marker;
+    function initMap(lat, lng) {
+      map = L.map('driver-map', { zoomControl:false }).setView([lat, lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'© OpenStreetMap', maxZoom:19 }).addTo(map);
+      const icon = L.divIcon({ className:'', html:`<div style="width:36px;height:36px;background:linear-gradient(135deg,#1e90ff,#00d4ff);border-radius:50%;border:3px solid #080c14;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 12px rgba(30,144,255,.4)">🚗</div>`, iconSize:[36,36], iconAnchor:[18,18] });
+      marker = L.marker([lat, lng], { icon }).addTo(map).bindPopup('📍 Your location');
+    }
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        p => initMap(p.coords.latitude, p.coords.longitude),
+        () => initMap(-1.2921, 36.8219)
+      );
+    } else { initMap(-1.2921, 36.8219); }
+
+    // Online toggle
+    let isOnline = false;
+    const badge = document.getElementById('status-badge');
+    const statusText = document.getElementById('status-text');
+    const toggleBtn = document.getElementById('toggle-btn');
+    const tripRequest = document.getElementById('trip-request');
+
+    toggleBtn.addEventListener('click', () => {
+      isOnline = !isOnline;
+      if (isOnline) {
+        badge.className = 'status-badge online';
+        statusText.textContent = 'Online';
+        toggleBtn.className = 'toggle-btn go-offline';
+        toggleBtn.textContent = 'Go Offline';
+        // Simulate an incoming trip after 3s
+        setTimeout(() => { tripRequest.style.display = 'block'; }, 3000);
+      } else {
+        badge.className = 'status-badge offline';
+        statusText.textContent = 'Offline';
+        toggleBtn.className = 'toggle-btn go-online';
+        toggleBtn.textContent = 'Go Online';
+        tripRequest.style.display = 'none';
+      }
+    });
+
+    document.getElementById('btn-accept').addEventListener('click', () => {
+      tripRequest.style.display = 'none';
+      alert('Trip accepted! Navigate to Westlands – Sarit Centre.');
+    });
+    document.getElementById('btn-decline').addEventListener('click', () => {
+      tripRequest.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
