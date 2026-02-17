@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>TickRide Admin — Live Trips</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><span class="brand-icon">⬡</span><div><div class="brand-name">TickRide</div><div class="brand-role">Admin Console</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Main</div>
+      <a href="index.html" class="nav-link"><span class="ni">▦</span> Overview</a>
+      <a href="trips.html" class="nav-link active"><span class="ni">🗺</span> Live Trips</a>
+      <a href="analytics.html" class="nav-link"><span class="ni">📈</span> Analytics</a>
+      <div class="nav-group-label">People</div>
+      <a href="riders.html" class="nav-link"><span class="ni">👤</span> Riders</a>
+      <a href="drivers.html" class="nav-link"><span class="ni">🚗</span> Drivers</a>
+      <div class="nav-group-label">Finance</div>
+      <a href="payments.html" class="nav-link"><span class="ni">💳</span> Payments</a>
+      <a href="promotions.html" class="nav-link"><span class="ni">🎁</span> Promotions</a>
+      <div class="nav-group-label">System</div>
+      <a href="settings.html" class="nav-link"><span class="ni">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer"><div class="admin-avatar">SA</div><div><div class="admin-name">Super Admin</div><a href="../login.html" class="logout-link">Sign out →</a></div></div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div><h1 class="page-title">Live Trips</h1><p class="page-sub"><span id="live-count">124</span> active trips right now · auto-refreshes every 30s</p></div>
+      <div class="topbar-actions">
+        <div class="search-box"><span>🔍</span><input placeholder="Search trip ID…" /></div>
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+      </div>
+    </header>
+    <div class="content-wrap">
+      <div class="trips-map-row">
+        <div class="map-frame">
+          <div id="admin-map"></div>
+          <div class="map-controls">
+            <button class="map-ctrl-btn" title="Zoom in">+</button>
+            <button class="map-ctrl-btn" title="Zoom out">−</button>
+            <button class="map-ctrl-btn" title="My location">📍</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;overflow-y:auto;max-height:420px;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);padding:4px 0">Active Trips</div>
+          <div class="mini-card" style="cursor:pointer;border-color:rgba(255,180,0,.3)">
+            <div class="card-header"><span class="card-title mono">#TR-4820</span><span class="badge active">Live</span></div>
+            <div style="font-size:12px;color:var(--text2);margin-top:8px">Amina S. → James O.</div>
+            <div style="font-size:12px;color:var(--text2)">Karen → Upperhill · KSh 980</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px">ETA 8 min</div>
+          </div>
+          <div class="mini-card" style="cursor:pointer">
+            <div class="card-header"><span class="card-title mono">#TR-4815</span><span class="badge active">Live</span></div>
+            <div style="font-size:12px;color:var(--text2);margin-top:8px">Njeri W. → Brian M.</div>
+            <div style="font-size:12px;color:var(--text2)">Westlands → CBD · KSh 450</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px">ETA 3 min</div>
+          </div>
+          <div class="mini-card" style="cursor:pointer">
+            <div class="card-header"><span class="card-title mono">#TR-4809</span><span class="badge active">Live</span></div>
+            <div style="font-size:12px;color:var(--text2);margin-top:8px">David K. → Samuel N.</div>
+            <div style="font-size:12px;color:var(--text2)">Langata → CBD · KSh 720</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px">ETA 14 min</div>
+          </div>
+        </div>
+      </div>
+      <div class="full-table-card">
+        <div class="card-header" style="margin-bottom:14px">
+          <span class="card-title">All Trips — Today</span>
+          <div style="display:flex;gap:8px">
+            <select class="filter-select"><option>All Status</option><option>Active</option><option>Completed</option><option>Cancelled</option></select>
+            <button class="btn-ghost">⬇ Export</button>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Trip ID</th><th>Rider</th><th>Driver</th><th>Pickup</th><th>Dropoff</th><th>Type</th><th>Fare</th><th>Duration</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">#TR-4821</td><td>Wanjiku K.</td><td>Brian M.</td><td>Westlands</td><td>CBD</td><td>TickX</td><td class="mono">KSh 450</td><td>18 min</td><td><span class="badge completed">Completed</span></td></tr>
+            <tr><td class="mono">#TR-4820</td><td>Amina S.</td><td>James O.</td><td>Karen</td><td>Upperhill</td><td>TickPremium</td><td class="mono">KSh 980</td><td>—</td><td><span class="badge active">Active</span></td></tr>
+            <tr><td class="mono">#TR-4819</td><td>Kipchoge R.</td><td>Fatuma A.</td><td>Kilimani</td><td>Gigiri</td><td>TickXL</td><td class="mono">KSh 1,200</td><td>32 min</td><td><span class="badge completed">Completed</span></td></tr>
+            <tr><td class="mono">#TR-4818</td><td>Njeri W.</td><td>—</td><td>CBD</td><td>Parklands</td><td>TickX</td><td class="mono">KSh 350</td><td>—</td><td><span class="badge cancelled">Cancelled</span></td></tr>
+            <tr><td class="mono">#TR-4817</td><td>David K.</td><td>Samuel N.</td><td>Langata</td><td>Westlands</td><td>TickShare</td><td class="mono">KSh 280</td><td>41 min</td><td><span class="badge completed">Completed</span></td></tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <span>Showing 1–5 of 1,284</span>
+          <button class="page-btn current">1</button><button class="page-btn">2</button><button class="page-btn">3</button><span>…</span><button class="page-btn">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="admin.js"></script>
+<script>
+  const map = L.map('admin-map').setView([-1.2921, 36.8219], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap', maxZoom: 19 }).addTo(map);
+  const mk = (lat,lng,label,color) => {
+    const icon = L.divIcon({ className:'', html:`<div style="width:28px;height:28px;background:${color};border-radius:50%;border:3px solid #0f1117;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.4)">🚗</div>`, iconSize:[28,28], iconAnchor:[14,14] });
+    L.marker([lat,lng],{icon}).addTo(map).bindPopup(label);
+  };
+  mk(-1.2741,36.8115,'James O. → Upperhill','#00b4ff');
+  mk(-1.3005,36.8100,'Brian M. → CBD','#ffb400');
+  mk(-1.3194,36.7946,'Samuel N. → CBD','#00ff88');
+</script>
+</body></html>

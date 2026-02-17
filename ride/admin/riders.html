@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="theme-color" content="#0f1117" />
+  <title>TickRide Admin — Riders</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><span class="brand-icon">⬡</span><div><div class="brand-name">TickRide</div><div class="brand-role">Admin Console</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Main</div>
+      <a href="index.html" class="nav-link"><span class="ni">▦</span> Overview</a>
+      <a href="trips.html" class="nav-link"><span class="ni">🗺</span> Live Trips</a>
+      <a href="analytics.html" class="nav-link"><span class="ni">📈</span> Analytics</a>
+      <div class="nav-group-label">People</div>
+      <a href="riders.html" class="nav-link active"><span class="ni">👤</span> Riders</a>
+      <a href="drivers.html" class="nav-link"><span class="ni">🚗</span> Drivers</a>
+      <div class="nav-group-label">Finance</div>
+      <a href="payments.html" class="nav-link"><span class="ni">💳</span> Payments</a>
+      <a href="promotions.html" class="nav-link"><span class="ni">🎁</span> Promotions</a>
+      <div class="nav-group-label">System</div>
+      <a href="settings.html" class="nav-link"><span class="ni">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer"><div class="admin-avatar">SA</div><div><div class="admin-name">Super Admin</div><a href="../login.html" class="logout-link">Sign out →</a></div></div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div><h1 class="page-title">Riders</h1><p class="page-sub">Manage all registered riders</p></div>
+      <div class="topbar-actions">
+        <div class="search-box"><span>🔍</span><input placeholder="Search riders…" /></div>
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+      </div>
+    </header>
+    <div class="content-wrap">
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi-card"><div class="kpi-icon" style="background:rgba(0,180,255,.1);color:#00b4ff">👤</div><div class="kpi-body"><div class="kpi-value">12,840</div><div class="kpi-label">Total Riders</div><div class="kpi-delta positive">▲ 124 this week</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon" style="background:rgba(0,255,136,.1);color:#00ff88">✅</div><div class="kpi-body"><div class="kpi-value">9,218</div><div class="kpi-label">Active (30d)</div><div class="kpi-delta positive">▲ 8%</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon" style="background:rgba(255,59,92,.1);color:#ff3b5c">🚫</div><div class="kpi-body"><div class="kpi-value">43</div><div class="kpi-label">Suspended</div><div class="kpi-delta negative">▲ 2 this week</div></div></div>
+      </div>
+      <div class="filter-bar">
+        <input class="filter-input" placeholder="🔍  Search by name, phone or email…" />
+        <select class="filter-select"><option>All Status</option><option>Active</option><option>Inactive</option><option>Suspended</option></select>
+        <select class="filter-select"><option>All Time</option><option>Today</option><option>This Week</option><option>This Month</option></select>
+        <button class="btn-primary">+ Add Rider</button>
+        <button class="btn-ghost">⬇ Export</button>
+      </div>
+      <div class="full-table-card">
+        <table class="data-table">
+          <thead><tr><th>Name</th><th>Phone</th><th>Joined</th><th>Trips</th><th>Spent</th><th>Rating</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><b>Wanjiku Kamau</b></td><td class="mono">+254 712 345 678</td><td>Jan 2025</td><td>24</td><td class="mono">KSh 18,400</td><td>⭐ 4.9</td><td><span class="badge completed">Active</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">View →</a></td></tr>
+            <tr><td><b>Amina Sharif</b></td><td class="mono">+254 723 456 789</td><td>Mar 2025</td><td>41</td><td class="mono">KSh 32,100</td><td>⭐ 4.8</td><td><span class="badge completed">Active</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">View →</a></td></tr>
+            <tr><td><b>Kipchoge Rotich</b></td><td class="mono">+254 734 567 890</td><td>Jun 2024</td><td>87</td><td class="mono">KSh 64,200</td><td>⭐ 4.7</td><td><span class="badge completed">Active</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">View →</a></td></tr>
+            <tr><td><b>Njeri Waweru</b></td><td class="mono">+254 745 678 901</td><td>Oct 2024</td><td>12</td><td class="mono">KSh 9,800</td><td>⭐ 4.6</td><td><span class="badge pending">Inactive</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">View →</a></td></tr>
+            <tr><td><b>David Ochieng</b></td><td class="mono">+254 756 789 012</td><td>Feb 2025</td><td>5</td><td class="mono">KSh 3,400</td><td>⭐ 3.2</td><td><span class="badge cancelled">Suspended</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">View →</a></td></tr>
+            <tr><td><b>Fatuma Ahmed</b></td><td class="mono">+254 767 890 123</td><td>Nov 2024</td><td>33</td><td class="mono">KSh 26,800</td><td>⭐ 4.8</td><td><span class="badge completed">Active</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">View →</a></td></tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <span>Showing 1–6 of 12,840</span>
+          <button class="page-btn current">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <span>…</span>
+          <button class="page-btn">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="admin.js"></script>
+</body></html>

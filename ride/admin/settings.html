@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="theme-color" content="#0f1117"/>
+  <title>TickRide Admin — Settings</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><span class="brand-icon">⬡</span><div><div class="brand-name">TickRide</div><div class="brand-role">Admin Console</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Main</div>
+      <a href="index.html" class="nav-link"><span class="ni">▦</span> Overview</a>
+      <a href="trips.html" class="nav-link"><span class="ni">🗺</span> Live Trips</a>
+      <a href="analytics.html" class="nav-link"><span class="ni">📈</span> Analytics</a>
+      <div class="nav-group-label">People</div>
+      <a href="riders.html" class="nav-link"><span class="ni">👤</span> Riders</a>
+      <a href="drivers.html" class="nav-link"><span class="ni">🚗</span> Drivers</a>
+      <div class="nav-group-label">Finance</div>
+      <a href="payments.html" class="nav-link"><span class="ni">💳</span> Payments</a>
+      <a href="promotions.html" class="nav-link"><span class="ni">🎁</span> Promotions</a>
+      <div class="nav-group-label">System</div>
+      <a href="settings.html" class="nav-link active"><span class="ni">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer"><div class="admin-avatar">SA</div><div><div class="admin-name">Super Admin</div><a href="../login.html" class="logout-link">Sign out →</a></div></div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div><h1 class="page-title">Settings</h1><p class="page-sub">Platform configuration & admin management</p></div>
+      <div class="topbar-actions">
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+      </div>
+    </header>
+    <div class="content-wrap">
+      <div class="settings-grid">
+
+        <!-- Platform -->
+        <div class="settings-card">
+          <div class="settings-title">🌍 Platform Settings</div>
+          <div class="form-row"><label class="form-label">Platform Name</label><input class="form-control" value="TickRide"/></div>
+          <div class="form-row"><label class="form-label">Default Currency</label><input class="form-control" value="KES — Kenyan Shilling"/></div>
+          <div class="form-row"><label class="form-label">Support Email</label><input class="form-control" value="support@tickride.ke"/></div>
+          <div class="form-row"><label class="form-label">Ops Phone</label><input class="form-control" value="+254 700 000 000"/></div>
+          <button class="btn-primary" style="margin-top:8px">Save Changes</button>
+        </div>
+
+        <!-- Pricing -->
+        <div class="settings-card">
+          <div class="settings-title">💰 Pricing Rules</div>
+          <div class="form-row"><label class="form-label">Base Fare (KSh)</label><input class="form-control" value="80" type="number"/></div>
+          <div class="form-row"><label class="form-label">Per KM Rate (KSh)</label><input class="form-control" value="55" type="number"/></div>
+          <div class="form-row"><label class="form-label">Per Minute Rate (KSh)</label><input class="form-control" value="4" type="number"/></div>
+          <div class="form-row"><label class="form-label">Cancellation Fee (KSh)</label><input class="form-control" value="50" type="number"/></div>
+          <div class="form-row"><label class="form-label">Surge Multiplier Max</label><input class="form-control" value="2.5" type="number"/></div>
+          <button class="btn-primary" style="margin-top:8px">Update Pricing</button>
+        </div>
+
+        <!-- Commission -->
+        <div class="settings-card">
+          <div class="settings-title">📊 Commission & Payouts</div>
+          <div class="form-row"><label class="form-label">Platform Commission (%)</label><input class="form-control" value="20" type="number"/></div>
+          <div class="form-row"><label class="form-label">Minimum Payout (KSh)</label><input class="form-control" value="500" type="number"/></div>
+          <div class="form-row"><label class="form-label">Payout Schedule</label>
+            <select class="form-control"><option>Daily</option><option selected>Weekly</option><option>Bi-weekly</option></select>
+          </div>
+          <div class="form-row"><label class="form-label">Payout Method</label>
+            <select class="form-control"><option selected>M-PESA</option><option>Bank Transfer</option><option>Both</option></select>
+          </div>
+          <button class="btn-primary" style="margin-top:8px">Save</button>
+        </div>
+
+        <!-- Notifications -->
+        <div class="settings-card">
+          <div class="settings-title">🔔 Alert Settings</div>
+          <div class="toggle-row"><div><div class="toggle-label">Email on driver suspension</div><div class="toggle-sub">Sends to admin@tickride.ke</div></div><div class="toggle on"></div></div>
+          <div class="toggle-row"><div><div class="toggle-label">Payment gateway alerts</div><div class="toggle-sub">Notify when latency &gt; 2s</div></div><div class="toggle on"></div></div>
+          <div class="toggle-row"><div><div class="toggle-label">Daily revenue report</div><div class="toggle-sub">Delivered at 08:00 EAT</div></div><div class="toggle"></div></div>
+          <div class="toggle-row"><div><div class="toggle-label">New driver registration</div><div class="toggle-sub">Instant notification</div></div><div class="toggle on"></div></div>
+          <div class="toggle-row"><div><div class="toggle-label">Surge pricing alerts</div><div class="toggle-sub">When multiplier exceeds 1.5×</div></div><div class="toggle on"></div></div>
+        </div>
+
+        <!-- Admins -->
+        <div class="settings-card" style="grid-column:span 2">
+          <div class="settings-title">👥 Admin Team</div>
+          <div class="driver-list" style="margin-bottom:20px">
+            <div class="driver-row"><div class="d-ava">SA</div><div class="d-info"><div class="d-name">Super Admin</div><div class="d-sub">admin@tickride.ke · Full access</div></div><span class="badge pending">Super Admin</span></div>
+            <div class="driver-row"><div class="d-ava">JK</div><div class="d-info"><div class="d-name">John Kariuki</div><div class="d-sub">ops@tickride.ke · Operations</div></div><span class="badge active">Ops Manager</span></div>
+            <div class="driver-row"><div class="d-ava">AM</div><div class="d-info"><div class="d-name">Alice Mutua</div><div class="d-sub">finance@tickride.ke · Finance only</div></div><span class="badge active">Finance</span></div>
+            <div class="driver-row"><div class="d-ava">GN</div><div class="d-info"><div class="d-name">Grace Njoki</div><div class="d-sub">support@tickride.ke · Support only</div></div><span class="badge" style="background:rgba(180,80,255,.1);color:#b450ff">Support</span></div>
+          </div>
+          <button class="btn-primary" style="width:auto;padding:9px 20px">+ Invite Admin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="admin.js"></script>
+</body></html>

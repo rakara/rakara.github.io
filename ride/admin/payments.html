@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="theme-color" content="#0f1117"/>
+  <title>TickRide Admin — Payments</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><span class="brand-icon">⬡</span><div><div class="brand-name">TickRide</div><div class="brand-role">Admin Console</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Main</div>
+      <a href="index.html" class="nav-link"><span class="ni">▦</span> Overview</a>
+      <a href="trips.html" class="nav-link"><span class="ni">🗺</span> Live Trips</a>
+      <a href="analytics.html" class="nav-link"><span class="ni">📈</span> Analytics</a>
+      <div class="nav-group-label">People</div>
+      <a href="riders.html" class="nav-link"><span class="ni">👤</span> Riders</a>
+      <a href="drivers.html" class="nav-link"><span class="ni">🚗</span> Drivers</a>
+      <div class="nav-group-label">Finance</div>
+      <a href="payments.html" class="nav-link active"><span class="ni">💳</span> Payments</a>
+      <a href="promotions.html" class="nav-link"><span class="ni">🎁</span> Promotions</a>
+      <div class="nav-group-label">System</div>
+      <a href="settings.html" class="nav-link"><span class="ni">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer"><div class="admin-avatar">SA</div><div><div class="admin-name">Super Admin</div><a href="../login.html" class="logout-link">Sign out →</a></div></div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div><h1 class="page-title">Payments</h1><p class="page-sub">Transactions, payouts & disputes</p></div>
+      <div class="topbar-actions">
+        <div class="search-box"><span>🔍</span><input placeholder="Search transactions…"/></div>
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+      </div>
+    </header>
+    <div class="content-wrap">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-icon" style="background:rgba(0,255,136,.1);color:#00ff88">💰</div><div class="kpi-body"><div class="kpi-value">KSh 842K</div><div class="kpi-label">Today's Revenue</div><div class="kpi-delta positive">▲ 8% vs yesterday</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon" style="background:rgba(255,180,0,.1);color:#ffb400">📅</div><div class="kpi-body"><div class="kpi-value">KSh 14.2M</div><div class="kpi-label">Month to Date</div><div class="kpi-delta positive">▲ 22% vs last month</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon" style="background:rgba(0,180,255,.1);color:#00b4ff">📱</div><div class="kpi-body"><div class="kpi-value">78%</div><div class="kpi-label">M-PESA Share</div><div class="kpi-delta">22% Card / Wallet</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon" style="background:rgba(255,59,92,.1);color:#ff3b5c">⚠️</div><div class="kpi-body"><div class="kpi-value">KSh 12,400</div><div class="kpi-label">Open Disputes</div><div class="kpi-delta negative">7 cases pending</div></div></div>
+      </div>
+      <div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+        <div class="card-header"><span class="card-title">Revenue — Last 14 Days</span><select class="card-select"><option>Daily</option><option>Weekly</option></select></div>
+        <canvas id="revChart" height="90"></canvas>
+      </div>
+      <div class="full-table-card">
+        <div class="card-header" style="margin-bottom:14px">
+          <span class="card-title">All Transactions</span>
+          <div style="display:flex;gap:8px">
+            <select class="filter-select"><option>All Methods</option><option>M-PESA</option><option>Card</option><option>Wallet</option><option>Cash</option></select>
+            <select class="filter-select"><option>All Status</option><option>Settled</option><option>Pending</option><option>Refunded</option><option>Failed</option></select>
+            <button class="btn-ghost">⬇ Export CSV</button>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Txn ID</th><th>Trip</th><th>Rider</th><th>Driver</th><th>Method</th><th>Amount</th><th>Driver Cut</th><th>Platform</th><th>Time</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">#TXN-88412</td><td class="mono">#TR-4821</td><td>Wanjiku K.</td><td>Brian M.</td><td>M-PESA</td><td class="mono">KSh 450</td><td class="mono">KSh 360</td><td class="mono">KSh 90</td><td>2:30 PM</td><td><span class="badge completed">Settled</span></td></tr>
+            <tr><td class="mono">#TXN-88411</td><td class="mono">#TR-4819</td><td>Kipchoge R.</td><td>Fatuma A.</td><td>Wallet</td><td class="mono">KSh 1,200</td><td class="mono">KSh 960</td><td class="mono">KSh 240</td><td>9:15 AM</td><td><span class="badge completed">Settled</span></td></tr>
+            <tr><td class="mono">#TXN-88410</td><td class="mono">#TR-4817</td><td>David K.</td><td>Samuel N.</td><td>M-PESA</td><td class="mono">KSh 720</td><td class="mono">KSh 576</td><td class="mono">KSh 144</td><td>Yesterday</td><td><span class="badge completed">Settled</span></td></tr>
+            <tr><td class="mono">#TXN-88409</td><td class="mono">#TR-4816</td><td>Amina S.</td><td>James O.</td><td>Visa Card</td><td class="mono">KSh 900</td><td class="mono">KSh 720</td><td class="mono">KSh 180</td><td>Yesterday</td><td><span class="badge pending">Pending</span></td></tr>
+            <tr><td class="mono">#TXN-88408</td><td class="mono">#TR-4818</td><td>Njeri W.</td><td>—</td><td>M-PESA</td><td class="mono">KSh 0</td><td class="mono">—</td><td class="mono">—</td><td>Yesterday</td><td><span class="badge cancelled">Refunded</span></td></tr>
+            <tr><td class="mono">#TXN-88407</td><td class="mono">#TR-4815</td><td>Fatuma A.</td><td>Brian M.</td><td>Cash</td><td class="mono">KSh 350</td><td class="mono">KSh 280</td><td class="mono">KSh 70</td><td>Feb 15</td><td><span class="badge completed">Settled</span></td></tr>
+          </tbody>
+        </table>
+        <div class="pagination"><span>Showing 1–6 of 8,412</span><button class="page-btn current">1</button><button class="page-btn">2</button><button class="page-btn">3</button><span>…</span><button class="page-btn">Next →</button></div>
+      </div>
+      <div class="table-card">
+        <div class="card-header"><span class="card-title">Pending Driver Payouts</span><button class="btn-primary">Run Batch Payout</button></div>
+        <table class="data-table">
+          <thead><tr><th>Driver</th><th>Trips</th><th>Gross</th><th>Commission</th><th>Net Payout</th><th>Method</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td><b>Brian Mwangi</b></td><td>18</td><td class="mono">KSh 12,400</td><td class="mono">KSh 2,480</td><td class="mono" style="color:var(--green)">KSh 9,920</td><td>M-PESA</td><td><button class="btn-ghost" style="padding:5px 12px;font-size:12px">Pay Now</button></td></tr>
+            <tr><td><b>James Otieno</b></td><td>15</td><td class="mono">KSh 9,800</td><td class="mono">KSh 1,960</td><td class="mono" style="color:var(--green)">KSh 7,840</td><td>M-PESA</td><td><button class="btn-ghost" style="padding:5px 12px;font-size:12px">Pay Now</button></td></tr>
+            <tr><td><b>Samuel Njoroge</b></td><td>14</td><td class="mono">KSh 9,100</td><td class="mono">KSh 1,820</td><td class="mono" style="color:var(--green)">KSh 7,280</td><td>Bank</td><td><button class="btn-ghost" style="padding:5px 12px;font-size:12px">Pay Now</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="admin.js"></script>
+<script>
+Chart.defaults.color='#8a91a8';Chart.defaults.borderColor='#2a2f3f';
+new Chart(document.getElementById('revChart'),{type:'line',data:{labels:['Feb 4','5','6','7','8','9','10','11','12','13','14','15','16','17'],datasets:[{data:[620000,580000,710000,840000,760000,900000,1100000,980000,840000,760000,920000,1040000,880000,842000],borderColor:'#ffb400',backgroundColor:'rgba(255,180,0,0.08)',tension:0.4,fill:true,pointBackgroundColor:'#ffb400',pointRadius:3}]},options:{plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#545c73'}},y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{color:'#545c73',callback:v=>'KSh '+(v/1000).toFixed(0)+'k'}}}}});
+</script>
+</body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="theme-color" content="#0f1117"/>
+  <title>TickRide Admin — Promotions</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><span class="brand-icon">⬡</span><div><div class="brand-name">TickRide</div><div class="brand-role">Admin Console</div></div></div>
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Main</div>
+      <a href="index.html" class="nav-link"><span class="ni">▦</span> Overview</a>
+      <a href="trips.html" class="nav-link"><span class="ni">🗺</span> Live Trips</a>
+      <a href="analytics.html" class="nav-link"><span class="ni">📈</span> Analytics</a>
+      <div class="nav-group-label">People</div>
+      <a href="riders.html" class="nav-link"><span class="ni">👤</span> Riders</a>
+      <a href="drivers.html" class="nav-link"><span class="ni">🚗</span> Drivers</a>
+      <div class="nav-group-label">Finance</div>
+      <a href="payments.html" class="nav-link"><span class="ni">💳</span> Payments</a>
+      <a href="promotions.html" class="nav-link active"><span class="ni">🎁</span> Promotions</a>
+      <div class="nav-group-label">System</div>
+      <a href="settings.html" class="nav-link"><span class="ni">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer"><div class="admin-avatar">SA</div><div><div class="admin-name">Super Admin</div><a href="../login.html" class="logout-link">Sign out →</a></div></div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div><h1 class="page-title">Promotions</h1><p class="page-sub">Promo codes, referrals & surge pricing</p></div>
+      <div class="topbar-actions">
+        <div class="search-box"><span>🔍</span><input placeholder="Search promos…"/></div>
+        <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+      </div>
+    </header>
+    <div class="content-wrap">
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi-card"><div class="kpi-icon" style="background:rgba(255,180,0,.1);color:#ffb400">🎁</div><div class="kpi-body"><div class="kpi-value">5</div><div class="kpi-label">Active Promos</div><div class="kpi-delta positive">2 scheduled</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon" style="background:rgba(0,255,136,.1);color:#00ff88">🎯</div><div class="kpi-body"><div class="kpi-value">8,526</div><div class="kpi-label">Total Redemptions</div><div class="kpi-delta positive">▲ 340 this week</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon" style="background:rgba(255,59,92,.1);color:#ff3b5c">💸</div><div class="kpi-body"><div class="kpi-value">KSh 284K</div><div class="kpi-label">Discount Given</div><div class="kpi-delta negative">Budget: KSh 500K</div></div></div>
+      </div>
+      <div class="filter-bar">
+        <input class="filter-input" placeholder="🔍  Search by code or description…"/>
+        <select class="filter-select"><option>All Status</option><option>Active</option><option>Scheduled</option><option>Expired</option><option>Paused</option></select>
+        <select class="filter-select"><option>All Types</option><option>% Discount</option><option>Fixed Amount</option><option>Free Ride</option></select>
+        <button class="btn-primary">+ Create Promo</button>
+        <button class="btn-ghost">⬇ Export</button>
+      </div>
+      <div class="full-table-card">
+        <div class="card-header" style="margin-bottom:14px"><span class="card-title">All Promotions</span></div>
+        <table class="data-table">
+          <thead><tr><th>Code</th><th>Description</th><th>Type</th><th>Value</th><th>Redemptions</th><th>Max Uses</th><th>Expires</th><th>Cost</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="mono"><b>TICK25</b></td><td>New user — 25% off first 3 rides</td><td>%</td><td>25%</td><td>1,284</td><td>5,000</td><td>28 Feb 2026</td><td class="mono">KSh 64K</td><td><span class="badge completed">Active</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">Edit →</a></td></tr>
+            <tr><td class="mono"><b>NAIROBIFLY</b></td><td>KSh 100 off airport rides</td><td>Fixed</td><td>KSh 100</td><td>342</td><td>1,000</td><td>15 Mar 2026</td><td class="mono">KSh 34K</td><td><span class="badge completed">Active</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">Edit →</a></td></tr>
+            <tr><td class="mono"><b>WEEKEND20</b></td><td>20% off all weekend rides</td><td>%</td><td>20%</td><td>6,100</td><td>∞</td><td>Ongoing</td><td class="mono">KSh 148K</td><td><span class="badge completed">Active</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">Edit →</a></td></tr>
+            <tr><td class="mono"><b>VDAY50</b></td><td>Valentine's Day — 50% off</td><td>%</td><td>50%</td><td>4,800</td><td>5,000</td><td>14 Feb 2026</td><td class="mono">KSh 38K</td><td><span class="badge cancelled">Expired</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">View →</a></td></tr>
+            <tr><td class="mono"><b>MADARAKA</b></td><td>Madaraka Day — 1 free ride (first 500)</td><td>Free</td><td>100%</td><td>0</td><td>500</td><td>1 Jun 2026</td><td class="mono">—</td><td><span class="badge pending">Scheduled</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">Edit →</a></td></tr>
+            <tr><td class="mono"><b>REFER50</b></td><td>Referral bonus — KSh 50 per referral</td><td>Fixed</td><td>KSh 50</td><td>2,100</td><td>∞</td><td>Ongoing</td><td class="mono">KSh 105K</td><td><span class="badge completed">Active</span></td><td><a href="#" style="color:var(--amber);font-size:12px;text-decoration:none">Edit →</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Surge zones -->
+      <div class="mini-card">
+        <div class="card-header"><span class="card-title">Active Surge Pricing Zones</span><button class="btn-ghost">Manage Zones</button></div>
+        <table class="data-table">
+          <thead><tr><th>Zone</th><th>Multiplier</th><th>Trigger</th><th>Active Since</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><b>CBD</b></td><td class="mono" style="color:var(--red)">1.8×</td><td>High demand</td><td>14 min ago</td><td><span class="badge active">Live</span></td></tr>
+            <tr><td><b>Westlands</b></td><td class="mono" style="color:var(--amber)">1.4×</td><td>Rush hour</td><td>32 min ago</td><td><span class="badge active">Live</span></td></tr>
+            <tr><td><b>JKIA Airport</b></td><td class="mono" style="color:var(--amber)">1.3×</td><td>Flight arrivals</td><td>1 hr ago</td><td><span class="badge active">Live</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="admin.js"></script>
+</body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>TickRide Admin — Login</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg0:#0f1117; --bg1:#181b24; --bg2:#1f2330; --border:#2a2f3f;
+      --text1:#f0f2f8; --text2:#8a91a8; --amber:#ffb400;
+    }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg0); color:var(--text1); min-height:100vh; display:grid; grid-template-columns:1fr 460px; }
+
+    .login-visual {
+      background: linear-gradient(145deg, #0f1117 0%, #181b24 40%, #1a1608 100%);
+      display:flex; flex-direction:column; justify-content:center; padding:60px;
+      border-right:1px solid var(--border); position:relative; overflow:hidden;
+    }
+    .login-visual::before {
+      content:'';
+      position:absolute; top:-20%; left:-20%; width:140%; height:140%;
+      background: radial-gradient(ellipse at 40% 60%, rgba(255,180,0,.08) 0%, transparent 60%);
+      pointer-events:none;
+    }
+    .visual-brand { display:flex; align-items:center; gap:14px; margin-bottom:60px; }
+    .visual-hex { font-size:40px; background:linear-gradient(135deg,#ffb400,#ff6b00); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .visual-brand-name { font-family:'Syne',sans-serif; font-size:28px; font-weight:800; }
+    .visual-title { font-family:'Syne',sans-serif; font-size:42px; font-weight:800; line-height:1.1; margin-bottom:20px; }
+    .visual-title span { background:linear-gradient(135deg,#ffb400,#ff6b00); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .visual-sub { color:var(--text2); font-size:16px; line-height:1.6; max-width:380px; }
+    .stats-row { display:flex; gap:32px; margin-top:48px; }
+    .stat { }
+    .stat-n { font-family:'Syne',sans-serif; font-size:28px; font-weight:800; color:var(--amber); }
+    .stat-l { font-size:13px; color:var(--text2); margin-top:4px; }
+
+    .login-form-wrap {
+      display:flex; flex-direction:column; justify-content:center; padding:60px 48px;
+      background:var(--bg1);
+    }
+    .form-title { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; margin-bottom:6px; }
+    .form-sub { color:var(--text2); font-size:14px; margin-bottom:36px; }
+    .form-group { margin-bottom:18px; }
+    .form-label { display:block; font-size:12px; color:var(--text2); margin-bottom:7px; text-transform:uppercase; letter-spacing:.5px; }
+    .form-input {
+      width:100%; padding:13px 16px;
+      background:var(--bg2); border:1px solid var(--border); border-radius:10px;
+      color:var(--text1); font-family:'DM Sans',sans-serif; font-size:15px;
+      transition:border-color .2s;
+    }
+    .form-input:focus { outline:none; border-color:var(--amber); box-shadow:0 0 0 3px rgba(255,180,0,.1); }
+    .form-row-inline { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+    .forgot { font-size:13px; color:var(--amber); text-decoration:none; }
+    .forgot:hover { opacity:.7; }
+    .login-btn {
+      width:100%; padding:14px;
+      background:linear-gradient(135deg,#ffb400,#ff6b00);
+      border:none; border-radius:10px;
+      color:#000; font-family:'Syne',sans-serif; font-weight:700; font-size:16px;
+      cursor:pointer; transition:all .22s;
+      margin-top:8px;
+    }
+    .login-btn:hover { opacity:.9; transform:translateY(-1px); box-shadow:0 8px 24px rgba(255,180,0,.3); }
+    .rider-link { text-align:center; margin-top:24px; font-size:13px; color:var(--text2); }
+    .rider-link a { color:var(--amber); text-decoration:none; font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="login-visual">
+    <div class="visual-brand">
+      <span class="visual-hex">⬡</span>
+      <span class="visual-brand-name">TickRide</span>
+    </div>
+    <h1 class="visual-title">Admin<br /><span>Command</span><br />Centre</h1>
+    <p class="visual-sub">Real-time visibility into every trip, driver, payment and rider across the TickRide platform.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n">1,284</div><div class="stat-l">Trips today</div></div>
+      <div class="stat"><div class="stat-n">348</div><div class="stat-l">Online drivers</div></div>
+      <div class="stat"><div class="stat-n">KSh 842K</div><div class="stat-l">Revenue today</div></div>
+    </div>
+  </div>
+
+  <div class="login-form-wrap">
+    <h2 class="form-title">Sign in</h2>
+    <p class="form-sub">Admin access only. Unauthorised access is prohibited.</p>
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input type="email" class="form-input" placeholder="admin@tickride.ke" />
+    </div>
+    <div class="form-group">
+      <div class="form-row-inline">
+        <label class="form-label" style="margin-bottom:0">Password</label>
+        <a href="#" class="forgot">Forgot password?</a>
+      </div>
+      <input type="password" class="form-input" placeholder="••••••••••" />
+    </div>
+    <button class="login-btn" onclick="window.location.href='index.html'">Sign In to Admin Console</button>
+    <div class="rider-link">
+      Not admin? <a href="../login.html">Rider login</a> · <a href="../driver/login.html">Driver login</a>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('.login-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>

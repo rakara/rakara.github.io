@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f1117" />
+  <title>TickRide Admin — Overview</title>
+  <link rel="icon" type="image/png" href="/ride/icons/favicon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="shell">
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-icon">⬡</span>
+        <div>
+          <div class="brand-name">TickRide</div>
+          <div class="brand-role">Admin Console</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-label">Main</div>
+        <a href="index.html"         class="nav-link active"><span class="ni">▦</span> Overview</a>
+        <a href="trips.html"         class="nav-link"><span class="ni">🗺</span> Live Trips</a>
+        <a href="analytics.html"     class="nav-link"><span class="ni">📈</span> Analytics</a>
+
+        <div class="nav-group-label">People</div>
+        <a href="riders.html"        class="nav-link"><span class="ni">👤</span> Riders</a>
+        <a href="drivers.html"       class="nav-link"><span class="ni">🚗</span> Drivers</a>
+
+        <div class="nav-group-label">Finance</div>
+        <a href="payments.html"      class="nav-link"><span class="ni">💳</span> Payments</a>
+        <a href="promotions.html"    class="nav-link"><span class="ni">🎁</span> Promotions</a>
+
+        <div class="nav-group-label">System</div>
+        <a href="settings.html"      class="nav-link"><span class="ni">⚙️</span> Settings</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="admin-avatar">SA</div>
+        <div>
+          <div class="admin-name">Super Admin</div>
+          <a href="../login.html" class="logout-link">Sign out →</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ═══ MAIN ═══ -->
+    <div class="main">
+
+      <header class="topbar">
+        <div>
+          <h1 class="page-title">Overview</h1>
+          <p class="page-sub">Tuesday, 17 Feb 2026 — Nairobi, KE</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="search-box"><span>🔍</span><input placeholder="Search anything…" /></div>
+          <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+        </div>
+      </header>
+
+      <!-- KPI row -->
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(255,180,0,.12);color:#ffb400">🚗</div>
+          <div class="kpi-body">
+            <div class="kpi-value">1,284</div>
+            <div class="kpi-label">Trips Today</div>
+            <div class="kpi-delta positive">▲ 12% vs yesterday</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(0,255,136,.1);color:#00ff88">💰</div>
+          <div class="kpi-body">
+            <div class="kpi-value">KSh 842K</div>
+            <div class="kpi-label">Revenue Today</div>
+            <div class="kpi-delta positive">▲ 8% vs yesterday</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(0,180,255,.1);color:#00b4ff">👤</div>
+          <div class="kpi-body">
+            <div class="kpi-value">348</div>
+            <div class="kpi-label">Active Drivers</div>
+            <div class="kpi-delta negative">▼ 3% vs yesterday</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(180,80,255,.1);color:#b450ff">⭐</div>
+          <div class="kpi-body">
+            <div class="kpi-value">4.82</div>
+            <div class="kpi-label">Avg Rating</div>
+            <div class="kpi-delta positive">▲ 0.04 vs last week</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Charts row -->
+      <section class="charts-row">
+        <div class="chart-card wide">
+          <div class="card-header">
+            <span class="card-title">Trip Volume — Last 7 Days</span>
+            <select class="card-select"><option>Daily</option><option>Weekly</option></select>
+          </div>
+          <canvas id="tripChart" height="120"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="card-header"><span class="card-title">Revenue Split</span></div>
+          <canvas id="revenueChart" height="160"></canvas>
+          <div class="donut-legend">
+            <span class="dl-item"><span class="dl-dot" style="background:#ffb400"></span>TickX 54%</span>
+            <span class="dl-item"><span class="dl-dot" style="background:#00ff88"></span>TickShare 21%</span>
+            <span class="dl-item"><span class="dl-dot" style="background:#00b4ff"></span>TickXL 15%</span>
+            <span class="dl-item"><span class="dl-dot" style="background:#b450ff"></span>TickPremium 10%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom row -->
+      <section class="bottom-row">
+
+        <!-- Recent trips table -->
+        <div class="table-card">
+          <div class="card-header">
+            <span class="card-title">Recent Trips</span>
+            <a href="trips.html" class="card-link">View all →</a>
+          </div>
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Rider</th><th>Driver</th><th>Route</th><th>Fare</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="mono">#TR-4821</td><td>Wanjiku K.</td><td>Brian M.</td>
+                <td>Westlands → CBD</td><td class="mono">KSh 450</td>
+                <td><span class="badge completed">Completed</span></td>
+              </tr>
+              <tr>
+                <td class="mono">#TR-4820</td><td>Amina S.</td><td>James O.</td>
+                <td>Karen → Upperhill</td><td class="mono">KSh 980</td>
+                <td><span class="badge active">Active</span></td>
+              </tr>
+              <tr>
+                <td class="mono">#TR-4819</td><td>Kipchoge R.</td><td>Fatuma A.</td>
+                <td>Kilimani → Gigiri</td><td class="mono">KSh 1,200</td>
+                <td><span class="badge completed">Completed</span></td>
+              </tr>
+              <tr>
+                <td class="mono">#TR-4818</td><td>Njeri W.</td><td>—</td>
+                <td>CBD → Parklands</td><td class="mono">KSh 350</td>
+                <td><span class="badge cancelled">Cancelled</span></td>
+              </tr>
+              <tr>
+                <td class="mono">#TR-4817</td><td>David K.</td><td>Samuel N.</td>
+                <td>Langata → Westlands</td><td class="mono">KSh 720</td>
+                <td><span class="badge completed">Completed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Right column -->
+        <div class="right-col">
+
+          <!-- Active drivers mini-list -->
+          <div class="mini-card">
+            <div class="card-header">
+              <span class="card-title">Top Drivers Today</span>
+              <a href="drivers.html" class="card-link">All →</a>
+            </div>
+            <div class="driver-list">
+              <div class="driver-row"><div class="d-ava">BM</div><div class="d-info"><div class="d-name">Brian Mwangi</div><div class="d-sub">18 trips · KSh 12,400</div></div><span class="badge completed">Online</span></div>
+              <div class="driver-row"><div class="d-ava">JO</div><div class="d-info"><div class="d-name">James Otieno</div><div class="d-sub">15 trips · KSh 9,800</div></div><span class="badge completed">Online</span></div>
+              <div class="driver-row"><div class="d-ava">SN</div><div class="d-info"><div class="d-name">Samuel Njoroge</div><div class="d-sub">14 trips · KSh 9,100</div></div><span class="badge active">Busy</span></div>
+              <div class="driver-row"><div class="d-ava">FA</div><div class="d-info"><div class="d-name">Fatuma Ahmed</div><div class="d-sub">12 trips · KSh 8,640</div></div><span class="badge completed">Online</span></div>
+            </div>
+          </div>
+
+          <!-- Alerts -->
+          <div class="mini-card">
+            <div class="card-header"><span class="card-title">System Alerts</span></div>
+            <div class="alert-list">
+              <div class="alert-item warning"><span>⚠️</span><span>Surge pricing active — CBD zone</span></div>
+              <div class="alert-item info"><span>ℹ️</span><span>3 driver documents pending review</span></div>
+              <div class="alert-item danger"><span>🚨</span><span>Payment gateway latency elevated</span></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div><!-- /main -->
+  </div><!-- /shell -->
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="admin.js"></script>
+  <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("/ride/admin/sw.js").then(()=>console.log("Admin SW registered")).catch(e=>console.log(e));</script>
+  <script>
+    // Trip volume bar chart
+    new Chart(document.getElementById('tripChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        datasets: [{
+          label: 'Trips',
+          data: [980, 1120, 1050, 1300, 1480, 1820, 1284],
+          backgroundColor: 'rgba(255,180,0,0.7)',
+          borderRadius: 6,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#777' } },
+          y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#777' } }
+        }
+      }
+    });
+
+    // Revenue donut
+    new Chart(document.getElementById('revenueChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['TickX','TickShare','TickXL','TickPremium'],
+        datasets: [{ data: [54,21,15,10], backgroundColor: ['#ffb400','#00ff88','#00b4ff','#b450ff'], borderWidth: 0, hoverOffset: 8 }]
+      },
+      options: { cutout: '70%', plugins: { legend: { display: false } } }
+    });
+  </script>
+</body>
+</html>
