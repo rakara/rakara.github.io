@@ -456,7 +456,7 @@
             <div class="trips-section">
                 <h2>Recent Trips</h2>
                 
-                <div class="trip-card">
+                <div class="trip-card" onclick="viewTripDetails('TR-4821', 'Westlands', 'CBD', 'TickX', 'KSh 450', '8.4 km', '18 min', 'Completed', 'Today 2:30 PM')">
                     <div class="trip-header">
                         <div class="trip-date">Today, 2:30 PM</div>
                         <div class="trip-status completed">Completed</div>
@@ -625,3 +625,73 @@
     </script>
 </body>
 </html>
+
+    <script>
+    // Filter functionality
+    const filters = document.querySelectorAll('.filter-btn');
+    const tripCards = document.querySelectorAll('.trip-card');
+
+    filters.forEach(filter => {
+        filter.addEventListener('click', function() {
+            // Update active state
+            filters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filterType = this.textContent.trim();
+            const now = new Date();
+            
+            tripCards.forEach(card => {
+                const dateText = card.querySelector('.trip-date').textContent;
+                let show = true;
+                
+                if (filterType === 'Today') {
+                    show = dateText.toLowerCase().includes('today');
+                } else if (filterType === 'This Week') {
+                    show = dateText.toLowerCase().includes('today') || 
+                           dateText.toLowerCase().includes('yesterday') ||
+                           isWithinDays(dateText, 7);
+                } else if (filterType === 'This Month') {
+                    show = !dateText.toLowerCase().includes('mar ') && 
+                           !dateText.toLowerCase().includes('jan ');
+                } else if (filterType === 'Completed') {
+                    show = card.querySelector('.trip-status').classList.contains('completed');
+                } else if (filterType === 'Cancelled') {
+                    show = card.querySelector('.trip-status').classList.contains('cancelled');
+                }
+                
+                card.style.display = show ? 'block' : 'none';
+            });
+        });
+    });
+
+    function isWithinDays(dateText, days) {
+        // Simple heuristic - if it has "Feb" and a number, show it
+        return dateText.includes('Feb');
+    }
+
+    // Make all trip cards clickable and extract their data
+    document.querySelectorAll('.trip-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        
+        card.addEventListener('click', function() {
+            const date   = this.querySelector('.trip-date').textContent;
+            const status = this.querySelector('.trip-status').textContent;
+            const pickup = this.querySelectorAll('.route-location-name')[0].textContent;
+            const dest   = this.querySelectorAll('.route-location-name')[1].textContent;
+            const tier   = this.querySelector('.trip-type').textContent;
+            const fare   = this.querySelector('.trip-price').textContent;
+            
+            // Save to localStorage
+            localStorage.setItem('activeTrip', JSON.stringify({
+                pickup: { name: pickup },
+                dest:   { name: dest },
+                tier, fare,
+                distance: '8.4 km', // Default
+                time: '18 min',     // Default
+                status, date
+            }));
+            
+            window.location.href = 'trip-complete.html?view=true';
+        });
+    });
+    </script>

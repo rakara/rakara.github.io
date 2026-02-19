@@ -486,6 +486,160 @@
         </nav>
     </div>
 
+    <!-- Top Up Modal -->
+    <div class="modal" id="topup-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Top Up Wallet</h3>
+                <button class="modal-close" onclick="closeModal('topup-modal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="amount-grid">
+                    <button class="amount-btn" onclick="setAmount(500)">KSh 500</button>
+                    <button class="amount-btn" onclick="setAmount(1000)">KSh 1,000</button>
+                    <button class="amount-btn" onclick="setAmount(2000)">KSh 2,000</button>
+                    <button class="amount-btn" onclick="setAmount(5000)">KSh 5,000</button>
+                </div>
+                <div class="form-group">
+                    <label>Or enter amount</label>
+                    <input type="number" class="form-input" id="topup-amount" placeholder="Enter amount" min="50" step="50">
+                </div>
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select class="form-input" id="topup-method">
+                        <option>M-PESA (+254 712 *** 678)</option>
+                        <option>Visa **** 4532</option>
+                        <option>Mastercard **** 8901</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('topup-modal')">Cancel</button>
+                <button class="btn-primary" onclick="confirmTopUp()">Confirm Top Up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div class="modal" id="withdraw-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Withdraw Funds</h3>
+                <button class="modal-close" onclick="closeModal('withdraw-modal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="balance-display">
+                    <div class="balance-label">Available Balance</div>
+                    <div class="balance-amount">KSh 1,240</div>
+                </div>
+                <div class="form-group">
+                    <label>Withdrawal Amount</label>
+                    <input type="number" class="form-input" id="withdraw-amount" placeholder="Enter amount" min="100" max="1240" step="50">
+                </div>
+                <div class="form-group">
+                    <label>Withdraw To</label>
+                    <select class="form-input" id="withdraw-method">
+                        <option>M-PESA (+254 712 *** 678)</option>
+                        <option>Bank Account (KCB **** 1234)</option>
+                    </select>
+                </div>
+                <div class="info-box">
+                    ℹ️ Withdrawals are processed within 24 hours. Minimum withdrawal: KSh 100
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('withdraw-modal')">Cancel</button>
+                <button class="btn-primary" onclick="confirmWithdraw()">Confirm Withdrawal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Payment Modal -->
+    <div class="modal" id="addpayment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Payment Method</h3>
+                <button class="modal-close" onclick="closeModal('addpayment-modal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-type-selector">
+                    <button class="type-btn active" onclick="selectPaymentType('mpesa')">
+                        <div class="type-icon">📱</div>
+                        <div>M-PESA</div>
+                    </button>
+                    <button class="type-btn" onclick="selectPaymentType('card')">
+                        <div class="type-icon">💳</div>
+                        <div>Card</div>
+                    </button>
+                </div>
+                
+                <div id="mpesa-form" class="payment-form">
+                    <div class="form-group">
+                        <label>M-PESA Number</label>
+                        <input type="tel" class="form-input" placeholder="+254 7XX XXX XXX" pattern="[0-9+]*">
+                    </div>
+                </div>
+                
+                <div id="card-form" class="payment-form" style="display:none">
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <input type="text" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry</label>
+                            <input type="text" class="form-input" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="text" class="form-input" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('addpayment-modal')">Cancel</button>
+                <button class="btn-primary" onclick="confirmAddPayment()">Add Payment Method</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.85); backdrop-filter:blur(8px); z-index:9999; align-items:center; justify-content:center; padding:20px; }
+        .modal.visible { display:flex; }
+        .modal-content { background:var(--bg-secondary); border:1px solid rgba(255,255,255,.1); border-radius:24px; width:100%; max-width:420px; max-height:90vh; overflow-y:auto; }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; padding:20px 24px; border-bottom:1px solid rgba(255,255,255,.05); }
+        .modal-header h3 { font-size:20px; font-weight:700; }
+        .modal-close { background:none; border:none; color:var(--text-secondary); font-size:28px; cursor:pointer; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:all .2s; }
+        .modal-close:hover { background:rgba(255,255,255,.05); color:var(--text-primary); }
+        .modal-body { padding:24px; }
+        .modal-footer { display:flex; gap:12px; padding:20px 24px; border-top:1px solid rgba(255,255,255,.05); }
+        
+        .amount-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:20px; }
+        .amount-btn { padding:16px; background:var(--bg-tertiary); border:1px solid rgba(255,255,255,.08); border-radius:12px; color:var(--text-primary); font-size:16px; font-weight:600; cursor:pointer; transition:all .2s; font-family:'JetBrains Mono',monospace; }
+        .amount-btn:hover, .amount-btn.active { background:rgba(0,255,136,.1); border-color:var(--accent-primary); color:var(--accent-primary); }
+        
+        .form-group { margin-bottom:16px; }
+        .form-group label { display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:8px; }
+        .form-input { width:100%; padding:12px 16px; background:var(--bg-tertiary); border:1px solid rgba(255,255,255,.05); border-radius:12px; color:var(--text-primary); font-size:15px; outline:none; }
+        .form-input:focus { border-color:var(--accent-primary); }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+        
+        .balance-display { background:linear-gradient(135deg,rgba(0,255,136,.1),rgba(0,204,255,.1)); border:1px solid rgba(0,255,136,.2); border-radius:16px; padding:20px; text-align:center; margin-bottom:24px; }
+        .balance-label { font-size:13px; color:var(--text-secondary); margin-bottom:8px; }
+        .balance-amount { font-family:'JetBrains Mono',monospace; font-size:32px; font-weight:800; background:linear-gradient(135deg,var(--accent-primary),var(--accent-secondary)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+        
+        .info-box { background:rgba(0,204,255,.05); border:1px solid rgba(0,204,255,.2); border-radius:12px; padding:14px; font-size:13px; color:var(--text-secondary); line-height:1.5; margin-top:16px; }
+        
+        .payment-type-selector { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px; }
+        .type-btn { padding:16px; background:var(--bg-tertiary); border:1px solid rgba(255,255,255,.08); border-radius:12px; cursor:pointer; transition:all .2s; display:flex; flex-direction:column; align-items:center; gap:8px; font-size:14px; font-weight:600; color:var(--text-primary); }
+        .type-btn:hover, .type-btn.active { background:rgba(0,255,136,.1); border-color:var(--accent-primary); }
+        .type-icon { font-size:28px; }
+        
+        .btn-primary { flex:1; padding:14px; background:linear-gradient(135deg,var(--accent-primary),var(--accent-secondary)); border:none; border-radius:12px; color:#000; font-size:15px; font-weight:700; cursor:pointer; }
+        .btn-secondary { flex:1; padding:14px; background:transparent; border:1px solid rgba(255,255,255,.15); border-radius:12px; color:var(--text-primary); font-size:15px; font-weight:600; cursor:pointer; }
+    </style>
+
     <script>
         // Payment method selection
         document.querySelectorAll('.payment-method').forEach(method => {
@@ -495,17 +649,74 @@
             });
         });
 
-        // Wallet actions
+        // Modal functions
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('visible');
+        }
+
+        function setAmount(amount) {
+            document.getElementById('topup-amount').value = amount;
+            document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function selectPaymentType(type) {
+            document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.type-btn').classList.add('active');
+            
+            document.getElementById('mpesa-form').style.display = type === 'mpesa' ? 'block' : 'none';
+            document.getElementById('card-form').style.display = type === 'card' ? 'block' : 'none';
+        }
+
+        function confirmTopUp() {
+            const amount = document.getElementById('topup-amount').value;
+            if (!amount || amount < 50) {
+                alert('Please enter an amount of at least KSh 50');
+                return;
+            }
+            alert(`✓ Top up of KSh ${amount} initiated!\n\nYou'll receive an M-PESA prompt shortly.`);
+            closeModal('topup-modal');
+        }
+
+        function confirmWithdraw() {
+            const amount = document.getElementById('withdraw-amount').value;
+            if (!amount || amount < 100) {
+                alert('Minimum withdrawal is KSh 100');
+                return;
+            }
+            if (amount > 1240) {
+                alert('Insufficient balance');
+                return;
+            }
+            alert(`✓ Withdrawal of KSh ${amount} submitted!\n\nFunds will be sent within 24 hours.`);
+            closeModal('withdraw-modal');
+        }
+
+        function confirmAddPayment() {
+            alert('✓ Payment method added successfully!');
+            closeModal('addpayment-modal');
+        }
+
+        // Wallet actions - updated to open modals
         document.querySelectorAll('.wallet-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                const action = this.textContent.includes('Top Up') ? 'top-up' : 'withdraw';
-                console.log(`Wallet ${action} clicked`);
+                const action = this.textContent.includes('Top Up') ? 'topup-modal' : 'withdraw-modal';
+                document.getElementById(action).classList.add('visible');
             });
         });
 
-        // Add payment method
+        // Add payment method - updated to open modal
         document.querySelector('.add-btn').addEventListener('click', function() {
-            console.log('Add new payment method');
+            document.getElementById('addpayment-modal').classList.add('visible');
+        });
+
+        // Close modals when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('visible');
+                }
+            });
         });
     </script>
 </body>

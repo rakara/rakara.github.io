@@ -824,7 +824,7 @@
                         <div class="action-icon">🕐</div>
                         <div class="action-label">Schedule</div>
                     </a>
-                    <div class="action-card" id="share-btn">
+                    <div class="action-card" id="share-btn" onclick="shareRide()">
                         <div class="action-icon">👥</div>
                         <div class="action-label">Share Ride</div>
                     </div>
@@ -1347,6 +1347,20 @@
             setTimeout(() => r.remove(), 600);
         });
     });
+
+    // ─── SHARE RIDE ────────────────────────────────────────────────────
+    function shareRide() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Join my TickRide!',
+                text: 'Hey! I'm taking a TickRide. Want to share and split the fare?',
+                url: window.location.href
+            }).catch(() => {});
+        } else {
+            alert('👥 Share feature: Split fare with friends!\n\n📋 Link copied to clipboard');
+            navigator.clipboard?.writeText(window.location.href);
+        }
+    }
 
     // ─── BOOT ──────────────────────────────────────────────────────────
     wireInput('pickup-input', 'pickup-clear', 'pickup-dropdown',

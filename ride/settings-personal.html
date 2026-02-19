@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Personal Information - TickRide</title>
+    <link rel="icon" href="/ride/icons/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root { --bg0:#0a0a0a; --bg1:#141414; --bg2:#1e1e1e; --text1:#ffffff; --text2:#a0a0a0; --accent:#00ff88; }
+        body { font-family:'Outfit',sans-serif; background:var(--bg0); color:var(--text1); max-width:480px; margin:0 auto; min-height:100vh; }
+        .header { padding:16px 20px; background:rgba(10,10,10,.95); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,255,255,.05); display:flex; align-items:center; gap:16px; position:sticky; top:0; z-index:100; }
+        .back-btn { width:36px; height:36px; border-radius:50%; background:var(--bg1); border:1px solid rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:18px; text-decoration:none; color:var(--text1); }
+        .header-title { flex:1; font-size:18px; font-weight:700; }
+        main { padding:20px; }
+        .info-card { background:var(--bg1); border:1px solid rgba(255,255,255,.05); border-radius:18px; padding:20px; margin-bottom:16px; }
+        .info-row { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.03); }
+        .info-row:last-child { border-bottom:none; }
+        .info-label { font-size:14px; color:var(--text2); }
+        .info-value { font-size:14px; font-weight:600; }
+        .edit-btn { width:100%; padding:16px; background:linear-gradient(135deg,var(--accent),#00ccff); border:none; border-radius:14px; color:#000; font-size:15px; font-weight:700; cursor:pointer; margin-top:20px; }
+    </style>
+</head>
+<body>
+    <div class="header"><a href="account.html" class="back-btn">←</a><div class="header-title">Personal Information</div></div>
+    <main>
+        <div class="info-card">
+            <div class="info-row"><div class="info-label">Full Name</div><div class="info-value">Wanjiku Kariuki</div></div>
+            <div class="info-row"><div class="info-label">Email</div><div class="info-value">wanjiku@example.com</div></div>
+            <div class="info-row"><div class="info-label">Phone</div><div class="info-value">+254 712 345 678</div></div>
+            <div class="info-row"><div class="info-label">Date of Birth</div><div class="info-value">March 15, 1995</div></div>
+            <div class="info-row"><div class="info-label">Gender</div><div class="info-value">Female</div></div>
+            <div class="info-row"><div class="info-label">Member Since</div><div class="info-value">January 2024</div></div>
+        </div>
+        <button class="edit-btn" onclick="window.history.back(); setTimeout(() => document.querySelector('.edit-profile-btn').click(), 100)">Edit Information</button>
+    </main>
+</body>
+</html>
