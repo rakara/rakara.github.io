@@ -1,2 +1,526 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Zeedoo • sports marketplace</title>
+    <!-- PWA meta (basic) -->
+    <meta name="theme-color" content="#0f172a">
+    <link rel="manifest" href="#">
+    <style>
+        /* GLOBAL RESET & FONTS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 1rem 0.75rem 2rem;
+        }
+
+        /* mobile-first card container */
+        .app-container {
+            max-width: 480px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2rem 2rem 1.5rem 1.5rem;
+            box-shadow: 0 10px 30px -5px rgba(0, 20, 30, 0.15);
+            overflow: hidden;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            backdrop-filter: blur(2px);
+        }
+
+        /* header – branded like a pro sports hub */
+        .app-header {
+            background: linear-gradient(145deg, #0f2b3c, #05161f);
+            color: white;
+            padding: 1.8rem 1.5rem 1.4rem;
+            position: relative;
+        }
+
+        .app-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #f59e0b, #10b981, #3b82f6);
+        }
+
+        .logo-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .logo-icon {
+            background: #fbbf24;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: #0b1e2b;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: -0.02em;
+        }
+        .logo-text span {
+            font-weight: 300;
+            color: #9ab7d3;
+            font-size: 1rem;
+            margin-left: 4px;
+        }
+
+        .tagline {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tagline i {
+            font-style: normal;
+            background: #1e3a4b;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #bcd6ed;
+        }
+
+        .header-price-note {
+            margin-top: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 0.5px solid #3a5b70;
+        }
+        .header-price-note strong {
+            color: #fcd34d;
+        }
+
+        /* main content */
+        .marketplace-grid {
+            padding: 1.5rem 1.2rem 1.8rem;
+            background: #ffffff;
+        }
+
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0b2c3d;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 5px solid #f59e0b;
+            padding-left: 0.8rem;
+        }
+
+        .category-title .light {
+            font-weight: 400;
+            color: #5f7d95;
+            font-size: 0.9rem;
+        }
+
+        /* card grid */
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .service-row {
+            background: #f9fcff;
+            border-radius: 20px;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #e9f0f5;
+            transition: all 0.15s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .service-row:hover {
+            border-color: #bcd3e3;
+            background: #f2f9ff;
+            transform: scale(1.01);
+            box-shadow: 0 6px 14px rgba(0, 50, 70, 0.08);
+        }
+
+        .service-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .service-icon {
+            width: 44px;
+            height: 44px;
+            background: white;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 6px 12px rgba(0, 20, 30, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .service-info h3 {
+            font-size: 1.04rem;
+            font-weight: 600;
+            color: #0f2a38;
+            letter-spacing: -0.01em;
+        }
+
+        .service-info .subcat {
+            font-size: 0.7rem;
+            color: #5e7e98;
+            background: #e5f0f9;
+            padding: 0.2rem 0.6rem;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .price-tag {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #0b2532;
+            background: #ffffffd0;
+            padding: 0.35rem 0.9rem;
+            border-radius: 40px;
+            border: 1px solid #cbdde9;
+            box-shadow: 0 2px 0 #cbdde9;
+            letter-spacing: -0.02em;
+        }
+
+        .price-tag small {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #5f7d97;
+            margin-right: 2px;
+        }
+
+        /* special quarantine styling (could be misprint, but we keep) */
+        .quarantine-row .service-info h3 {
+            color: #164e63;
+        }
+        .quarantine-icon {
+            background: #e0f2fe;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+            margin: 1.2rem 0 0.8rem;
+        }
+
+        .info-note {
+            background: #eef5fa;
+            border-radius: 24px;
+            padding: 0.9rem 1.2rem;
+            margin: 1.5rem 0 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: #1a445b;
+            border: 1px solid #d2e5f2;
+        }
+
+        .info-note .emoji-big {
+            font-size: 2rem;
+        }
+
+        .pwa-badge {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            color: #728faa;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        .pwa-badge span {
+            background: #ecf3f9;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* bottom nav simulation (mobile first) */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #f3f9ff;
+            border-top: 1px solid #cde0ed;
+            padding: 0.7rem 0.5rem 0.5rem;
+            margin-top: 0.8rem;
+            border-radius: 30px 30px 0 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #4b6d89;
+            font-size: 0.65rem;
+            font-weight: 500;
+            transition: 0.1s;
+        }
+        .nav-item.active {
+            color: #0f2b3c;
+            font-weight: 600;
+        }
+        .nav-item i {
+            font-size: 1.4rem;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        /* tiny responsive touches */
+        @media (max-width: 360px) {
+            .service-row {
+                padding: 0.75rem 1rem;
+            }
+            .price-tag {
+                font-size: 1.2rem;
+                padding: 0.3rem 0.6rem;
+            }
+            .service-info h3 {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* emoji fallback for non-icon fonts (just use text) */
+        .service-icon span, .nav-item span:first-child {
+            font-size: 1.6rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- PWA / mobile-first wrapper -->
+    <div class="app-container">
+        <!-- header with Zeedoo identity -->
+        <div class="app-header">
+            <div class="logo-badge">
+                <div class="logo-icon">Z</div>
+                <div class="logo-text">ZEEDOO <span>market</span></div>
+            </div>
+            <div class="tagline">
+                <span>⚡ sports & wellness hub</span>
+                <i>PWA ready</i>
+            </div>
+            <div class="header-price-note">
+                <span>💸</span> all prices in local currency · <strong>credit / cash</strong>
+            </div>
+        </div>
+
+        <!-- marketplace grid with categories from the list -->
+        <div class="marketplace-grid">
+            <div class="category-title">
+                <span>🏅 PRO SERVICES</span>
+                <span class="light">(athlete rated)</span>
+            </div>
+
+            <!-- data rows exactly from the image (with icons) -->
+            <div class="card-list">
+                <!-- Coach - 1000 -->
+                <div class="service-row">
+                    <div class="service-left">
+                        <div class="service-icon">🧑‍🏫</div>
+                        <div class="service-info">
+                            <h3>Coach</h3>
+                            <span class="subcat">personal & team</span>
+                        </div>
+                    </div>
+                    <div class="price-tag"><small></small>1000</div>
+                </div>
+
+                <!-- Teams / Indivi - 500 -->
+                <div class="service-row">
+                    <div class="service-left">
+                        <div class="service-icon">👥</div>
+                        <div class="service-info">
+                            <h3>Teams / Individual</h3>
+                            <span class="subcat">registration</span>
+                        </div>
+                    </div>
+                    <div class="price-tag"><small></small>500</div>
+                </div>
+
+                <!-- Physiotherapy - 1000 -->
+                <div class="service-row">
+                    <div class="service-left">
+                        <div class="service-icon">🦵</div>
+                        <div class="service-info">
+                            <h3>Physiotherapy</h3>
+                            <span class="subcat">recovery & massage</span>
+                        </div>
+                    </div>
+                    <div class="price-tag"><small></small>1000</div>
+                </div>
+
+                <!-- Nutritionist - 1000 -->
+                <div class="service-row">
+                    <div class="service-left">
+                        <div class="service-icon">🥗</div>
+                        <div class="service-info">
+                            <h3>Nutritionist</h3>
+                            <span class="subcat">meal plans</span>
+                        </div>
+                    </div>
+                    <div class="price-tag"><small></small>1000</div>
+                </div>
+
+                <!-- Venues - 3000 -->
+                <div class="service-row">
+                    <div class="service-left">
+                        <div class="service-icon">🏟️</div>
+                        <div class="service-info">
+                            <h3>Venues</h3>
+                            <span class="subcat">stadiums, fields</span>
+                        </div>
+                    </div>
+                    <div class="price-tag"><small></small>3000</div>
+                </div>
+
+                <!-- Events - 3000 -->
+                <div class="service-row">
+                    <div class="service-left">
+                        <div class="service-icon">🎉</div>
+                        <div class="service-info">
+                            <h3>Events</h3>
+                            <span class="subcat">tournaments, meets</span>
+                        </div>
+                    </div>
+                    <div class="price-tag"><small></small>3000</div>
+                </div>
+
+                <!-- Transport - 3000 -->
+                <div class="service-row">
+                    <div class="service-left">
+                        <div class="service-icon">🚐</div>
+                        <div class="service-info">
+                            <h3>Transport</h3>
+                            <span class="subcat">athlete shuttle</span>
+                        </div>
+                    </div>
+                    <div class="price-tag"><small></small>3000</div>
+                </div>
+
+                <!-- Rentals - 3000 -->
+                <div class="service-row">
+                    <div class="service-left">
+                        <div class="service-icon">⛳</div>
+                        <div class="service-info">
+                            <h3>Rentals</h3>
+                            <span class="subcat">gear, equipment</span>
+                        </div>
+                    </div>
+                    <div class="price-tag"><small></small>3000</div>
+                </div>
+
+                <!-- Repairs - 1000 -->
+                <div class="service-row">
+                    <div class="service-left">
+                        <div class="service-icon">🔧</div>
+                        <div class="service-info">
+                            <h3>Repairs</h3>
+                            <span class="subcat">gear fix</span>
+                        </div>
+                    </div>
+                    <div class="price-tag"><small></small>1000</div>
+                </div>
+
+                <!-- Causse de quarant - 3000 (preserved as per image) -->
+                <div class="service-row quarantine-row">
+                    <div class="service-left">
+                        <div class="service-icon quarantine-icon">🛡️</div>
+                        <div class="service-info">
+                            <h3>Causse de quarant</h3>
+                            <span class="subcat">health protocol</span>
+                        </div>
+                    </div>
+                    <div class="price-tag"><small></small>3000</div>
+                </div>
+            </div>
+
+            <!-- subtle separator -->
+            <div class="divider"></div>
+
+            <!-- info panel: quarantine clarification (since it looked like a typo, but we keep original) -->
+            <div class="info-note">
+                <span class="emoji-big">🔄</span>
+                <span><strong>Causse de quarant</strong> = quarantine-related services / injury timeout. As listed.</span>
+            </div>
+
+            <!-- quick price insight (tiers) -->
+            <div style="display: flex; gap: 0.5rem; margin: 1rem 0 0.3rem; flex-wrap: wrap;">
+                <span style="background: #d9efff; border-radius: 30px; padding: 0.2rem 1rem; font-size: 0.7rem; font-weight: 600; color:#15475f;">💎 low tier 500–1000</span>
+                <span style="background: #cdf3e0; border-radius: 30px; padding: 0.2rem 1rem; font-size: 0.7rem; font-weight: 600; color:#166349;">🔥 high tier 3000</span>
+            </div>
+
+            <!-- small PWA call to action -->
+            <div class="pwa-badge">
+                <span>📲 install as app</span>
+                <span>⚡ offline ready</span>
+            </div>
+        </div>
+
+        <!-- bottom navigation (mobile typical) -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <span>🏠</span>
+                <span>Home</span>
+            </div>
+            <div class="nav-item">
+                <span>🔍</span>
+                <span>Explore</span>
+            </div>
+            <div class="nav-item">
+                <span>📅</span>
+                <span>Bookings</span>
+            </div>
+            <div class="nav-item">
+                <span>👤</span>
+                <span>Profile</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- tiny note for demo (can be removed) -->
+    <div style="max-width:480px; width:100%; margin-top: 0.8rem; font-size:0.6rem; color:#7f98af; text-align: center; padding:0 1rem;">
+        Zeedoo marketplace concept • prices as per spec: coach 1000, teams/indiv 500, physio 1000, nutritionist 1000, venues 3000, events 3000, transport 3000, rentals 3000, repairs 1000, causse de quarant 3000.
+    </div>
+</body>
 </html>
