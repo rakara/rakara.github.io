@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b35">
+    <title>Confirm Order - TickGas</title>
+    <link rel="icon" type="image/png" href="/ride/icons/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        :root {
+            --bg0: #0a0a0a;
+            --bg1: #141414;
+            --bg2: #1e1e1e;
+            --text1: #ffffff;
+            --text2: #a0a0a0;
+            --accent: #ff6b35;
+            --accent2: #ff9f1c;
+            --gradient: linear-gradient(135deg, #ff6b35, #ff9f1c);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg0);
+            color: var(--text1);
+            min-height: 100vh;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 159, 28, 0.06) 0%, transparent 50%);
+            animation: backgroundFloat 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(5%, 5%) rotate(120deg); }
+            66% { transform: translate(-5%, 5%) rotate(240deg); }
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        header {
+            padding: 16px 20px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .back-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            text-decoration: none;
+            color: var(--text1);
+        }
+        
+        .header-title {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        /* Main */
+        main {
+            padding: 24px 20px;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        
+        .page-subtitle {
+            font-size: 15px;
+            color: var(--text2);
+            margin-bottom: 32px;
+        }
+        
+        /* Order Card */
+        .order-card {
+            background: var(--bg1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .card-section {
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-section:first-child {
+            padding-top: 0;
+        }
+        
+        .card-section:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .supplier-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .supplier-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .supplier-info {
+            flex: 1;
+        }
+        
+        .supplier-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .supplier-meta {
+            font-size: 13px;
+            color: var(--text2);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-left: 8px;
+        }
+        
+        /* Order Details */
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+        
+        .detail-label {
+            font-size: 15px;
+            color: var(--text2);
+        }
+        
+        .detail-value {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .gas-size {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Delivery */
+        .delivery-info {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .delivery-icon {
+            font-size: 24px;
+        }
+        
+        .delivery-text {
+            flex: 1;
+        }
+        
+        .delivery-address {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .delivery-time {
+            font-size: 13px;
+            color: var(--text2);
+        }
+        
+        /* Price Summary */
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 15px;
+        }
+        
+        .price-row.total {
+            padding-top: 16px;
+            margin-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .price-value {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .total .price-value {
+            font-size: 24px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Payment Method */
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+        }
+        
+        .payment-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .payment-info {
+            flex: 1;
+        }
+        
+        .payment-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .payment-desc {
+            font-size: 13px;
+            color: var(--text2);
+        }
+        
+        /* Phone Input */
+        .phone-input-wrap {
+            margin-top: 16px;
+        }
+        
+        .phone-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            color: var(--text1);
+            font-size: 15px;
+            outline: none;
+        }
+        
+        .phone-input:focus {
+            border-color: var(--accent);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 16px;
+            color: #000;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+            margin-bottom: 12px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(255, 107, 53, 0.4);
+        }
+        
+        .btn-secondary {
+            width: 100%;
+            padding: 16px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            color: var(--text1);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        /* Info */
+        .info-box {
+            background: rgba(255, 107, 53, 0.08);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: var(--text2);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn">←</a>
+            <div class="header-title">Confirm Order</div>
+        </header>
+        
+        <main>
+            <h1 class="page-title">Review Your Order</h1>
+            <p class="page-subtitle">Check details before proceeding to payment</p>
+            
+            <!-- Supplier -->
+            <div class="order-card">
+                <div class="card-section">
+                    <div class="section-label">Supplier</div>
+                    <div class="supplier-header">
+                        <div class="supplier-icon">🔥</div>
+                        <div class="supplier-info">
+                            <div class="supplier-name" id="supplier-name">Total Gas</div>
+                            <div class="supplier-meta">
+                                ⭐ <span id="supplier-rating">4.8</span>
+                                <span class="badge">✓ Verified</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Order Details -->
+                <div class="card-section">
+                    <div class="section-label">Order Details</div>
+                    <div class="detail-row">
+                        <div class="detail-label">Gas Cylinder</div>
+                        <div class="detail-value">
+                            <div class="gas-size">
+                                <span id="gas-size">13 kg</span>
+                                <span>🔥🔥</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Quantity</div>
+                        <div class="detail-value">1 Cylinder</div>
+                    </div>
+                </div>
+                
+                <!-- Delivery -->
+                <div class="card-section">
+                    <div class="section-label">Delivery Address</div>
+                    <div class="delivery-info">
+                        <div class="delivery-icon">📍</div>
+                        <div class="delivery-text">
+                            <div class="delivery-address" id="delivery-address">Nairobi CBD</div>
+                            <div class="delivery-time">🚚 Expected in <span id="delivery-time">15-25 min</span></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Price -->
+                <div class="card-section">
+                    <div class="section-label">Price Summary</div>
+                    <div class="price-row">
+                        <span>Gas Cylinder (<span id="summary-size">13kg</span>)</span>
+                        <span class="price-value">KSh <span id="gas-price">3,200</span></span>
+                    </div>
+                    <div class="price-row">
+                        <span>Delivery Fee</span>
+                        <span class="price-value">Free</span>
+                    </div>
+                    <div class="price-row total">
+                        <span>Total Amount</span>
+                        <span class="price-value">KSh <span id="total-price">3,200</span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment -->
+            <div class="order-card">
+                <div class="section-label">Payment Method</div>
+                <div class="payment-method">
+                    <div class="payment-icon">📱</div>
+                    <div class="payment-info">
+                        <div class="payment-name">M-PESA</div>
+                        <div class="payment-desc">Pay securely with your mobile money</div>
+                    </div>
+                </div>
+                
+                <div class="phone-input-wrap">
+                    <input 
+                        type="tel" 
+                        class="phone-input" 
+                        id="phone-input"
+                        placeholder="Enter M-PESA number (e.g. 0712345678)"
+                        value="0712345678"
+                    />
+                </div>
+            </div>
+            
+            <div class="info-box">
+                ℹ️ You'll receive an M-PESA prompt on your phone to complete payment. The order will be confirmed once payment is successful.
+            </div>
+            
+            <button class="btn-primary" id="pay-btn">
+                Pay KSh <span id="pay-amount">3,200</span> via M-PESA
+            </button>
+            
+            <button class="btn-secondary" onclick="history.back()">
+                Back to Suppliers
+            </button>
+        </main>
+    </div>
+    
+    <script>
+        // Load order from localStorage
+        const orderData = JSON.parse(localStorage.getItem('gasOrder') || '{}');
+        
+        if (orderData.supplier) {
+            document.getElementById('supplier-name').textContent = orderData.supplier.name;
+            document.getElementById('supplier-rating').textContent = orderData.supplier.rating;
+            document.getElementById('gas-size').textContent = orderData.size;
+            document.getElementById('summary-size').textContent = orderData.size;
+            document.getElementById('delivery-address').textContent = orderData.location.name;
+            document.getElementById('delivery-time').textContent = orderData.supplier.deliveryTime;
+            
+            const price = orderData.price.toLocaleString();
+            document.getElementById('gas-price').textContent = price;
+            document.getElementById('total-price').textContent = price;
+            document.getElementById('pay-amount').textContent = price;
+        }
+        
+        // Pay button
+        document.getElementById('pay-btn').addEventListener('click', () => {
+            const phone = document.getElementById('phone-input').value;
+            
+            if (!phone || phone.length < 10) {
+                alert('Please enter a valid M-PESA phone number');
+                return;
+            }
+            
+            // Save payment info
+            localStorage.setItem('gasPayment', JSON.stringify({
+                phone,
+                amount: orderData.price,
+                timestamp: new Date().toISOString()
+            }));
+            
+            window.location.href = 'checkout.html';
+        });
+    </script>
+</body>
+</html>

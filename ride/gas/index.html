@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b35">
+    <title>TickGas - Fast Gas Delivery</title>
+    <link rel="icon" type="image/png" href="/ride/icons/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        :root {
+            --bg0: #0a0a0a;
+            --bg1: #141414;
+            --bg2: #1e1e1e;
+            --text1: #ffffff;
+            --text2: #a0a0a0;
+            --accent: #ff6b35;
+            --accent2: #ff9f1c;
+            --gradient: linear-gradient(135deg, #ff6b35, #ff9f1c);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg0);
+            color: var(--text1);
+            min-height: 100vh;
+        }
+        
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 159, 28, 0.06) 0%, transparent 50%);
+            animation: backgroundFloat 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(5%, 5%) rotate(120deg); }
+            66% { transform: translate(-5%, 5%) rotate(240deg); }
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        header {
+            padding: 20px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            font-size: 14px;
+            color: var(--text2);
+            margin-top: 4px;
+        }
+        
+        /* Main */
+        main {
+            padding: 24px 20px;
+        }
+        
+        .greeting {
+            margin-bottom: 32px;
+        }
+        
+        .greeting h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .greeting p {
+            font-size: 15px;
+            color: var(--text2);
+        }
+        
+        /* Form Card */
+        .form-card {
+            background: var(--bg1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.1);
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text2);
+            margin-bottom: 10px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .location-input-wrap {
+            position: relative;
+        }
+        
+        .location-input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            background: var(--bg2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            color: var(--text1);
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .location-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        
+        .location-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--text2);
+        }
+        
+        .locate-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 8px 16px;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 10px;
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .locate-btn:hover {
+            background: rgba(255, 107, 53, 0.2);
+        }
+        
+        /* Size Selector */
+        .size-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .size-option {
+            padding: 20px;
+            background: var(--bg2);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .size-option:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+            background: rgba(255, 107, 53, 0.05);
+        }
+        
+        .size-option.selected {
+            border-color: var(--accent);
+            background: rgba(255, 107, 53, 0.1);
+        }
+        
+        .size-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+        
+        .size-label {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .size-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        /* Suppliers Section */
+        .suppliers-section {
+            margin-bottom: 24px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .suppliers-loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text2);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 16px;
+            border: 3px solid rgba(255, 107, 53, 0.2);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .supplier-card {
+            background: var(--bg1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .supplier-card:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .supplier-card.selected {
+            border-color: var(--accent);
+            background: rgba(255, 107, 53, 0.05);
+        }
+        
+        .supplier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .supplier-info {
+            flex: 1;
+        }
+        
+        .supplier-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .supplier-location {
+            font-size: 13px;
+            color: var(--text2);
+            margin-bottom: 8px;
+        }
+        
+        .supplier-rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .supplier-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .supplier-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .delivery-time {
+            font-size: 14px;
+            color: var(--text2);
+        }
+        
+        .supplier-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 22px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Order Button */
+        .order-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 16px;
+            color: #000;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+            margin-bottom: 20px;
+        }
+        
+        .order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(255, 107, 53, 0.4);
+        }
+        
+        .order-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Info Banner */
+        .info-banner {
+            background: rgba(255, 107, 53, 0.08);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 12px;
+        }
+        
+        .info-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .info-text {
+            font-size: 14px;
+            color: var(--text2);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🔥 TickGas</div>
+            <div class="tagline">Fast Cooking Gas Delivery</div>
+        </header>
+        
+        <main>
+            <div class="greeting">
+                <h1>Order Cooking Gas</h1>
+                <p>Delivered to your doorstep in minutes</p>
+            </div>
+            
+            <!-- Form -->
+            <div class="form-card">
+                <div class="input-group">
+                    <label class="input-label">Delivery Location</label>
+                    <div class="location-input-wrap">
+                        <span class="location-icon">📍</span>
+                        <input 
+                            type="text" 
+                            class="location-input" 
+                            id="location-input"
+                            placeholder="Enter your delivery address"
+                            autocomplete="off"
+                        />
+                        <button class="locate-btn" id="locate-btn">Use My Location</button>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label">Gas Cylinder Size</label>
+                    <div class="size-selector">
+                        <div class="size-option" data-size="6kg" data-base-price="1800">
+                            <div class="size-icon">🔥</div>
+                            <div class="size-label">6 kg</div>
+                            <div class="size-price">KSh 1,800</div>
+                        </div>
+                        <div class="size-option selected" data-size="13kg" data-base-price="3200">
+                            <div class="size-icon">🔥🔥</div>
+                            <div class="size-label">13 kg</div>
+                            <div class="size-price">KSh 3,200</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Info Banner -->
+            <div class="info-banner">
+                <div class="info-icon">💡</div>
+                <div class="info-text">
+                    <strong>Free delivery</strong> within 5km radius. Prices may vary by supplier and location.
+                </div>
+            </div>
+            
+            <!-- Suppliers -->
+            <div class="suppliers-section" id="suppliers-section">
+                <h2 class="section-title">Available Suppliers</h2>
+                
+                <div id="suppliers-list">
+                    <div class="suppliers-loading">
+                        <div class="spinner"></div>
+                        <p>Finding suppliers near you...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Button -->
+            <button class="order-btn" id="order-btn" disabled>
+                Select a supplier to continue
+            </button>
+        </main>
+    </div>
+    
+    <script>
+        // State
+        let selectedSize = '13kg';
+        let selectedSupplier = null;
+        let userLocation = { lat: -1.2921, lng: 36.8219, name: 'Nairobi CBD' };
+        
+        // Mock supplier data (in production, this would come from an API)
+        const suppliers = [
+            { id: 1, name: 'Total Gas', location: 'Westlands', distance: '2.3 km', rating: 4.8, deliveryTime: '15-25 min', verified: true, basePrices: { '6kg': 1800, '13kg': 3200 } },
+            { id: 2, name: 'K-Gas', location: 'Kilimani', distance: '3.1 km', rating: 4.9, deliveryTime: '20-30 min', verified: true, basePrices: { '6kg': 1750, '13kg': 3150 } },
+            { id: 3, name: 'ProGas', location: 'CBD', distance: '1.8 km', rating: 4.7, deliveryTime: '10-20 min', verified: true, basePrices: { '6kg': 1850, '13kg': 3250 } },
+            { id: 4, name: 'AfriGas', location: 'Upperhill', distance: '4.2 km', rating: 4.6, deliveryTime: '25-35 min', verified: false, basePrices: { '6kg': 1780, '13kg': 3180 } },
+        ];
+        
+        // Size selection
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.size-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedSize = this.dataset.size;
+                renderSuppliers();
+            });
+        });
+        
+        // Location
+        document.getElementById('locate-btn').addEventListener('click', () => {
+            const btn = document.getElementById('locate-btn');
+            btn.textContent = 'Locating...';
+            
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        userLocation = {
+                            lat: pos.coords.latitude,
+                            lng: pos.coords.longitude,
+                            name: 'Your Location'
+                        };
+                        document.getElementById('location-input').value = 'Current Location';
+                        btn.textContent = '✓ Located';
+                        setTimeout(() => {
+                            btn.textContent = 'Use My Location';
+                        }, 2000);
+                    },
+                    () => {
+                        document.getElementById('location-input').value = 'Nairobi CBD';
+                        btn.textContent = 'Use My Location';
+                    }
+                );
+            }
+        });
+        
+        // Render suppliers
+        function renderSuppliers() {
+            const container = document.getElementById('suppliers-list');
+            
+            const html = suppliers.map(supplier => `
+                <div class="supplier-card" data-id="${supplier.id}">
+                    <div class="supplier-header">
+                        <div class="supplier-info">
+                            <div class="supplier-name">${supplier.name}</div>
+                            <div class="supplier-location">📍 ${supplier.location} · ${supplier.distance}</div>
+                            <div class="supplier-rating">
+                                ⭐ ${supplier.rating} ${supplier.verified ? '<span class="supplier-badge">✓ Verified</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="supplier-footer">
+                        <div class="delivery-time">🚚 ${supplier.deliveryTime}</div>
+                        <div class="supplier-price">KSh ${supplier.basePrices[selectedSize].toLocaleString()}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = html;
+            
+            // Add click handlers
+            document.querySelectorAll('.supplier-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('.supplier-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedSupplier = suppliers.find(s => s.id === parseInt(this.dataset.id));
+                    updateOrderButton();
+                });
+            });
+        }
+        
+        function updateOrderButton() {
+            const btn = document.getElementById('order-btn');
+            if (selectedSupplier) {
+                btn.disabled = false;
+                btn.textContent = `Order ${selectedSize} from ${selectedSupplier.name} - KSh ${selectedSupplier.basePrices[selectedSize].toLocaleString()}`;
+            }
+        }
+        
+        // Order button
+        document.getElementById('order-btn').addEventListener('click', () => {
+            if (selectedSupplier) {
+                // Save order data to localStorage
+                localStorage.setItem('gasOrder', JSON.stringify({
+                    supplier: selectedSupplier,
+                    size: selectedSize,
+                    location: userLocation,
+                    price: selectedSupplier.basePrices[selectedSize]
+                }));
+                window.location.href = 'confirm.html';
+            }
+        });
+        
+        // Initialize
+        setTimeout(() => {
+            renderSuppliers();
+            document.getElementById('location-input').value = 'Nairobi CBD';
+        }, 800);
+        
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/ride/gas/sw.js')
+                    .then(reg => console.log('TickGas SW registered'))
+                    .catch(err => console.log('SW registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
