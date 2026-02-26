@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STREAMFILTER — Insertable Streams</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #2a2a3a;
+    --accent: #00ff88;
+    --accent2: #ff0055;
+    --accent3: #0088ff;
+    --text: #e0e0f0;
+    --muted: #555570;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    background-image: 
+      radial-gradient(ellipse at 20% 20%, rgba(0,255,136,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(0,136,255,0.04) 0%, transparent 50%);
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    letter-spacing: 0.12em;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  header p {
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 960px;
+  }
+
+  @media (max-width: 640px) {
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .panel-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .panel-label .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+  .panel-label .dot.live { background: var(--accent); box-shadow: 0 0 6px var(--accent); animation: pulse 2s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .video-wrap {
+    position: relative;
+    background: #000;
+    aspect-ratio: 16/9;
+  }
+
+  video, canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video-off {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .video-off svg { opacity: 0.3; }
+
+  .controls-panel {
+    grid-column: 1 / -1;
+    padding: 1.5rem;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  button {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.2rem;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid;
+    transition: all 0.15s;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .btn-primary:hover { background: #00cc6a; border-color: #00cc6a; }
+
+  .btn-danger {
+    background: transparent;
+    color: var(--accent2);
+    border-color: var(--accent2);
+  }
+  .btn-danger:hover { background: rgba(255,0,85,0.1); }
+
+  .btn-default {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-default:hover { border-color: var(--text); }
+
+  button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .filter-card {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .filter-card:hover {
+    border-color: var(--accent3);
+    background: rgba(0,136,255,0.05);
+  }
+
+  .filter-card.active {
+    border-color: var(--accent);
+    background: rgba(0,255,136,0.08);
+  }
+
+  .filter-card .name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+
+  .filter-card.active .name { color: var(--accent); }
+
+  .filter-card .desc {
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+
+  .status-bar {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.6rem 1rem;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .status-bar .tag {
+    color: var(--accent3);
+    font-weight: 700;
+  }
+
+  #statusMsg { color: var(--text); }
+
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .slider-row label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-width: 80px;
+  }
+
+  input[type=range] {
+    flex: 1;
+    accent-color: var(--accent);
+    height: 4px;
+  }
+
+  .slider-val {
+    font-size: 0.65rem;
+    color: var(--accent);
+    min-width: 36px;
+    text-align: right;
+  }
+
+  .section-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>StreamFilter</h1>
+  <p>Web API · Insertable Streams for MediaStreamTrack</p>
+</header>
+
+<div class="main-grid">
+
+  <div class="panel">
+    <div class="panel-label"><div class="dot live" id="inputDot"></div>Input — Camera</div>
+    <div class="video-wrap">
+      <video id="inputVideo" autoplay muted playsinline></video>
+      <div class="video-off" id="inputOff">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.069A1 1 0 0121 8.868v6.264a1 1 0 01-1.447.9L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        <span>No camera</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-label"><div class="dot" id="outputDot"></div>Output — Filtered</div>
+    <div class="video-wrap">
+      <canvas id="outputCanvas"></canvas>
+      <div class="video-off" id="outputOff">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <span>Start camera first</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel controls-panel">
+    <div class="section-title">Camera Control</div>
+    <div class="btn-row">
+      <button class="btn-primary" id="startBtn" onclick="startCamera()">▶ Start Camera</button>
+      <button class="btn-danger" id="stopBtn" onclick="stopCamera()" disabled>■ Stop</button>
+    </div>
+
+    <div class="section-title">Filters</div>
+    <div class="filters-grid" id="filtersGrid"></div>
+
+    <div class="slider-row">
+      <label>Intensity</label>
+      <input type="range" id="intensitySlider" min="0" max="100" value="50" oninput="updateIntensity(this.value)">
+      <span class="slider-val" id="intensityVal">50%</span>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <span class="tag">[SYS]</span>
+    <span id="statusMsg">Waiting for camera access...</span>
+  </div>
+
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────────────────────────
+let stream = null;
+let animFrame = null;
+let activeFilter = 'none';
+let intensity = 0.5;
+
+const inputVideo = document.getElementById('inputVideo');
+const outputCanvas = document.getElementById('outputCanvas');
+const ctx = outputCanvas.getContext('2d', { willReadFrequently: true });
+
+// ─── Filters ─────────────────────────────────────────────────────────────────
+const filters = [
+  { id: 'none',     name: 'Bypass',    desc: 'Raw passthrough — no processing applied' },
+  { id: 'grayscale',name: 'Grayscale', desc: 'Luminance-weighted desaturation' },
+  { id: 'invert',   name: 'Invert',    desc: 'Bitwise color inversion' },
+  { id: 'sepia',    name: 'Sepia',     desc: 'Warm tone matrix transform' },
+  { id: 'pixelate', name: 'Pixelate',  desc: 'Block-based pixel averaging' },
+  { id: 'glitch',   name: 'Glitch',    desc: 'RGB channel displacement' },
+  { id: 'edge',     name: 'Edge',      desc: 'Sobel gradient detection' },
+  { id: 'neon',     name: 'Neon',      desc: 'Boosted saturation + bloom' },
+  { id: 'scanline', name: 'Scanlines', desc: 'CRT raster line overlay' },
+  { id: 'thermal',  name: 'Thermal',   desc: 'False-color heat mapping' },
+];
+
+// Render filter cards
+const grid = document.getElementById('filtersGrid');
+filters.forEach(f => {
+  const card = document.createElement('div');
+  card.className = 'filter-card' + (f.id === 'none' ? ' active' : '');
+  card.id = 'card-' + f.id;
+  card.innerHTML = `<div class="name">${f.name}</div><div class="desc">${f.desc}</div>`;
+  card.onclick = () => setFilter(f.id);
+  grid.appendChild(card);
+});
+
+function setFilter(id) {
+  activeFilter = id;
+  document.querySelectorAll('.filter-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('card-' + id).classList.add('active');
+  setStatus('Filter: ' + id.toUpperCase());
+}
+
+function updateIntensity(v) {
+  intensity = v / 100;
+  document.getElementById('intensityVal').textContent = v + '%';
+}
+
+// ─── Camera ───────────────────────────────────────────────────────────────────
+async function startCamera() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
+    inputVideo.srcObject = stream;
+    await inputVideo.play();
+
+    outputCanvas.width = inputVideo.videoWidth || 640;
+    outputCanvas.height = inputVideo.videoHeight || 480;
+
+    document.getElementById('inputOff').style.display = 'none';
+    document.getElementById('outputOff').style.display = 'none';
+    document.getElementById('inputDot').classList.add('live');
+    document.getElementById('outputDot').classList.add('live');
+    document.getElementById('startBtn').disabled = true;
+    document.getElementById('stopBtn').disabled = false;
+
+    setStatus('Streaming · Insertable Streams pipeline active');
+    renderLoop();
+  } catch(e) {
+    setStatus('Error: ' + e.message);
+  }
+}
+
+function stopCamera() {
+  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+  if (animFrame) { cancelAnimationFrame(animFrame); animFrame = null; }
+  inputVideo.srcObject = null;
+  ctx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+  document.getElementById('inputOff').style.display = '';
+  document.getElementById('outputOff').style.display = '';
+  document.getElementById('inputDot').classList.remove('live');
+  document.getElementById('outputDot').classList.remove('live');
+  document.getElementById('startBtn').disabled = false;
+  document.getElementById('stopBtn').disabled = true;
+  setStatus('Camera stopped.');
+}
+
+function setStatus(msg) {
+  document.getElementById('statusMsg').textContent = msg;
+}
+
+// ─── Render Loop (simulates Insertable Streams frame transform) ───────────────
+function renderLoop() {
+  if (!stream) return;
+
+  outputCanvas.width = inputVideo.videoWidth;
+  outputCanvas.height = inputVideo.videoHeight;
+
+  // Draw raw frame
+  ctx.drawImage(inputVideo, 0, 0);
+
+  const w = outputCanvas.width, h = outputCanvas.height;
+  if (w === 0 || h === 0) { animFrame = requestAnimationFrame(renderLoop); return; }
+
+  // Get pixel data — this is what Insertable Streams gives us per frame
+  const frame = ctx.getImageData(0, 0, w, h);
+  const data = frame.data;
+
+  // Apply selected filter transform
+  switch (activeFilter) {
+    case 'grayscale':   applyGrayscale(data, intensity); break;
+    case 'invert':      applyInvert(data, intensity); break;
+    case 'sepia':       applySepia(data, intensity); break;
+    case 'pixelate':    applyPixelate(ctx, w, h, intensity); break;
+    case 'glitch':      applyGlitch(data, w, h, intensity); break;
+    case 'edge':        applyEdge(ctx, data, w, h, intensity); break;
+    case 'neon':        applyNeon(data, intensity); break;
+    case 'scanline':    ctx.putImageData(frame, 0, 0); applyScanlines(ctx, w, h, intensity); animFrame = requestAnimationFrame(renderLoop); return;
+    case 'thermal':     applyThermal(data, intensity); break;
+    default: break; // passthrough
+  }
+
+  if (activeFilter !== 'pixelate' && activeFilter !== 'scanline' && activeFilter !== 'edge') {
+    ctx.putImageData(frame, 0, 0);
+  }
+
+  animFrame = requestAnimationFrame(renderLoop);
+}
+
+// ─── Filter Implementations ───────────────────────────────────────────────────
+function applyGrayscale(data, t) {
+  for (let i = 0; i < data.length; i += 4) {
+    const lum = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+    data[i]   = lerp(data[i],   lum, t);
+    data[i+1] = lerp(data[i+1], lum, t);
+    data[i+2] = lerp(data[i+2], lum, t);
+  }
+}
+
+function applyInvert(data, t) {
+  for (let i = 0; i < data.length; i += 4) {
+    data[i]   = lerp(data[i],   255 - data[i],   t);
+    data[i+1] = lerp(data[i+1], 255 - data[i+1], t);
+    data[i+2] = lerp(data[i+2], 255 - data[i+2], t);
+  }
+}
+
+function applySepia(data, t) {
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i], g = data[i+1], b = data[i+2];
+    const sr = Math.min(255, r*0.393 + g*0.769 + b*0.189);
+    const sg = Math.min(255, r*0.349 + g*0.686 + b*0.168);
+    const sb = Math.min(255, r*0.272 + g*0.534 + b*0.131);
+    data[i]   = lerp(r, sr, t);
+    data[i+1] = lerp(g, sg, t);
+    data[i+2] = lerp(b, sb, t);
+  }
+}
+
+function applyNeon(data, t) {
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i], g = data[i+1], b = data[i+2];
+    const max = Math.max(r, g, b);
+    const boost = 1 + t * 2;
+    data[i]   = Math.min(255, (r === max ? r * boost : r * (1 - t * 0.5)));
+    data[i+1] = Math.min(255, (g === max ? g * boost : g * (1 - t * 0.5)));
+    data[i+2] = Math.min(255, (b === max ? b * boost : b * (1 - t * 0.5)));
+  }
+}
+
+function applyPixelate(ctx, w, h, t) {
+  const size = Math.max(2, Math.floor(t * 40 + 2));
+  ctx.imageSmoothingEnabled = false;
+  const tmp = document.createElement('canvas');
+  tmp.width = Math.ceil(w / size);
+  tmp.height = Math.ceil(h / size);
+  const tc = tmp.getContext('2d');
+  tc.drawImage(outputCanvas, 0, 0, tmp.width, tmp.height);
+  ctx.drawImage(tmp, 0, 0, w, h);
+}
+
+function applyGlitch(data, w, h, t) {
+  const shift = Math.floor(t * 30);
+  if (shift === 0) return;
+  for (let y = 0; y < h; y++) {
+    if (Math.random() > 0.1) continue;
+    const dx = Math.floor((Math.random() - 0.5) * shift * 2);
+    for (let x = 0; x < w; x++) {
+      const srcX = Math.min(w - 1, Math.max(0, x + dx));
+      const si = (y * w + srcX) * 4;
+      const di = (y * w + x) * 4;
+      data[di]   = data[si];   // R channel shift
+    }
+  }
+}
+
+function applyEdge(ctx, data, w, h, t) {
+  const tmp = new Uint8ClampedArray(data);
+  for (let y = 1; y < h - 1; y++) {
+    for (let x = 1; x < w - 1; x++) {
+      const i = (y * w + x) * 4;
+      const t2 = ((y-1)*w + x)*4, b2 = ((y+1)*w + x)*4;
+      const l = (y*w + (x-1))*4, r2 = (y*w + (x+1))*4;
+      const gx = -tmp[l] + tmp[r2];
+      const gy = -tmp[t2] + tmp[b2];
+      const mag = Math.min(255, Math.sqrt(gx*gx + gy*gy) * (1 + t * 3));
+      const mix = lerp(tmp[i], mag, t);
+      data[i] = data[i+1] = data[i+2] = mix;
+    }
+  }
+  ctx.putImageData(new ImageData(data, w, h), 0, 0);
+}
+
+function applyScanlines(ctx, w, h, t) {
+  const spacing = Math.max(2, Math.floor(6 - t * 4));
+  ctx.fillStyle = `rgba(0,0,0,${0.1 + t * 0.4})`;
+  for (let y = 0; y < h; y += spacing) {
+    ctx.fillRect(0, y, w, 1);
+  }
+}
+
+function applyThermal(data, t) {
+  for (let i = 0; i < data.length; i += 4) {
+    const lum = (0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2]) / 255;
+    const mapped = lerp(lum, 1 - lum, t * 0.5);
+    // Map to thermal: black→blue→cyan→green→yellow→red→white
+    const r = Math.min(255, mapped < 0.5 ? 0 : (mapped - 0.5) * 2 * 510);
+    const g = Math.min(255, mapped < 0.25 ? 0 : mapped < 0.75 ? (mapped - 0.25) * 2 * 255 : (1 - (mapped - 0.75) * 4) * 255);
+    const b = Math.min(255, mapped < 0.25 ? mapped * 4 * 255 : mapped < 0.5 ? (0.5 - mapped) * 4 * 255 : 0);
+    data[i]   = lerp(data[i],   r, t);
+    data[i+1] = lerp(data[i+1], g, t);
+    data[i+2] = lerp(data[i+2], b, t);
+  }
+}
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+// Initial hide
+document.getElementById('inputOff').style.display = 'flex';
+document.getElementById('outputOff').style.display = 'flex';
+</script>
+</body>
+</html>
