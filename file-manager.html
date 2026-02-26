@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FILE_SYS // TERMINAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080a0c;
+    --bg2: #0d1117;
+    --bg3: #111820;
+    --border: #1a2430;
+    --border2: #243040;
+    --green: #00ff88;
+    --red: #ff0055;
+    --blue: #0088ff;
+    --dim: #2a3a4a;
+    --muted: #4a6070;
+    --text: #8aacbc;
+    --text-bright: #c8dce8;
+    --mono: 'Space Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    overflow: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(0,136,255,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 100% 0%, rgba(0,255,136,0.03) 0%, transparent 60%),
+      radial-gradient(ellipse at 100% 100%, rgba(255,0,85,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 0% 100%, rgba(0,136,255,0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #app {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,10,12,0.9);
+    flex-shrink: 0;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .title {
+    font-family: var(--display);
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--text-bright);
+    line-height: 1;
+  }
+
+  .title span { color: var(--green); }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--green); }
+    50% { opacity: 0.3; box-shadow: 0 0 3px var(--green); }
+  }
+
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .meta-item {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .meta-item span {
+    color: var(--blue);
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: none;
+  }
+
+  /* TOOLBAR */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    flex-shrink: 0;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn:hover {
+    background: var(--bg3);
+    border-color: var(--text);
+    color: var(--text-bright);
+  }
+
+  .btn.primary {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .btn.primary:hover {
+    background: rgba(0,255,136,0.08);
+    box-shadow: 0 0 12px rgba(0,255,136,0.15);
+  }
+
+  .btn.danger {
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  .btn.danger:hover {
+    background: rgba(255,0,85,0.08);
+    box-shadow: 0 0 12px rgba(255,0,85,0.15);
+  }
+
+  .btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+  .toolbar-sep {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    margin: 0 4px;
+  }
+
+  .toolbar-spacer { flex: 1; }
+
+  /* PATH BAR */
+  .pathbar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 20px;
+    height: 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .path-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 12px;
+    white-space: nowrap;
+  }
+
+  .path-segments {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .path-seg {
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 2px 6px;
+    transition: color 0.12s;
+    white-space: nowrap;
+  }
+
+  .path-seg:hover { color: var(--blue); }
+  .path-seg.active { color: var(--text-bright); }
+
+  .path-arrow {
+    color: var(--dim);
+    font-size: 10px;
+  }
+
+  /* MAIN AREA */
+  .main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 220px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--bg2);
+  }
+
+  .sidebar-section {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-label {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--dim);
+    padding: 0 16px 8px;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: background 0.12s;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .sidebar-item:hover { background: var(--bg3); color: var(--text); }
+  .sidebar-item.active { background: rgba(0,136,255,0.06); color: var(--blue); }
+  .sidebar-item svg { width: 13px; height: 13px; flex-shrink: 0; opacity: 0.7; }
+
+  .sidebar-item .item-badge {
+    margin-left: auto;
+    font-size: 9px;
+    color: var(--dim);
+    letter-spacing: 1px;
+  }
+
+  /* CONTENT */
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* FILE LIST */
+  .file-list {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .file-list::-webkit-scrollbar { width: 4px; }
+  .file-list::-webkit-scrollbar-track { background: transparent; }
+  .file-list::-webkit-scrollbar-thumb { background: var(--border2); }
+  .file-list::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  .list-header {
+    display: grid;
+    grid-template-columns: 24px 1fr 100px 120px 80px;
+    gap: 0;
+    padding: 6px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .list-header-cell {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    cursor: pointer;
+    padding: 2px 4px;
+    transition: color 0.12s;
+  }
+
+  .list-header-cell:hover { color: var(--text); }
+  .list-header-cell.sorted { color: var(--blue); }
+
+  .file-row {
+    display: grid;
+    grid-template-columns: 24px 1fr 100px 120px 80px;
+    gap: 0;
+    padding: 5px 20px;
+    border-bottom: 1px solid rgba(26,36,48,0.5);
+    cursor: pointer;
+    transition: background 0.08s;
+    align-items: center;
+  }
+
+  .file-row:hover { background: rgba(255,255,255,0.02); }
+
+  .file-row.selected {
+    background: rgba(0,136,255,0.07);
+    border-color: rgba(0,136,255,0.15);
+  }
+
+  .file-row.cut { opacity: 0.4; }
+
+  .file-icon { display: flex; align-items: center; }
+  .file-icon svg { width: 13px; height: 13px; }
+
+  .file-name {
+    font-size: 12px;
+    color: var(--text-bright);
+    padding: 0 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .file-name.dir { color: var(--blue); }
+  .file-name.editing {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--green);
+    outline: none;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--green);
+    width: 100%;
+    padding: 0 8px;
+  }
+
+  .file-type, .file-modified, .file-size {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    padding: 0 4px;
+  }
+
+  .file-type { text-transform: uppercase; font-size: 9px; letter-spacing: 1.5px; }
+
+  /* Empty state */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 16px;
+    opacity: 0.4;
+    padding: 60px 20px;
+  }
+
+  .empty-state svg { width: 40px; height: 40px; color: var(--muted); }
+
+  .empty-state p {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* OPEN ROOT BTN */
+  .open-root-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .open-root-title {
+    font-family: var(--display);
+    font-size: 42px;
+    letter-spacing: 6px;
+    color: var(--text-bright);
+    text-align: center;
+  }
+
+  .open-root-title span { color: var(--green); }
+
+  .open-root-sub {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .open-root-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background: transparent;
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .open-root-btn:hover {
+    background: rgba(0,255,136,0.06);
+    box-shadow: 0 0 30px rgba(0,255,136,0.12), inset 0 0 30px rgba(0,255,136,0.03);
+  }
+
+  .open-root-btn svg { width: 16px; height: 16px; }
+
+  /* STATUS BAR */
+  .statusbar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 6px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+    flex-shrink: 0;
+  }
+
+  .status-item {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+
+  .status-item .val {
+    color: var(--text);
+    margin-left: 4px;
+  }
+
+  .status-item .val.green { color: var(--green); }
+  .status-item .val.red { color: var(--red); }
+  .status-item .val.blue { color: var(--blue); }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(2px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    min-width: 340px;
+    max-width: 480px;
+    width: 100%;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-title {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-bright);
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 2px 6px;
+    transition: color 0.12s;
+  }
+
+  .modal-close:hover { color: var(--red); }
+
+  .modal-body { padding: 20px 18px; }
+
+  .modal-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .modal-input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    color: var(--text-bright);
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 0.12s;
+  }
+
+  .modal-input:focus { border-color: var(--green); }
+
+  .modal-footer {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    padding: 12px 18px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* DROP OVERLAY */
+  .drop-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: rgba(0,255,136,0.04);
+    border: 2px solid var(--green);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .drop-overlay.active { display: flex; }
+
+  .drop-overlay-text {
+    font-family: var(--display);
+    font-size: 48px;
+    letter-spacing: 8px;
+    color: var(--green);
+    text-shadow: 0 0 40px rgba(0,255,136,0.5);
+  }
+
+  /* TOAST */
+  .toast-container {
+    position: fixed;
+    bottom: 48px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 200;
+    pointer-events: none;
+  }
+
+  .toast {
+    padding: 10px 16px;
+    border: 1px solid;
+    font-size: 11px;
+    letter-spacing: 1px;
+    animation: toast-in 0.2s ease forwards;
+    max-width: 320px;
+  }
+
+  .toast.success { border-color: var(--green); color: var(--green); background: rgba(0,255,136,0.06); }
+  .toast.error { border-color: var(--red); color: var(--red); background: rgba(255,0,85,0.06); }
+  .toast.info { border-color: var(--blue); color: var(--blue); background: rgba(0,136,255,0.06); }
+
+  @keyframes toast-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .no-api {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .no-api-title {
+    font-family: var(--display);
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: var(--red);
+  }
+
+  .no-api-sub {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* Context menu */
+  .ctx-menu {
+    position: fixed;
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    z-index: 300;
+    min-width: 180px;
+    padding: 4px 0;
+    display: none;
+  }
+
+  .ctx-menu.open { display: block; }
+
+  .ctx-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.1s;
+  }
+
+  .ctx-item:hover { background: var(--bg3); color: var(--text-bright); }
+  .ctx-item.danger:hover { color: var(--red); }
+  .ctx-item svg { width: 12px; height: 12px; }
+  .ctx-sep { height: 1px; background: var(--border); margin: 4px 0; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div class="header-left">
+      <div class="live-dot" id="liveDot"></div>
+      <div class="title">FILE_<span>SYS</span></div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item">ITEMS<span id="metaItems">—</span></div>
+      <div class="meta-item">SELECTED<span id="metaSelected" style="color:var(--green)">0</span></div>
+      <div class="meta-item">FS API<span id="metaApi" style="color:var(--green)">ACTIVE</span></div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn primary" id="btnOpen" onclick="openDirectory()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 4h5l2 2h7v9H1V4z"/></svg>
+      OPEN DIR
+    </button>
+    <div class="toolbar-sep"></div>
+    <button class="btn" id="btnNewFile" onclick="showNewModal('file')" disabled>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 1H3a1 1 0 00-1 1v12a1 1 0 001 1h10a1 1 0 001-1V6L9 1z"/><path d="M9 1v5h5"/><path d="M8 8v5M5.5 10.5h5"/></svg>
+      NEW FILE
+    </button>
+    <button class="btn" id="btnNewDir" onclick="showNewModal('dir')" disabled>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 4h5l2 2h7v9H1V4z"/><path d="M8 8v5M5.5 10.5h5"/></svg>
+      NEW FOLDER
+    </button>
+    <div class="toolbar-sep"></div>
+    <button class="btn" id="btnCopy" onclick="copySelected()" disabled>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="10" rx="1"/><path d="M11 5V3a1 1 0 00-1-1H2a1 1 0 00-1 1v9a1 1 0 001 1h2"/></svg>
+      COPY
+    </button>
+    <button class="btn" id="btnCut" onclick="cutSelected()" disabled>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3l10 10M13 3L3 13"/><circle cx="3.5" cy="12.5" r="1.5"/><circle cx="12.5" cy="12.5" r="1.5"/></svg>
+      CUT
+    </button>
+    <button class="btn" id="btnPaste" onclick="pasteItems()" disabled>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="12" rx="1"/><path d="M5 3V2a1 1 0 011-1h4a1 1 0 011 1v1"/><path d="M8 7v5M5.5 9.5h5"/></svg>
+      PASTE
+    </button>
+    <div class="toolbar-sep"></div>
+    <button class="btn danger" id="btnDelete" onclick="deleteSelected()" disabled>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 10h8l1-10"/></svg>
+      DELETE
+    </button>
+    <div class="toolbar-spacer"></div>
+    <button class="btn" onclick="refresh()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 2.5A7 7 0 1014.5 9"/><path d="M14.5 2.5v4h-4"/></svg>
+      REFRESH
+    </button>
+    <div class="toolbar-sep"></div>
+    <button class="btn" id="btnViewToggle" onclick="toggleView()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" id="viewIcon"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>
+      GRID
+    </button>
+  </div>
+
+  <div class="pathbar">
+    <span class="path-label">PATH</span>
+    <div class="path-segments" id="pathSegments">
+      <span class="path-seg active">~</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">WORKSPACE</div>
+        <div class="sidebar-item active" id="sidebarRoot" onclick="goToRoot()">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="11" rx="1"/><path d="M1 7h14M5 3V1h6v2"/></svg>
+          Root
+          <span class="item-badge" id="sidebarCount">—</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">QUICK FILTER</div>
+        <div class="sidebar-item" onclick="filterType('dir')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 4h5l2 2h7v9H1V4z"/></svg>
+          Folders
+        </div>
+        <div class="sidebar-item" onclick="filterType('file')">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 1H3a1 1 0 00-1 1v12a1 1 0 001 1h10a1 1 0 001-1V6L9 1z"/><path d="M9 1v5h5"/></svg>
+          Files
+        </div>
+      </div>
+      <div class="sidebar-section" style="border-bottom:none;">
+        <div class="sidebar-label">CLIPBOARD</div>
+        <div class="sidebar-item" id="clipboardInfo">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="12" rx="1"/><path d="M5 3V2a1 1 0 011-1h4a1 1 0 011 1v1"/></svg>
+          Empty
+        </div>
+      </div>
+    </div>
+
+    <div class="content" id="content">
+      <div class="open-root-screen" id="openRootScreen">
+        <div class="open-root-title">SELECT<br><span>DIRECTORY</span></div>
+        <div class="open-root-sub">
+          GRANT ACCESS TO A LOCAL FOLDER<br>
+          TO BEGIN MANAGING FILES
+        </div>
+        <button class="open-root-btn" onclick="openDirectory()">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 4h5l2 2h7v9H1V4z"/></svg>
+          OPEN DIRECTORY
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="statusbar">
+    <div class="status-item">STATUS <span class="val green" id="statusMsg">READY</span></div>
+    <div class="status-item">DIR <span class="val blue" id="statusDir">—</span></div>
+    <div class="status-item">CLIPBOARD <span class="val" id="statusClip">EMPTY</span></div>
+    <div class="status-item" style="margin-left:auto">v1.0.0</div>
+  </div>
+</div>
+
+<!-- Drop overlay -->
+<div class="drop-overlay" id="dropOverlay">
+  <div class="drop-overlay-text">DROP FILES</div>
+</div>
+
+<!-- Context menu -->
+<div class="ctx-menu" id="ctxMenu">
+  <div class="ctx-item" onclick="ctxOpen()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 4h5l2 2h7v9H1V4z"/></svg> Open
+  </div>
+  <div class="ctx-item" onclick="ctxRename()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3L11 2z"/></svg> Rename
+  </div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" onclick="copySelected()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="10" rx="1"/><path d="M11 5V3a1 1 0 00-1-1H2a1 1 0 00-1 1v9a1 1 0 001 1h2"/></svg> Copy
+  </div>
+  <div class="ctx-item" onclick="cutSelected()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3l10 10M13 3L3 13"/><circle cx="3.5" cy="12.5" r="1.5"/><circle cx="12.5" cy="12.5" r="1.5"/></svg> Cut
+  </div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item danger" onclick="deleteSelected()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 10h8l1-10"/></svg> Delete
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" style="display:none" onclick="e => e.target===this && closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">NEW FILE</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="modal-label" for="modalInput" id="modalLabelText">FILENAME</label>
+      <input type="text" class="modal-input" id="modalInput" placeholder="filename.txt" autocomplete="off"/>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal()">CANCEL</button>
+      <button class="btn primary" onclick="confirmModal()" id="modalConfirmBtn">CREATE</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+const API_SUPPORTED = 'showDirectoryPicker' in window;
+
+let rootHandle = null;
+let currentDirHandle = null;
+let currentDirPath = [];
+let entries = [];
+let selectedNames = new Set();
+let clipboard = { items: [], mode: null }; // mode: 'copy' | 'cut'
+let activeFilter = null;
+let viewMode = 'list'; // 'list' | 'grid'
+let modalMode = null;
+let ctxTarget = null;
+let sortKey = 'name';
+let sortAsc = true;
+
+// ---- INIT ----
+if (!API_SUPPORTED) {
+  document.getElementById('content').innerHTML = `
+    <div class="no-api">
+      <div class="no-api-title">UNSUPPORTED</div>
+      <div class="no-api-sub">
+        THE FILE SYSTEM ACCESS API<br>
+        IS NOT AVAILABLE IN THIS BROWSER.<br><br>
+        USE CHROME OR EDGE 86+ TO ACCESS<br>
+        THIS FEATURE.
+      </div>
+    </div>`;
+  document.getElementById('metaApi').textContent = 'UNAVAILABLE';
+  document.getElementById('metaApi').style.color = 'var(--red)';
+}
+
+document.addEventListener('click', () => {
+  document.getElementById('ctxMenu').classList.remove('open');
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Delete' && selectedNames.size > 0) deleteSelected();
+  if (e.key === 'F2' && selectedNames.size === 1) { const name = [...selectedNames][0]; ctxTarget = entries.find(x=>x.name===name); ctxRename(); }
+  if ((e.ctrlKey||e.metaKey) && e.key === 'c') { if(selectedNames.size>0) copySelected(); }
+  if ((e.ctrlKey||e.metaKey) && e.key === 'x') { if(selectedNames.size>0) cutSelected(); }
+  if ((e.ctrlKey||e.metaKey) && e.key === 'v') { if(clipboard.items.length>0) pasteItems(); }
+  if ((e.ctrlKey||e.metaKey) && e.key === 'a') { if(entries.length>0) { entries.forEach(e=>selectedNames.add(e.name)); renderFiles(); } }
+});
+
+// Drag/drop upload
+document.addEventListener('dragover', (e) => { e.preventDefault(); document.getElementById('dropOverlay').classList.add('active'); });
+document.addEventListener('dragleave', (e) => { if (e.relatedTarget === null) document.getElementById('dropOverlay').classList.remove('active'); });
+document.addEventListener('drop', async (e) => {
+  e.preventDefault();
+  document.getElementById('dropOverlay').classList.remove('active');
+  if (!currentDirHandle) { toast('Open a directory first', 'error'); return; }
+  const files = [...e.dataTransfer.files];
+  if (!files.length) return;
+  let count = 0;
+  for (const file of files) {
+    try {
+      const fh = await currentDirHandle.getFileHandle(file.name, { create: true });
+      const w = await fh.createWritable();
+      await w.write(file);
+      await w.close();
+      count++;
+    } catch(err) { toast(`Failed: ${file.name}`, 'error'); }
+  }
+  toast(`Uploaded ${count} file(s)`, 'success');
+  await refresh();
+});
+
+// ---- OPEN DIR ----
+async function openDirectory() {
+  if (!API_SUPPORTED) return;
+  try {
+    rootHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+    currentDirHandle = rootHandle;
+    currentDirPath = [{ name: rootHandle.name, handle: rootHandle }];
+    await loadDir();
+    document.getElementById('openRootScreen').remove();
+    enableToolbar(true);
+    document.getElementById('statusDir').textContent = rootHandle.name;
+    document.getElementById('sidebarCount').textContent = entries.length;
+    toast(`Opened: ${rootHandle.name}`, 'success');
+  } catch(e) {
+    if (e.name !== 'AbortError') toast('Could not open directory', 'error');
+  }
+}
+
+function enableToolbar(on) {
+  ['btnNewFile','btnNewDir','btnDelete'].forEach(id => document.getElementById(id).disabled = !on);
+}
+
+// ---- LOAD DIR ----
+async function loadDir() {
+  entries = [];
+  try {
+    for await (const [name, handle] of currentDirHandle.entries()) {
+      let size = null, modified = null;
+      if (handle.kind === 'file') {
+        try {
+          const f = await handle.getFile();
+          size = f.size;
+          modified = f.lastModified;
+        } catch(e) {}
+      }
+      entries.push({ name, handle, kind: handle.kind, size, modified });
+    }
+  } catch(e) { toast('Error reading directory', 'error'); }
+
+  // Sort
+  sortEntries();
+  selectedNames.clear();
+  updateSelectionUI();
+  renderFiles();
+  updatePath();
+  document.getElementById('metaItems').textContent = entries.length;
+  document.getElementById('sidebarCount').textContent = entries.length;
+  setStatus('READY');
+}
+
+function sortEntries() {
+  entries.sort((a, b) => {
+    // Dirs first
+    if (a.kind !== b.kind) return a.kind === 'directory' ? -1 : 1;
+    if (sortKey === 'name') return sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+    if (sortKey === 'size') return sortAsc ? (a.size||0)-(b.size||0) : (b.size||0)-(a.size||0);
+    if (sortKey === 'modified') return sortAsc ? (a.modified||0)-(b.modified||0) : (b.modified||0)-(a.modified||0);
+    return 0;
+  });
+}
+
+// ---- RENDER ----
+function renderFiles() {
+  const content = document.getElementById('content');
+  // Clear previous list if exists
+  let listEl = document.getElementById('fileList');
+  if (listEl) listEl.remove();
+
+  const filteredEntries = activeFilter
+    ? entries.filter(e => activeFilter === 'dir' ? e.kind === 'directory' : e.kind === 'file')
+    : entries;
+
+  const wrap = document.createElement('div');
+  wrap.id = 'fileList';
+  wrap.style.cssText = 'display:flex;flex-direction:column;flex:1;overflow:hidden;';
+
+  if (viewMode === 'list') {
+    // Header
+    const hdr = document.createElement('div');
+    hdr.className = 'list-header';
+    hdr.innerHTML = `
+      <div></div>
+      <div class="list-header-cell ${sortKey==='name'?'sorted':''}" onclick="setSort('name')">NAME ${sortKey==='name'?(sortAsc?'▲':'▼'):''}</div>
+      <div class="list-header-cell ${sortKey==='type'?'sorted':''}" onclick="setSort('type')">TYPE</div>
+      <div class="list-header-cell ${sortKey==='modified'?'sorted':''}" onclick="setSort('modified')">MODIFIED ${sortKey==='modified'?(sortAsc?'▲':'▼'):''}</div>
+      <div class="list-header-cell ${sortKey==='size'?'sorted':''}" onclick="setSort('size')">SIZE ${sortKey==='size'?(sortAsc?'▲':'▼'):''}</div>
+    `;
+    wrap.appendChild(hdr);
+
+    const list = document.createElement('div');
+    list.className = 'file-list';
+
+    if (filteredEntries.length === 0) {
+      list.innerHTML = `<div class="empty-state">
+        ${folderIconSvg(40)}
+        <p>DIRECTORY IS EMPTY</p>
+      </div>`;
+    } else {
+      for (const entry of filteredEntries) {
+        list.appendChild(createRow(entry));
+      }
+    }
+    wrap.appendChild(list);
+  } else {
+    // Grid view
+    const grid = document.createElement('div');
+    grid.className = 'file-list';
+    grid.style.cssText = 'padding:16px 20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;align-content:start;';
+    if (filteredEntries.length === 0) {
+      grid.style.display = 'flex';
+      grid.innerHTML = `<div class="empty-state" style="width:100%">${folderIconSvg(40)}<p>DIRECTORY IS EMPTY</p></div>`;
+    } else {
+      for (const entry of filteredEntries) {
+        grid.appendChild(createGridItem(entry));
+      }
+    }
+    wrap.appendChild(grid);
+  }
+
+  content.appendChild(wrap);
+}
+
+function folderIconSvg(size) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M1 4h5l2 2h7v9H1V4z"/></svg>`;
+}
+
+function createRow(entry) {
+  const row = document.createElement('div');
+  row.className = 'file-row' + (selectedNames.has(entry.name) ? ' selected' : '') + (clipboard.mode === 'cut' && clipboard.items.some(i=>i.name===entry.name) ? ' cut' : '');
+  row.dataset.name = entry.name;
+
+  const isDir = entry.kind === 'directory';
+  const ext = isDir ? '' : (entry.name.includes('.') ? entry.name.split('.').pop().toUpperCase() : '—');
+  const size = isDir ? '—' : formatSize(entry.size);
+  const mod = entry.modified ? formatDate(entry.modified) : '—';
+
+  row.innerHTML = `
+    <div class="file-icon">${isDir ? dirSvg() : fileSvg()}</div>
+    <div class="file-name ${isDir ? 'dir' : ''}">${entry.name}</div>
+    <div class="file-type">${ext}</div>
+    <div class="file-modified">${mod}</div>
+    <div class="file-size">${size}</div>
+  `;
+
+  row.addEventListener('click', (e) => handleRowClick(e, entry));
+  row.addEventListener('dblclick', () => openEntry(entry));
+  row.addEventListener('contextmenu', (e) => showCtxMenu(e, entry));
+  return row;
+}
+
+function createGridItem(entry) {
+  const isDir = entry.kind === 'directory';
+  const item = document.createElement('div');
+  item.style.cssText = `display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border:1px solid var(--border);cursor:pointer;transition:all 0.12s;background:${selectedNames.has(entry.name)?'rgba(0,136,255,0.07)':'transparent'};`;
+  item.innerHTML = `
+    <div style="color:${isDir ? 'var(--blue)' : 'var(--muted)'}">${isDir ? dirSvg() : fileSvg()}</div>
+    <div style="font-size:10px;letter-spacing:0.5px;color:${isDir?'var(--blue)':'var(--text-bright)'};text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;">${entry.name}</div>
+  `;
+  item.addEventListener('click', (e) => handleRowClick(e, entry));
+  item.addEventListener('dblclick', () => openEntry(entry));
+  item.addEventListener('contextmenu', (e) => showCtxMenu(e, entry));
+  item.addEventListener('mouseenter', () => { item.style.borderColor = 'var(--border2)'; item.style.background = selectedNames.has(entry.name)?'rgba(0,136,255,0.1)':'rgba(255,255,255,0.02)'; });
+  item.addEventListener('mouseleave', () => { item.style.borderColor = 'var(--border)'; item.style.background = selectedNames.has(entry.name)?'rgba(0,136,255,0.07)':'transparent'; });
+  return item;
+}
+
+function dirSvg() { return `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 4h5l2 2h7v9H1V4z"/></svg>`; }
+function fileSvg() { return `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 1H3a1 1 0 00-1 1v12a1 1 0 001 1h10a1 1 0 001-1V6L9 1z"/><path d="M9 1v5h5"/></svg>`; }
+
+function handleRowClick(e, entry) {
+  if (e.ctrlKey || e.metaKey) {
+    selectedNames.has(entry.name) ? selectedNames.delete(entry.name) : selectedNames.add(entry.name);
+  } else if (e.shiftKey && selectedNames.size > 0) {
+    const names = entries.map(x=>x.name);
+    const last = [...selectedNames].pop();
+    const from = names.indexOf(last);
+    const to = names.indexOf(entry.name);
+    const range = names.slice(Math.min(from,to), Math.max(from,to)+1);
+    range.forEach(n => selectedNames.add(n));
+  } else {
+    selectedNames.clear();
+    selectedNames.add(entry.name);
+  }
+  updateSelectionUI();
+  renderFiles();
+}
+
+function updateSelectionUI() {
+  const count = selectedNames.size;
+  document.getElementById('metaSelected').textContent = count;
+  document.getElementById('btnDelete').disabled = count === 0;
+  document.getElementById('btnCopy').disabled = count === 0;
+  document.getElementById('btnCut').disabled = count === 0;
+}
+
+// ---- NAVIGATION ----
+async function openEntry(entry) {
+  if (entry.kind === 'directory') {
+    try {
+      const dh = await currentDirHandle.getDirectoryHandle(entry.name);
+      currentDirHandle = dh;
+      currentDirPath.push({ name: entry.name, handle: dh });
+      await loadDir();
+    } catch(e) { toast('Cannot open folder', 'error'); }
+  }
+}
+
+function updatePath() {
+  const seg = document.getElementById('pathSegments');
+  seg.innerHTML = '';
+  currentDirPath.forEach((part, i) => {
+    if (i > 0) {
+      const arr = document.createElement('span');
+      arr.className = 'path-arrow';
+      arr.textContent = ' / ';
+      seg.appendChild(arr);
+    }
+    const s = document.createElement('span');
+    s.className = 'path-seg' + (i === currentDirPath.length-1 ? ' active' : '');
+    s.textContent = part.name;
+    s.onclick = () => navigateTo(i);
+    seg.appendChild(s);
+  });
+}
+
+async function navigateTo(idx) {
+  currentDirPath = currentDirPath.slice(0, idx+1);
+  currentDirHandle = currentDirPath[idx].handle;
+  await loadDir();
+}
+
+async function goToRoot() {
+  if (!rootHandle) return;
+  currentDirHandle = rootHandle;
+  currentDirPath = [{ name: rootHandle.name, handle: rootHandle }];
+  await loadDir();
+}
+
+// ---- FILE OPS ----
+function showNewModal(type) {
+  modalMode = type;
+  const title = type === 'file' ? 'NEW FILE' : 'NEW FOLDER';
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalLabelText').textContent = type === 'file' ? 'FILENAME' : 'FOLDER NAME';
+  document.getElementById('modalInput').placeholder = type === 'file' ? 'filename.txt' : 'new-folder';
+  document.getElementById('modalInput').value = '';
+  document.getElementById('modalConfirmBtn').textContent = 'CREATE';
+  document.getElementById('modalOverlay').style.display = 'flex';
+  setTimeout(() => document.getElementById('modalInput').focus(), 50);
+}
+
+document.getElementById('modalInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') confirmModal();
+});
+
+async function confirmModal() {
+  const val = document.getElementById('modalInput').value.trim();
+  if (!val) return;
+  closeModal();
+  try {
+    if (modalMode === 'file') {
+      await currentDirHandle.getFileHandle(val, { create: true });
+      toast(`Created: ${val}`, 'success');
+    } else if (modalMode === 'dir') {
+      await currentDirHandle.getDirectoryHandle(val, { create: true });
+      toast(`Created folder: ${val}`, 'success');
+    } else if (modalMode === 'rename') {
+      // Rename via copy+delete (FS API doesn't support rename directly)
+      const entry = ctxTarget;
+      if (!entry) return;
+      if (entry.kind === 'file') {
+        const srcHandle = await currentDirHandle.getFileHandle(entry.name);
+        const srcFile = await srcHandle.getFile();
+        const destHandle = await currentDirHandle.getFileHandle(val, { create: true });
+        const w = await destHandle.createWritable();
+        await w.write(srcFile);
+        await w.close();
+        await currentDirHandle.removeEntry(entry.name);
+        toast(`Renamed to: ${val}`, 'success');
+      } else {
+        toast('Folder rename not fully supported', 'info');
+      }
+    }
+    await loadDir();
+  } catch(e) { toast('Operation failed: ' + e.message, 'error'); }
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').style.display = 'none';
+  modalMode = null;
+}
+
+async function deleteSelected() {
+  if (!selectedNames.size) return;
+  const names = [...selectedNames];
+  if (!confirm(`Delete ${names.length} item(s)? This cannot be undone.`)) return;
+  let fail = 0;
+  for (const name of names) {
+    try {
+      await currentDirHandle.removeEntry(name, { recursive: true });
+    } catch(e) { fail++; }
+  }
+  selectedNames.clear();
+  toast(fail ? `Deleted with ${fail} error(s)` : `Deleted ${names.length} item(s)`, fail ? 'error' : 'success');
+  await loadDir();
+}
+
+function copySelected() {
+  clipboard.items = entries.filter(e => selectedNames.has(e.name));
+  clipboard.mode = 'copy';
+  updateClipboardUI();
+  toast(`Copied ${clipboard.items.length} item(s)`, 'info');
+}
+
+function cutSelected() {
+  clipboard.items = entries.filter(e => selectedNames.has(e.name));
+  clipboard.mode = 'cut';
+  updateClipboardUI();
+  toast(`Cut ${clipboard.items.length} item(s)`, 'info');
+  renderFiles();
+}
+
+function updateClipboardUI() {
+  document.getElementById('btnPaste').disabled = clipboard.items.length === 0;
+  const info = document.getElementById('clipboardInfo');
+  const statusClip = document.getElementById('statusClip');
+  if (clipboard.items.length > 0) {
+    info.innerHTML = `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="${clipboard.mode==='cut'?'var(--red)':'var(--green)'}" stroke-width="1.5"><rect x="2" y="3" width="12" height="12" rx="1"/><path d="M5 3V2a1 1 0 011-1h4a1 1 0 011 1v1"/></svg> ${clipboard.items.length} item(s) [${clipboard.mode.toUpperCase()}]`;
+    info.style.color = clipboard.mode === 'cut' ? 'var(--red)' : 'var(--green)';
+    statusClip.textContent = `${clipboard.items.length} [${clipboard.mode.toUpperCase()}]`;
+    statusClip.style.color = clipboard.mode === 'cut' ? 'var(--red)' : 'var(--green)';
+  } else {
+    info.innerHTML = `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="12" rx="1"/><path d="M5 3V2a1 1 0 011-1h4a1 1 0 011 1v1"/></svg> Empty`;
+    info.style.color = '';
+    statusClip.textContent = 'EMPTY';
+    statusClip.style.color = '';
+  }
+}
+
+async function pasteItems() {
+  if (!clipboard.items.length || !currentDirHandle) return;
+  let ok = 0, fail = 0;
+  for (const item of clipboard.items) {
+    try {
+      if (item.kind === 'file') {
+        const srcFile = await item.handle.getFile();
+        const destHandle = await currentDirHandle.getFileHandle(item.name, { create: true });
+        const w = await destHandle.createWritable();
+        await w.write(srcFile);
+        await w.close();
+        if (clipboard.mode === 'cut') {
+          // Try to delete source - may fail if different root
+          try {
+            const srcParent = currentDirPath.length > 1
+              ? currentDirPath[currentDirPath.length-2].handle
+              : currentDirHandle;
+            // Can't easily get original parent, skip delete for safety
+          } catch(e) {}
+        }
+        ok++;
+      }
+    } catch(e) { fail++; }
+  }
+  if (clipboard.mode === 'cut') { clipboard.items = []; clipboard.mode = null; updateClipboardUI(); }
+  toast(fail ? `Pasted ${ok}, failed ${fail}` : `Pasted ${ok} item(s)`, fail ? 'error' : 'success');
+  await loadDir();
+}
+
+// ---- CONTEXT MENU ----
+function showCtxMenu(e, entry) {
+  e.preventDefault();
+  ctxTarget = entry;
+  if (!selectedNames.has(entry.name)) { selectedNames.clear(); selectedNames.add(entry.name); updateSelectionUI(); renderFiles(); }
+  const menu = document.getElementById('ctxMenu');
+  menu.style.left = Math.min(e.clientX, window.innerWidth - 200) + 'px';
+  menu.style.top = Math.min(e.clientY, window.innerHeight - 160) + 'px';
+  menu.classList.add('open');
+  e.stopPropagation();
+}
+
+function ctxOpen() {
+  if (ctxTarget) openEntry(ctxTarget);
+}
+
+function ctxRename() {
+  if (!ctxTarget) return;
+  modalMode = 'rename';
+  document.getElementById('modalTitle').textContent = 'RENAME';
+  document.getElementById('modalLabelText').textContent = 'NEW NAME';
+  document.getElementById('modalInput').value = ctxTarget.name;
+  document.getElementById('modalConfirmBtn').textContent = 'RENAME';
+  document.getElementById('modalOverlay').style.display = 'flex';
+  setTimeout(() => { const inp = document.getElementById('modalInput'); inp.focus(); inp.select(); }, 50);
+}
+
+// ---- UTILS ----
+async function refresh() {
+  if (!currentDirHandle) return;
+  setStatus('SCANNING...');
+  await loadDir();
+  setStatus('READY');
+}
+
+function setSort(key) {
+  if (sortKey === key) sortAsc = !sortAsc;
+  else { sortKey = key; sortAsc = true; }
+  sortEntries();
+  renderFiles();
+}
+
+function filterType(type) {
+  activeFilter = activeFilter === type ? null : type;
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+  if (!activeFilter) document.getElementById('sidebarRoot') && document.getElementById('sidebarRoot').classList.add('active');
+  renderFiles();
+}
+
+function toggleView() {
+  viewMode = viewMode === 'list' ? 'grid' : 'list';
+  const btn = document.getElementById('btnViewToggle');
+  if (viewMode === 'grid') {
+    btn.querySelector('svg').innerHTML = `<line x1="1" y1="4" x2="15" y2="4"/><line x1="1" y1="8" x2="15" y2="8"/><line x1="1" y1="12" x2="15" y2="12"/>`;
+    btn.querySelector('svg').setAttribute('stroke-width', '1.5');
+    btn.childNodes[btn.childNodes.length-1].textContent = ' LIST';
+  } else {
+    btn.querySelector('svg').innerHTML = `<rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/>`;
+    btn.childNodes[btn.childNodes.length-1].textContent = ' GRID';
+  }
+  renderFiles();
+}
+
+function setStatus(msg) {
+  document.getElementById('statusMsg').textContent = msg;
+}
+
+function formatSize(bytes) {
+  if (bytes === null || bytes === undefined) return '—';
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  if (bytes < 1024*1024*1024) return (bytes/1024/1024).toFixed(1) + ' MB';
+  return (bytes/1024/1024/1024).toFixed(2) + ' GB';
+}
+
+function formatDate(ms) {
+  const d = new Date(ms);
+  return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+}
+
+function toast(msg, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => {
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.3s';
+    setTimeout(() => el.remove(), 300);
+  }, 2800);
+}
+</script>
+</body>
+</html>
