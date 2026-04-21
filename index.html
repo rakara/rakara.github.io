@@ -1,528 +1,487 @@
 <!DOCTYPE html>
-<html class="uk-height-1-1">
-    <head>
-    <meta charset="UTF-8">
-    <title>Rakara Abila - Web Design and Development</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Freelance Web Designer specializing in HTML, CSS, PHP, and MySQL. Inspiration Beyond Reality.">
-    <meta name="keywords" content="web design, web development, freelance, HTML, CSS, PHP, MySQL, Kenya, Rakara Abila">
-    <meta name="author" content="Rakara Abila">
-
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#c0c0c0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Rakara Abila">
-    
-    <!-- Apple Touch Icon (using data URI for consistency) -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUyIiBoZWlnaHQ9IjE1MiIgdmlld0JveD0iMCAwIDE1MiAxNTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTIiIGhlaWdodD0iMTUyIiBmaWxsPSIjMjUyNTI1Ii8+Cjx0ZXh0IHg9Ijc2IiB5PSI4OCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjcyIiBmaWxsPSIjYzBjMGMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5SQTwvdGV4dD4KPC9zdmc+">
-    
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Preload critical resources -->
-    <link rel="preload" href="css/uikit.min.css" as="style">
-    <link rel="preload" href="js/uikit.min.js" as="script">
-    <link rel="preload" href="https://code.jquery.com/jquery-3.7.0.js" as="script" crossorigin="anonymous">
-
-    <!-- Improved SEO -->
-    <meta property="og:title" content="Rakara Abila - Web Design & Development">
-    <meta property="og:description" content="Freelance Web Designer specializing in HTML, CSS, PHP, and MySQL. Inspiration Beyond Reality.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://rakara.github.io">
-    <meta property="og:image" content="https://rakara.github.io/img/og-image.jpg">
-    <meta property="og:site_name" content="Rakara Abila">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Rakara Abila - Web Design & Development">
-    <meta name="twitter:description" content="Freelance Web Designer specializing in HTML, CSS, PHP, and MySQL. Inspiration Beyond Reality.">
-    <meta name="twitter:image" content="https://rakara.github.io/img/og-image.jpg">
-
-    <!-- Additional PWA Optimizations -->
-    <meta name="msapplication-TileColor" content="#252525">
-    <meta name="msapplication-config" content="/browserconfig.xml">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMjUyNTI1Ii8+Cjx0ZXh0IHg9IjE2IiB5PSIyMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYzBjMGMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5SQTwvdGV4dD4KPC9zdmc+">
-    <link rel="shortcut icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMjUyNTI1Ii8+Cjx0ZXh0IHg9IjE2IiB5PSIyMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYzBjMGMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5SQTwvdGV4dD4KPC9zdmc+">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://rakara.github.io">
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="css/uikit.min.css" />
-    <link rel="stylesheet" href="css/style.css" />
-
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
-    <script src="js/uikit.min.js"></script>
-
-    <!-- Service Worker Registration -->
-    <script>
-        // Register service worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch(function(registrationError) {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-    </script>
-</head>
-    <body class="uk-height-1-1">
-    	<!--Header-->
-        <section id="intro">
-            <div class="intro uk-height-viewport uk-cover">
-                <video class="uk-cover-object" width="" height="" autoplay loop muted controls>
-                    <source src="video/ETRG.mp4" type="">
-                </video>
-                <div class="uk-position-cover uk-height-viewport uk-vertical-align uk-text-center" style="background: rgba(60, 90, 100, 0.8);">
-                    <div class="uk-vertical-align-middle">
-                        <h1 class="uk-contrast brand">Rakara Abila <hr> Web Design</h1>
-                        <h2 class="uk-contrast">Inspiration Beyond Reality.</h2>
-                        <p class="uk-contrast">&copy; <?= date("Y"); ?></p>
-                        <a href="#about" class="uk-icon-button uk-icon-chevron-down" data-uk-smooth-scroll></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!--About-->
-        <section id="about">
-            <div class="about uk-cover-background">
-                <div class="about-cover uk-block uk-block-large">
-                <div class="uk-container uk-container-center">
-                    <div class="uk-grid">
-                        <div class="uk-width-medium-1-3 uk-width-small-1-1">
-                            <h2 class="uk-contrast"><i class="uk-icon-dot-circle-o"></i> About Rakara Abila</h2>
-                            <hr>
-                            <p class="uk-contrast">Who Am I?</p>
-                        </div>
-                        <div class="uk-width-medium-2-3 uk-width-small-1-1">
-                            <p class="uk-column-xlarge-1-2 uk-column-large-1-2 uk-column-medium-1-1 uk-contrast">‎Welcome to my website! I'm Rakara Abila, a talented freelance web designer based in Kenya, specializing in HTML, CSS, PHP, and MySQL.<br />
-
-With a passion for all things web design, I bring creativity, technical expertise, and a keen eye for detail to every project I undertake. I believe that a well-designed website is not only visually appealing but also functional, intuitive, and capable of delivering an exceptional user experience.<br />
-
-Having honed my skills for a number years in the industry, I have had the privilege of working with a diverse range of clients, from startups and small businesses to established enterprises. I understand that each project is unique, and I take the time to understand your specific goals, target audience, and brand identity to create a website that truly reflects your vision.<br />
-
-Whether you need a simple brochure site to showcase your products or services or a complex web application with advanced functionalities, I have the expertise to bring your ideas to life. I stay up-to-date with the latest web design trends and technologies, ensuring that your website not only looks modern and stylish but also meets industry standards for performance, responsiveness, and security.<br />
-
-But it's not just about creating a stunning website. I value open communication and collaboration, and I believe that your input is invaluable throughout the design process. I work closely with my clients, listening to your ideas and incorporating your feedback to ensure that the end result exceeds your expectations.<br />
-
-As a freelancer, I offer you the advantages of personalized attention, quick response times, and cost-effective solutions. I am dedicated to delivering projects on time and within budget, without compromising on quality.<br />
-
-I also provide ongoing support and maintenance to ensure that your website remains up-to-date, secure, and optimized for performance. Your success is my priority, and I am committed to building long-term relationships with my clients, supporting you every step of the way.<br />
-
-So, whether you're a startup looking to make a strong online presence or an established business seeking to revamp your website, I am here to help. Let's collaborate and create a website that not only looks great but also drives results for your business.<br />
-
-Contact me today to discuss your project and let's embark on an exciting web design journey together.
-                            <br>
-                            <a href="#contact" class="uk-button uk-width-1-1" style="margin-top: 5px;" data-uk-smooth-scroll>Contact Me</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </section>
-
-        <!--disciplines-->
-        <section id="disciplines">
-            <div class="disciplines uk-block uk-block-large">
-                <div class="uk-container uk-container-center">
-                    <div class="uk-grid">
-                        <div class="uk-width-1-1">
-                            <h2><i class="uk-icon-cogs"></i> Services</h2>
-                            <hr>
-                            <p>What I Do!</p>
-                        </div>
-                    </div>
-                    <div class="uk-grid uk-grid-small" data-uk-grid-parallax>
-                        <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                            
-                            <p class="tv uk-text-center"><i class="uk-icon-code uk-h1"></i></p>
-                            <hr class="tv">
-                            <h3 class="">Web Design &amp; Development</h3>
-                            <p>Are you looking for a talented and experienced freelancer to bring your online vision to life?</p>
-                            <p class="uk-animate-fade"><span class="tv uk-hidden"> <span class="tv uk-hidden">Look no further! I'm here to provide you with top-notch services tailored to your unique needs.
-                            You can expect nothing less than stunning, user-friendly websites that captivate your audience and drive results. Whether you're a small business owner, a startup, or an established enterprise, I have the expertise to create a digital presence that sets you apart from the competition.</span></p>
-                            <div class="tv">&nbsp;</div>
-                            <a class="tv uk-button uk-width-1-1 see-thru" data-uk-toggle="{target:'.tv'}">Read More</a>
-                            <a class="tv uk-hidden uk-button uk-width-1-1 see-thru" data-uk-toggle="{target:'.tv'}">Less</a>
-                        </div>
-                        <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                            
-                            <p class="live uk-text-center"><i class="uk-icon-rocket uk-h1"></i></p>
-                            <hr class="live">
-                            <h3 class="">Logo Design &amp; Brand Identity</h3>
-                            <p>Building a strong and memorable brand starts with a well-crafted visual identity. </p>
-                            <p class="uk-animate"><span class="live uk-hidden"> As a freelance brand identity designer, I specialize in creating captivating and cohesive brand identities that leave a lasting impression.<br />
-                            Your brand is more than just a logo—it's a combination of visual elements, colors, typography, and graphical elements that together convey your unique personality and values. I understand the power of a well-designed brand identity in capturing the essence of your business and connecting with your target audience.</span></p>
-                            <a class="live uk-button uk-width-1-1 see-thru" data-uk-toggle="{target:'.live'}">Read More</a>
-                            <a class="live uk-hidden uk-button uk-width-1-1 see-thru" data-uk-toggle="{target:'.live'}">Less</a>
-                        </div>
-                        <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                           
-                            <p class="uk-text-center"><i class="ia uk-icon-tasks uk-h1"></i></p>
-                            <hr class="ia">
-                            <h3 class="">Information Architecture</h3>
-                            <p>In the digital realm, creating a seamless user experience relies on a solid foundation of Information Architecture (IA).<span class="ia uk-hidden"> I specialize in designing intuitive and user-centered structures that elevate the usability and effectiveness of digital systems.<br />
-Navigating through the vast sea of information can be overwhelming for users. That's where I come in. With my expertise in IA, I help businesses organize and structure their content, ensuring that users can effortlessly find the information they need and accomplish their goals with ease.</span></p>
-                            <a class="ia uk-button uk-width-1-1 see-thru" data-uk-toggle="{target:'.ia'}">Read More</a>
-                            <a class="ia uk-hidden uk-button uk-width-1-1 see-thru" data-uk-toggle="{target:'.ia'}">Less</a>
-                        </div>
-                        <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                           
-                            <p class="uk-text-center"><i class="film uk-icon-thumbs-up uk-h1"></i></p>
-                            <hr class="film">
-                            <h3 class="">Social Media Management</h3>
-                            <p>In today's digital age, a strong social media presence is essential for businesses and individuals alike.<span class="film uk-hidden"> I specialize in crafting and executing comprehensive social media strategies that elevate your brand, engage your audience, and drive meaningful results.<br />
-
-Managing social media platforms can be time-consuming and complex, but that's where I come in. I offer personalized and dedicated social media management services tailored to your unique goals and target audience.</span></p>
-                            <a class="film uk-button uk-width-1-1 see-thru" data-uk-toggle="{target:'.film'}">Read More</a>
-                            <a class="film uk-hidden uk-button uk-width-1-1 see-thru" data-uk-toggle="{target:'.film'}">Less</a>
-                        </div>
-                    </div>                    
-                </div>
-            </div>
-        </section>
-
-        <!--Work-->
-        <section id="work">
-            <div class="work">
-                <div class="uk-container uk-container-center">
-                    <div class="uk-grid">
-                        <div class="uk-width-1-1">
-                            <h2 class="uk-hidden">Latest Works</h2>
-                            <hr>
-                        </div>
-                    </div>
-                </div>        
-                <div class="uk-grid uk-grid-collapse" data-uk-grid-margin>
-                    <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                        <figure class="uk-overlay uk-overlay-hover">
-                            <img src="img/projects/goyefoundation.jpg" class="uk-overlay-grayscale">
-                            <img class="uk-overlay-panel uk-overlay-image" src="" width="" height="" alt="">
-                            <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-slide-bottom uk-overlay-bottom">
-                                GOYE Foundation
-                            </figcaption>
-                            <a class="uk-position-cover" href="#my-id" data-uk-modal></a>
-                        </figure>
-                    </div>
-                    <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                        <figure class="uk-overlay uk-overlay-hover">
-                            <img src="img/projects/1discipling1.jpg" class="uk-overlay-grayscale">
-                            <img class="uk-overlay-panel uk-overlay-image" src="" width="" height="" alt="">
-                            <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-slide-bottom uk-overlay-bottom">
-                                Believers Bible Institute
-                            </figcaption>
-                            <a class="uk-position-cover" href="#my-id" data-uk-modal></a>
-                        </figure>
-                    </div>
-                    <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                        <figure class="uk-overlay uk-overlay-hover">
-                            <img src="img/projects/reeltribe.jpg" class="uk-overlay-grayscale">
-                            <img class="uk-overlay-panel uk-overlay-image" src="" width="" height="" alt="">
-                            <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-slide-bottom uk-overlay-bottom">
-                                "Reeltribe"
-                            </figcaption>
-                            <a class="uk-position-cover" href="#my-id" data-uk-modal></a>
-                        </figure>
-                    </div>
-                    <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                        <figure class="uk-overlay uk-overlay-hover">
-                            <img src="img/projects/placeholder_800x600_4.jpg" class="uk-overlay-grayscale">
-                            <img class="uk-overlay-panel uk-overlay-image" src="" width="" height="" alt="">
-                            <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-slide-bottom uk-overlay-bottom">
-                                 "Third Factor"
-                            </figcaption>
-                            <a class="uk-position-cover" href="#my-id" data-uk-modal></a>
-                        </figure>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!--referals-->
-        <section id="referals">
-            <div class="referals uk-block uk-block-large">
-                <div class="uk-container uk-container-center">
-                    <div class="uk-grid">
-                        <div class="uk-width-medium-1-5 uk-width-small-1-1">
-                            <h2 class="uk-contrast"><i class="uk-icon-check"></i> Testimonials</h2>
-                            <hr>
-                            <p class="">What Clients Say!</p>
-                        </div>
-                        <div class="uk-width-medium-4-5 uk-width-small-1-1">
-                            <blockquote>
-                                <p>
-                                    <i class="uk-icon-quote-left uk-icon-large uk-align-left"></i> From the initial consultation to the final delivery, Rakara Abila demonstrated a deep understanding of my brand and its unique requirements. He took the time to listen to my ideas, goals, and vision, and translated them into a stunning website that perfectly captured the essence of my business. 
-                                    <br>
-                                    <span class="uk-text-small">Michael O. - Director, GOYE Foundation </span>
-                                </p>
-                            </blockquote>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!--clients-->
-        <section id="clients">
-            <div class="clients uk-block uk-block-large">
-                <div class="uk-container uk-container-center">
-                    <div class="uk-grid">
-                        <div class="uk-width-medium-1-5 uk-width-small-1-1">
-                            <h2 class=""><i class="uk-icon-suitcase"></i> Clients</h2>
-                            <hr>
-                            <p class="">Our Esteemed Clients!</p>
-                        </div>
-                        <div class="uk-width-medium-4-5 uk-width-small-1-1">
-                            <div class="uk-grid uk-grid-small">
-                                <div class="uk-width-1-5">
-                                    <figure class="uk-overlay uk-overlay-hover">
-                                        <img src="img/logos/cocacola.jpg" height="100px" class="uk-overlay-grayscale">
-                                        <a class="uk-position-cover"></a>
-                                    </figure>
-                                </div>
-                                <div class="uk-width-1-5">
-                                    <figure class="uk-overlay uk-overlay-hover">
-                                        <img src="img/logos/shell.jpg" height="100px" class="uk-overlay-grayscale">
-                                        <a class="uk-position-cover"></a>
-                                    </figure>
-                                </div>
-                                <div class="uk-width-1-5">
-                                    <figure class="uk-overlay uk-overlay-hover">
-                                        <img src="img/logos/Equity_Bank_Logo.jpg" class="uk-overlay-grayscale">
-                                        <a class="uk-position-cover"></a>
-                                    </figure>
-                                </div>
-                                <div class="uk-width-1-5">
-                                   <figure class="uk-overlay uk-overlay-hover">
-                                        <img src="img/logos/airtel.jpg" class="uk-overlay-grayscale">
-                                        <a class="uk-position-cover"></a>
-                                    </figure>
-                                </div>
-                                <div class="uk-width-1-5">
-                                   <figure class="uk-overlay uk-overlay-hover">
-                                        <img src="img/logos/total.jpg" class="uk-overlay-grayscale">
-                                        <a class="uk-position-cover"></a>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!--cta-->
-        <section id="cta">
-            <div class="cta uk-block">
-                
-                    <div class="uk-grid">
-                        <div class="uk-width-1-1 uk-text-center">
-                            <p class="uk-h2 uk-contrast">Have We Inspired You! Don't Hesitate Let's Get Started On Your Amazing Project!</p>
-                            <a href="#contact" class="uk-button" data-uk-smooth-scroll>Request a Quote</a>
-                        </div>
-                    </div>
-
-            </div>
-        </section>
-
-        <!--awards-->
-        <section id="awards">
-            <div class="awards uk-block">
-                <div class="uk-container uk-container-center">
-                    <div class="uk-grid">
-                        <div class="uk-width-medium-1-4 uk-width-small-1-1">
-                            <h2 class="uk-text-capitalize"><i class="uk-icon-certificate"></i> Awards</h2>
-                            <hr>
-                            <p>What We've Achieved!</p>
-                        </div>
-                        <div class="uk-width-3-4">
-                            <div class="uk-grid">
-                                <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                                    <figure class="uk-overlay">
-                                        <img src="img/awards.jpg" />
-                                        <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-right">Award 1</figcaption>
-                                        <a class="uk-position-cover"></a>
-                                    </figure>
-                                </div>
-                                <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                                    <figure class="uk-overlay">
-                                        <img src="img/awards.jpg" />
-                                        <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-right">Award 1</figcaption>
-                                        <a class="uk-position-cover"></a>
-                                    </figure>
-                                </div>
-                                <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                                    <figure class="uk-overlay">
-                                        <img src="img/awards.jpg" />
-                                        <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-right">Award 1</figcaption>
-                                        <a class="uk-position-cover"></a>
-                                    </figure>
-                                </div>
-                                <div class="uk-width-medium-1-4 uk-width-small-1-2">
-                                    <figure class="uk-overlay">
-                                        <img src="img/awards.jpg" />
-                                        <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-right">Award 1</figcaption>
-                                        <a class="uk-position-cover"></a>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!--contact-->
-        <section id="contact">
-            <div class="contact uk-block">
-                <div class="uk-container uk-container-center">
-                    <div class="uk-grid">
-                        <div class="uk-width-1-1">
-                            <div class="uk-grid uk-grid-collapse">
-                                <div class="uk-width-1-2 uk-hidden-small">
-                                    <div class="uk-grid">
-                                        <div class="uk-width-1-3"><h3><i class="uk-icon-envelope"></i> Contact</h3> <hr></div>
-                                        <div class="uk-width-2-3">
-                                            <ul class="uk-list">
-                                                <li><i class="uk-icon-envelope"></i> rakara.abila@gmail.com</li>
-                                                <li><i class="uk-icon-phone-square"></i> (254) 725 720 822</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="uk-grid">
-                                        <div class="uk-width-1-3"><h3><i class="uk-icon-building"></i> Offices</h3> <hr></div>
-                                        <div class="uk-width-2-3">
-                                            <ul class="uk-list">
-                                                <li>P.O.Box 49 - 40307</li>
-                                                <li>Magunga, Homabay</li>
-                                                <li>Kenya</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="uk-grid">
-                                        <div class="uk-width-1-3"><h3><i class="uk-icon-share"></i> Social</h3> <hr></div>
-                                        <div class="uk-width-2-3">
-                                            <a href="https://skype.com/geoffrey.abila" target="_blank" class="uk-icon-button uk-icon-skype"></a>
-                                            <a href="https://facebook.com/RakaraWebStudio/" target="_blank" class="uk-icon-button uk-icon-facebook"></a>
-                                            <a href="https://twitter.com/RakaraWebStudio/" target="_blank" class="uk-icon-button uk-icon-twitter"></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="uk-width-medium-1-2 uk-width-small-1-1">
-                                    <form class="uk-form">
-                                        <div class="uk-grid">
-                                        
-                                            <div class="uk-width-medium-1-2 uk-width-small-1-1">
-                                                <div class="uk-form-row">
-                                                    <input type="text" placeholder="Your Name" class="uk-width-1-1 uk-form-large"></input>
-                                                </div>
-                                                <div class="uk-form-row">
-                                                    <input type="text" placeholder="Your Email" class="uk-width-1-1 uk-form-large"></input>
-                                                </div>
-                                                <div class="uk-form-row">
-                                                    <input type="text" placeholder="Subject" class="uk-width-1-1 uk-form-large"></input>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2 uk-width-small-1-1">
-                                                <div class="uk-form-row">
-                                                    <textarea class="uk-width-1-1 uk-form-large" rows="7"></textarea>
-                                                </div>
-                                                <div class="uk-form-row">
-                                                    <input type="submit" value="Send Email" class="uk-button uk-form-large uk-width-1-1"></input>
-                                                </div>
-                                            </div>
-                                        
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!--footer-->
-        <section id="footer">
-            <div class="footer uk-block">
-                <div class="uk-container uk-container-center">
-                    <div class="uk-grid">
-                        <div class="uk-width-medium-1-3 uk-width-small-1-1">
-                            <div class="uk-grid">
-                                <div class="uk-width-1-1">
-                                    <ul class="uk-list">
-                                        <li><i class="uk-icon-envelope"></i> rakara.abila@gmail.com</li>
-                                        <li><i class="uk-icon-phone-square"></i> (254) 725 720 822</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-width-medium-1-3 uk-width-small-1-1">
-                            <div class="uk-grid">
-                                <div class="uk-width-1-1 uk-text-center" style="vertical-align: baseline;">
-                                    <a href="https://skype.com/geoffrey.abila" target="_blank" class="uk-icon-button uk-icon-skype"></a>
-                                    <a href="https://facebook.com/RakaraWebStudio/" target="_blank" class="uk-icon-button uk-icon-facebook"></a>
-                                    <a href="https://twitter.com/RakaraWebStudio/" target="_blank" class="uk-icon-button uk-icon-twitter"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-width-medium-1-3 uk-width-small-1-1">
-                            <div class="uk-grid">
-                                <div class="uk-width-1-1 uk-text-right">
-                                    <ul class="uk-list">
-                                        <li>P.O. Box 49 - 40307</li>
-                                        <li>Magunga, Homabay</li>
-                                        <li>Kenya</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="uk-grid">
-                        <div class="uk-width-medium-1-2 uk-width-small-1-1">&copy; <?= date("Y"); ?> Rakara Abila</div>
-                        <div class="uk-width-medium-1-2 uk-width-small-1-1 uk-text-right">Inspiration Beyond Reality.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- This is the modal -->
-        <div id="my-id" class="uk-modal">
-            <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                <a href="" class="uk-modal-close uk-close uk-close-alt"></a>
-                <img src="img/projects/placeholder_800x600_1.jpg">
-            </div>
-        </div>
-<script>
-    // Register Service Worker
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js')
-                .then(function(registration) {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                })
-                .catch(function(error) {
-                    console.log('Service Worker registration failed:', error);
-                });
-        });
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rakara Abila — Web Design & Development</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0f0e0c;
+      --cream: #f5f0e8;
+      --accent: #c8502a;
+      --accent2: #2a6bc8;
+      --muted: #8a8375;
+      --card-bg: #1a1814;
     }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
 
-    // Add fade-in animation to sections
-    document.addEventListener('DOMContentLoaded', function() {
-        const sections = document.querySelectorAll('section');
-        sections.forEach(section => {
-            section.classList.add('fade-in');
-        });
-    });
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 5vw;
+      backdrop-filter: blur(12px);
+      background: rgba(245,240,232,0.88);
+      border-bottom: 1px solid rgba(15,14,12,0.07);
+    }
+    .nav-logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.78rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta { background: var(--ink); color: var(--cream) !important; padding: 0.45rem 1.1rem; border-radius: 2rem; transition: background 0.2s !important; }
+    .nav-cta:hover { background: var(--accent) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: 0.3s; }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--cream); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--ink); text-decoration: none; }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 120px 5vw 80px;
+      gap: 4rem;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: ''; position: absolute; top: -20%; right: -10%;
+      width: 60vw; height: 60vw; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,80,42,0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-text { position: relative; z-index: 1; animation: fadeUp 0.8s ease both; }
+    .hero-eyebrow {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .hero-eyebrow::before { content: ''; display: inline-block; width: 2rem; height: 1px; background: var(--accent); }
+    h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(2.8rem, 5.5vw, 5.2rem); line-height: 1.02; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+    h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub { font-size: 1rem; line-height: 1.75; color: var(--muted); max-width: 440px; margin-bottom: 2.5rem; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--ink); color: var(--cream); padding: 0.85rem 2rem; border-radius: 3rem; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: background 0.25s, transform 0.2s; }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; border: 1.5px solid var(--ink); color: var(--ink); padding: 0.85rem 2rem; border-radius: 3rem; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: 0.25s; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .hero-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(15,14,12,0.1); }
+    .stat-num { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 700; line-height: 1; }
+    .stat-label { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; letter-spacing: 0.04em; }
+
+    /* hero visual */
+    .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; animation: fadeUp 0.8s 0.2s ease both; }
+    .hero-frame { width: 100%; max-width: 400px; aspect-ratio: 4/5; background: var(--card-bg); border-radius: 2rem; overflow: hidden; position: relative; box-shadow: 0 40px 80px rgba(15,14,12,0.22); }
+    .hero-frame-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(150deg, #1e1b16 0%, #2a241c 100%); position: relative; overflow: hidden; }
+    .frame-circles { position: absolute; inset: 0; }
+    .frame-circles span { position: absolute; border: 1px solid rgba(200,80,42,0.15); border-radius: 50%; }
+    .frame-circles span:nth-child(1) { width: 200px; height: 200px; top: -50px; right: -50px; }
+    .frame-circles span:nth-child(2) { width: 140px; height: 140px; bottom: 40px; left: -40px; border-color: rgba(42,107,200,0.12); }
+    .frame-circles span:nth-child(3) { width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-color: rgba(200,80,42,0.06); }
+    .hero-initials { font-family: 'Fraunces', serif; font-size: 8rem; font-weight: 900; color: rgba(245,240,232,0.07); line-height: 1; letter-spacing: -0.05em; position: relative; z-index: 1; }
+    .hero-badge { position: absolute; bottom: 1.5rem; left: 1.5rem; background: var(--accent); color: white; padding: 0.55rem 1.1rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.04em; }
+    .floating-tag { position: absolute; background: white; border-radius: 1rem; padding: 0.65rem 0.9rem; box-shadow: 0 8px 24px rgba(15,14,12,0.14); font-size: 0.78rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
+    .floating-tag.t1 { top: 1.5rem; right: -1.2rem; animation: float 3s ease-in-out infinite; }
+    .floating-tag.t2 { bottom: 5.5rem; right: -2rem; animation: float 3s 1.5s ease-in-out infinite; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot-green { background: #3ddc84; }
+    .dot-orange { background: var(--accent); }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ABOUT */
+    #about { padding: 100px 5vw; display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start; }
+    .about-sticky { position: sticky; top: 120px; }
+    .section-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+    h2 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+    h2 em { font-style: italic; color: var(--accent); }
+    .about-body p { font-size: 0.97rem; line-height: 1.85; color: #3a3530; margin-bottom: 1.1rem; }
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+    .skill-pill { background: var(--ink); color: var(--cream); padding: 0.4rem 1rem; border-radius: 2rem; font-size: 0.76rem; font-weight: 400; }
+
+    /* SERVICES */
+    #services { padding: 100px 5vw; background: var(--ink); color: var(--cream); }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 1.5rem; }
+    #services .section-label { color: rgba(200,80,42,0.9); }
+    #services h2 { color: var(--cream); margin-bottom: 0; }
+    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5px; background: rgba(255,255,255,0.05); }
+    .service-card { background: var(--card-bg); padding: 2.5rem; position: relative; overflow: hidden; transition: background 0.3s; }
+    .service-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.4s ease; }
+    .service-card:hover { background: #221f1b; }
+    .service-card:hover::after { width: 100%; }
+    .service-icon { font-size: 1.8rem; margin-bottom: 1.2rem; }
+    .service-card h3 { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--cream); }
+    .service-card p { font-size: 0.88rem; line-height: 1.7; color: rgba(245,240,232,0.5); }
+
+    /* WORK */
+    #work { padding: 100px 5vw; }
+    .work-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
+    .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .work-card { border-radius: 1.2rem; overflow: hidden; background: var(--ink); aspect-ratio: 4/3; position: relative; cursor: pointer; }
+    .work-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease, opacity 0.3s ease; opacity: 0.8; }
+    .work-card:hover img { transform: scale(1.05); opacity: 1; }
+    .work-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,14,12,0.85) 0%, transparent 60%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; }
+    .work-card-cat { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+    .work-card h3 { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 700; color: white; }
+
+    /* TESTIMONIAL */
+    #testimonials { padding: 100px 5vw; background: var(--ink); color: var(--cream); text-align: center; position: relative; overflow: hidden; }
+    #testimonials::before { content: '"'; position: absolute; top: -0.2em; left: 50%; transform: translateX(-50%); font-family: 'Fraunces', serif; font-size: 25rem; font-weight: 900; color: rgba(200,80,42,0.06); line-height: 1; pointer-events: none; }
+    .testimonial-inner { position: relative; z-index: 1; }
+    #testimonials .section-label { color: rgba(200,80,42,0.9); justify-content: center; display: block; }
+    .testimonial-body { font-family: 'Fraunces', serif; font-size: clamp(1.3rem, 2.8vw, 2rem); font-style: italic; font-weight: 300; line-height: 1.55; max-width: 760px; margin: 2rem auto 2.5rem; color: rgba(245,240,232,0.9); }
+    .testimonial-attr { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,240,232,0.5); }
+
+    /* CLIENTS */
+    #clients { padding: 80px 5vw; }
+    .clients-label { text-align: center; margin-bottom: 3rem; }
+    .clients-track { display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .client-logo { height: 36px; opacity: 0.35; filter: grayscale(1); transition: opacity 0.3s, filter 0.3s; object-fit: contain; }
+    .client-logo:hover { opacity: 0.8; filter: grayscale(0); }
+    .cta-banner { margin-top: 4rem; background: var(--ink); border-radius: 2rem; padding: 3.5rem; text-align: center; }
+    .cta-banner p { font-family: 'Fraunces', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; color: var(--cream); margin-bottom: 1.5rem; line-height: 1.25; }
+    .cta-banner p em { font-style: italic; color: var(--accent); }
+
+    /* CONTACT */
+    #contact { padding: 100px 5vw; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .contact-info {}
+    .contact-links { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .contact-link { display: flex; align-items: center; gap: 1rem; }
+    .contact-icon { width: 42px; height: 42px; background: var(--ink); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .contact-link-text a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+    .contact-link-text a:hover { color: var(--accent); }
+    .contact-link-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .form-group input, .form-group textarea {
+      background: white; border: 1.5px solid rgba(15,14,12,0.1);
+      border-radius: 0.75rem; padding: 0.85rem 1.1rem;
+      font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--ink);
+      transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,80,42,0.08); }
+    .form-group textarea { min-height: 130px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* FOOTER */
+    footer { background: var(--ink); color: rgba(245,240,232,0.5); padding: 2.5rem 5vw; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; }
+    .footer-logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1rem; color: var(--cream); }
+    .footer-tagline { font-style: italic; }
+
+    /* SCROLL ANIMATION */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; padding-top: 100px; gap: 3rem; }
+      .hero-visual { order: -1; }
+      .hero-frame { max-width: 300px; margin: 0 auto; }
+      .floating-tag.t2 { right: -0.5rem; }
+      #about { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-sticky { position: static; }
+      .services-grid { grid-template-columns: 1fr; }
+      .work-grid { grid-template-columns: 1fr; }
+      #contact { grid-template-columns: 1fr; gap: 3rem; }
+      nav .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-stats { gap: 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .services-header { flex-direction: column; align-items: flex-start; }
+      .work-header { flex-direction: column; align-items: flex-start; }
+      .form-row { grid-template-columns: 1fr; }
+      .cta-banner { padding: 2rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Rakara Abila</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#work" onclick="toggleMenu()">Work</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Freelance Web Designer · Kenya</p>
+    <h1>Where Code Meets <em>Creative Soul.</em></h1>
+    <p class="hero-sub">I craft digital experiences that don't just look stunning — they convert, engage, and leave a lasting impression. From concept to launch, every pixel has a purpose.</p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-primary">See My Work →</a>
+      <a href="#contact" class="btn-outline">Start a Project</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">40+</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-frame">
+      <div class="hero-frame-bg">
+        <div class="frame-circles">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="hero-initials">RA</div>
+      </div>
+      <div class="hero-badge">📍 Nairobi, Kenya</div>
+    </div>
+    <div class="floating-tag t1"><span class="dot dot-green"></span> Available for projects</div>
+    <div class="floating-tag t2"><span class="dot dot-orange"></span> HTML · CSS · PHP · MySQL</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-sticky reveal">
+    <p class="section-label">About Me</p>
+    <h2>Building the web, <em>one thoughtful pixel</em> at a time.</h2>
+    <div class="skills-grid">
+      <span class="skill-pill">HTML5</span>
+      <span class="skill-pill">CSS3</span>
+      <span class="skill-pill">PHP</span>
+      <span class="skill-pill">MySQL</span>
+      <span class="skill-pill">Brand Identity</span>
+      <span class="skill-pill">UX Design</span>
+      <span class="skill-pill">Social Media</span>
+      <span class="skill-pill">Responsive Design</span>
+    </div>
+  </div>
+  <div class="about-body reveal">
+    <p>I'm Rakara Abila — a freelance web designer and developer based in Kenya with a genuine passion for the craft. I believe a great website is more than a pretty face: it's a strategic tool that communicates your brand, earns trust, and drives real results.</p>
+    <p>Over the years, I've partnered with startups, non-profits, and established enterprises across diverse industries. Each project starts the same way — with deep listening. Your goals, your audience, your story — these shape every decision I make.</p>
+    <p>I stay current with evolving web standards and trends so your site doesn't just look modern today — it's built to last. And I don't disappear after launch. I offer ongoing support, maintenance, and optimization because your long-term success is the real measure of my work.</p>
+    <p>Whether you're building from scratch or ready to level up an existing presence, let's create something genuinely extraordinary together.</p>
+    <br/>
+    <a href="#contact" class="btn-primary">Work With Me →</a>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <p class="section-label">What I Do</p>
+      <h2>Expertise that <em>moves</em> the needle.</h2>
+    </div>
+    <a href="#contact" class="btn-primary" style="background: var(--accent);">Get a Quote</a>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon">🖥️</div>
+      <h3>Web Design & Development</h3>
+      <p>Stunning, high-performance websites built with clean code. From brochure sites to complex web applications — designed to captivate your audience and built to scale with your ambitions.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✦</div>
+      <h3>Logo & Brand Identity</h3>
+      <p>Your brand is your first impression and your lasting legacy. I craft cohesive visual identities — logos, colour systems, typography — that tell your story before you say a word.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🗂️</div>
+      <h3>Information Architecture</h3>
+      <p>Great UX begins with clear structure. I design intuitive content hierarchies and navigation systems that guide users effortlessly from curiosity to conversion.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <h3>Social Media Management</h3>
+      <p>Your audience is online right now. I craft and execute social strategies that build genuine community, amplify your brand voice, and turn followers into loyal advocates.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="work-header reveal">
+    <div>
+      <p class="section-label">Selected Work</p>
+      <h2>Projects I'm <em>proud</em> of.</h2>
+    </div>
+  </div>
+  <div class="work-grid reveal">
+    <div class="work-card">
+      <img src="https://rakara.github.io/img/projects/goyefoundation.jpg" alt="GOYE Foundation" loading="lazy" onerror="this.style.display='none'" />
+      <div class="work-card-overlay">
+        <p class="work-card-cat">Non-Profit · Web Design</p>
+        <h3>GOYE Foundation</h3>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="https://rakara.github.io/img/projects/1discipling1.jpg" alt="Believers Bible Institute" loading="lazy" onerror="this.style.display='none'" />
+      <div class="work-card-overlay">
+        <p class="work-card-cat">Education · Development</p>
+        <h3>Believers Bible Institute</h3>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="https://rakara.github.io/img/projects/reeltribe.jpg" alt="Reeltribe" loading="lazy" onerror="this.style.display='none'" />
+      <div class="work-card-overlay">
+        <p class="work-card-cat">Entertainment · Branding</p>
+        <h3>Reeltribe</h3>
+      </div>
+    </div>
+    <div class="work-card" style="background: var(--card-bg);">
+      <div class="work-card-overlay" style="background: linear-gradient(to top, rgba(200,80,42,0.7) 0%, transparent 80%);">
+        <p class="work-card-cat">Media · Web App</p>
+        <h3>Third Factor</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonials">
+  <div class="testimonial-inner reveal">
+    <p class="section-label">Client Stories</p>
+    <p class="testimonial-body">"Rakara demonstrated a deep understanding of my brand and its unique requirements. He translated our vision into a stunning website that perfectly captured the essence of our business."</p>
+    <p class="testimonial-attr">— Michael O., Director · GOYE Foundation</p>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="clients-label reveal">
+    <p class="section-label" style="display:inline-block;">Trusted By</p>
+    <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem);">Brands that <em>trust</em> the craft.</h2>
+  </div>
+  <div class="clients-track reveal">
+    <img class="client-logo" src="https://rakara.github.io/img/logos/cocacola.jpg" alt="Coca-Cola" />
+    <img class="client-logo" src="https://rakara.github.io/img/logos/shell.jpg" alt="Shell" />
+    <img class="client-logo" src="https://rakara.github.io/img/logos/Equity_Bank_Logo.jpg" alt="Equity Bank" />
+    <img class="client-logo" src="https://rakara.github.io/img/logos/airtel.jpg" alt="Airtel" />
+    <img class="client-logo" src="https://rakara.github.io/img/logos/total.jpg" alt="Total" />
+  </div>
+  <div class="cta-banner reveal">
+    <p>Ready to build something <em>unforgettable?</em><br/>Let's make your vision real.</p>
+    <a href="#contact" class="btn-primary" style="background: var(--accent);">Request a Quote →</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-info reveal">
+    <p class="section-label">Get In Touch</p>
+    <h2>Let's build something <em>great</em> together.</h2>
+    <p style="color: var(--muted); line-height: 1.75; font-size: 0.95rem; margin-bottom: 1rem;">
+      Have a project in mind? I'd love to hear about it. Drop me a message and I'll get back to you within 24 hours.
+    </p>
+    <div class="contact-links">
+      <div class="contact-link">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-link-text">
+          <div class="contact-link-label">Email</div>
+          <a href="mailto:rakara.abila@gmail.com">rakara.abila@gmail.com</a>
+        </div>
+      </div>
+      <div class="contact-link">
+        <div class="contact-icon">📞</div>
+        <div class="contact-link-text">
+          <div class="contact-link-label">Phone</div>
+          <a href="tel:+254725720822">(254) 725 720 822</a>
+        </div>
+      </div>
+      <div class="contact-link">
+        <div class="contact-icon">📍</div>
+        <div class="contact-link-text">
+          <div class="contact-link-label">Location</div>
+          <a href="#">Magunga, Homabay, Kenya</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal">
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="John" required />
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Doe" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="john@company.com" required />
+      </div>
+      <div class="form-group">
+        <label>Project Type</label>
+        <input type="text" placeholder="e.g. Website Redesign, Logo Design…" />
+      </div>
+      <div class="form-group">
+        <label>Tell Me About Your Project</label>
+        <textarea placeholder="Describe your goals, timeline, and budget…"></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="align-self: flex-start;">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Rakara Abila</span>
+  <span class="footer-tagline">Inspiration Beyond Reality.</span>
+  <span>© 2025 All rights reserved.</span>
+</footer>
+
+<script>
+  // scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#2a8c3a';
+    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; }, 3000);
+  }
 </script>
-    </body>
+</body>
 </html>
