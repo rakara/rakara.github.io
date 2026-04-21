@@ -179,6 +179,21 @@
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /*Social Media Icons*/
+    .contact-icon svg {
+      display: block;
+      color: #25D366; /* replace with your green brand */
+    }
+
+    .contact-link a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .contact-link a:hover {
+      text-decoration: underline;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       #hero { grid-template-columns: 1fr; padding-top: 100px; gap: 3rem; }
@@ -433,29 +448,60 @@
     <p style="color: var(--muted); line-height: 1.75; font-size: 0.95rem; margin-bottom: 1rem;">
       Have a project in mind? I'd love to hear about it. Drop me a message and I'll get back to you within 24 hours.
     </p>
-    <div class="contact-links">
-      <div class="contact-link">
-        <div class="contact-icon">✉️</div>
-        <div class="contact-link-text">
-          <div class="contact-link-label">Email</div>
-          <a href="mailto:rakara.abila@gmail.com">rakara.abila@gmail.com</a>
-        </div>
-      </div>
-      <div class="contact-link">
-        <div class="contact-icon">📞</div>
-        <div class="contact-link-text">
-          <div class="contact-link-label">Phone</div>
-          <a href="tel:+254725720822">(254) 725 720 822</a>
-        </div>
-      </div>
-      <div class="contact-link">
-        <div class="contact-icon">📍</div>
-        <div class="contact-link-text">
-          <div class="contact-link-label">Location</div>
-          <a href="#">Nairobi, Kenya</a>
-        </div>
-      </div>
+   <div class="contact-links">
+
+  <!-- Facebook -->
+  <div class="contact-link">
+    <div class="contact-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M22 12a10 10 0 1 0-11.63 9.87v-6.99h-2.8V12h2.8V9.8c0-2.76 1.64-4.29 4.15-4.29 1.2 0 2.46.21 2.46.21v2.7h-1.39c-1.37 0-1.8.85-1.8 1.72V12h3.06l-.49 2.88h-2.57v6.99A10 10 0 0 0 22 12z"/>
+      </svg>
     </div>
+    <div class="contact-link-text">
+      <div class="contact-link-label">Facebook</div>
+      <a href="https://facebook.com/RakaraWebStudio" target="_blank">
+        facebook.com/RakaraWebStudio
+      </a>
+    </div>
+  </div>
+
+  <!-- Instagram -->
+  <div class="contact-link">
+    <div class="contact-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 
+        0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm5 
+        5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm6.5-.75a1.25 
+        1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 
+        0zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+      </svg>
+    </div>
+    <div class="contact-link-text">
+      <div class="contact-link-label">Instagram</div>
+      <a href="https://instagram.com/RakaraWebStudio" target="_blank">
+        instagram.com/RakaraWebStudio
+      </a>
+    </div>
+  </div>
+
+  <!-- X (Twitter) -->
+  <div class="contact-link">
+    <div class="contact-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2H21l-6.5 7.43L22 22h-6.828l-5.348-6.987L3.5 
+        22H1l6.96-7.957L2 2h6.828l4.858 6.355L18.244 
+        2zm-2.395 18h1.885L7.07 4H5.09l10.759 16z"/>
+      </svg>
+    </div>
+    <div class="contact-link-text">
+      <div class="contact-link-label">X (Twitter)</div>
+      <a href="https://x.com/RakaraWebStudio" target="_blank">
+        x.com/RakaraWebStudio
+      </a>
+    </div>
+  </div>
+
+</div>
   </div>
   <div class="reveal">
     <form class="contact-form" onsubmit="handleSubmit(event)">
