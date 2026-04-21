@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NewsHub</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <h1 class="logo">📰 NewsHub</h1>
+    <input type="text" id="search" placeholder="Search news...">
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+  </nav>
+
+  <div class="categories" id="categories">
+    <button data-category="all">All</button>
+    <button data-category="tech">Tech</button>
+    <button data-category="sports">Sports</button>
+    <button data-category="business">Business</button>
+  </div>
+</header>
+
+<main>
+  <section id="news-container" class="news-container"></section>
+</main>
+
+<footer>
+  <p>© 2026 NewsHub</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
