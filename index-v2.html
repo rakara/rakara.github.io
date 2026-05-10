@@ -506,33 +506,30 @@
 </div>
   </div>
   <div class="reveal">
-    <form class="contact-form" id="contactForm" action="https://formspree.io/f/xnjwgpdb" method="POST">
-      <input type="hidden" name="_subject" value="New project inquiry from your website" />
+    <form class="contact-form" onsubmit="handleSubmit(event)">
       <div class="form-row">
         <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" name="first_name" placeholder="John" required />
+          <label>First Name</label>
+          <input type="text" placeholder="John" required />
         </div>
         <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" name="last_name" placeholder="Doe" required />
+          <label>Last Name</label>
+          <input type="text" placeholder="Doe" required />
         </div>
       </div>
       <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="john@company.com" required />
+        <label>Email Address</label>
+        <input type="email" placeholder="john@company.com" required />
       </div>
       <div class="form-group">
-        <label for="projectType">Project Type</label>
-        <input type="text" id="projectType" name="project_type" placeholder="e.g. Website Redesign, Logo Design…" />
+        <label>Project Type</label>
+        <input type="text" placeholder="e.g. Website Redesign, Logo Design…" />
       </div>
       <div class="form-group">
-        <label for="message">Tell Me About Your Project</label>
-        <textarea id="message" name="message" placeholder="Describe your goals, timeline, and budget…"></textarea>
+        <label>Tell Me About Your Project</label>
+        <textarea placeholder="Describe your goals, timeline, and budget…"></textarea>
       </div>
-      <button type="submit" class="btn-primary" id="submitBtn" style="align-self: flex-start;">Send Message →</button>
-      <p id="formSuccess" style="display:none; color: #2a8c3a; font-size: 0.92rem; font-weight: 500; margin-top: 0.5rem;">✓ Message sent! I'll get back to you within 24 hours.</p>
-      <p id="formError" style="display:none; color: var(--accent); font-size: 0.92rem; font-weight: 500; margin-top: 0.5rem;">Something went wrong. Please try again or email me directly.</p>
+      <button type="submit" class="btn-primary" style="align-self: flex-start;">Send Message →</button>
     </form>
   </div>
 </section>
@@ -557,38 +554,13 @@
     document.getElementById('mobileMenu').classList.toggle('open');
   }
 
-  // Formspree AJAX submission
-  const contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const successMsg = document.getElementById('formSuccess');
-      const errorMsg = document.getElementById('formError');
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
-      successMsg.style.display = 'none';
-      errorMsg.style.display = 'none';
-      try {
-        const response = await fetch('https://formspree.io/f/xnjwgpdb', {
-          method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: new FormData(contactForm)
-        });
-        if (response.ok) {
-          contactForm.reset();
-          successMsg.style.display = 'block';
-          btn.textContent = 'Send Message →';
-          btn.disabled = false;
-        } else {
-          throw new Error('Server error');
-        }
-      } catch (err) {
-        errorMsg.style.display = 'block';
-        btn.textContent = 'Send Message →';
-        btn.disabled = false;
-      }
-    });
+  // form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#2a8c3a';
+    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; }, 3000);
   }
 </script>
 </body>
