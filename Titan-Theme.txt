@@ -1,0 +1,14 @@
+Here's your Titan-themed redesign of rakara.github.io. Here's what drives the concept:
+The Aesthetic Direction — "Primordial Forge"
+Titans as primordial gods of craft and raw power informed every decision: obsidian and charcoal stone backgrounds, molten gold as the signature accent (representing forged craftsmanship), ember-red for energy markers, and ancient Roman numeral service icons (I–VIII) echoing stone tablets.
+Typography
+Cinzel Decorative for the display logo and major headings — it's rooted in Roman inscriptional lettering, the literal language carved by Titans. Cinzel for UI labels and navigation. Cormorant Garamond in light/italic for body copy — classical, editorial, timeless.
+Key Design Decisions
+
+Hero title uses the chamfered clip-path CTA button — angular, forged-metal feel, not generic rounded corners
+Services grid uses Roman numerals (I–VIII) as section glyphs — deliberate, not decorative
+Work cards have giant ghost numerals in the background for depth
+The gold top-border slide-in on service card hover feels like gilding stone
+Scroll reveal animations bring each section to life progressively
+
+Your content is fully preserved — all 8 services, 4 projects, the GOYE Foundation testimonial, all 5 brand logos, and the contact form with your social links.

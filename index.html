@@ -3,220 +3,112 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ═══════════════════════════════════════════════
+       PRIMARY SEO META
+  ════════════════════════════════════════════════ -->
+  <title>Rakara Abila — Freelance Web Designer &amp; Developer in Nairobi, Kenya</title>
+  <meta name="description" content="Nairobi-based freelance web designer and developer crafting high-performance websites, web apps, and e-commerce platforms. 8+ years experience. M-Pesa integrations, React, PHP." />
+  <meta name="keywords" content="web designer Nairobi, web developer Kenya, freelance developer Kenya, M-Pesa integration, React developer Nairobi, e-commerce Kenya" />
+  <meta name="author" content="Rakara Abila" />
+  <link rel="canonical" href="https://rakaraabila.co.ke/" />
+
+  <!-- ═══════════════════════════════════════════════
+       OPEN GRAPH (Facebook / LinkedIn / WhatsApp)
+  ════════════════════════════════════════════════ -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://rakaraabila.co.ke/" />
+  <meta property="og:title"       content="Rakara Abila — Freelance Web Designer &amp; Developer, Nairobi" />
+  <meta property="og:description" content="Crafting digital experiences that convert, engage, and leave a lasting impression. Web design, development &amp; M-Pesa integrations for Kenyan businesses." />
+  <meta property="og:image"       content="https://rakaraabila.co.ke/img/og-cover.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale"      content="en_KE" />
+  <meta property="og:site_name"   content="Rakara Abila" />
+
+  <!-- ═══════════════════════════════════════════════
+       TWITTER / X CARD
+  ════════════════════════════════════════════════ -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@RakaraWebStudio" />
+  <meta name="twitter:creator"     content="@RakaraWebStudio" />
+  <meta name="twitter:title"       content="Rakara Abila — Web Designer &amp; Developer, Nairobi" />
+  <meta name="twitter:description" content="Crafting high-performance websites &amp; web apps for Kenyan businesses." />
+  <meta name="twitter:image"       content="https://rakaraabila.co.ke/img/og-cover.jpg" />
+
+  <!-- ═══════════════════════════════════════════════
+       STRUCTURED DATA — Person + WebSite
+  ════════════════════════════════════════════════ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://rakaraabila.co.ke/#person",
+        "name": "Rakara Abila",
+        "jobTitle": "Freelance Web Designer & Developer",
+        "description": "Nairobi-based freelance web designer and developer with 8+ years of experience building websites, web apps, and e-commerce platforms for Kenyan and East African businesses.",
+        "url": "https://rakaraabila.co.ke/",
+        "image": "https://rakaraabila.co.ke/img/rakara.jpg",
+        "email": "hello@rakaraabila.co.ke",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nairobi",
+          "addressCountry": "KE"
+        },
+        "sameAs": [
+          "https://facebook.com/RakaraWebStudio",
+          "https://instagram.com/RakaraWebStudio",
+          "https://x.com/RakaraWebStudio"
+        ],
+        "knowsAbout": ["Web Design","Web Development","React","PHP","M-Pesa Integration","UX Design","E-Commerce","SEO"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://rakaraabila.co.ke/#website",
+        "name": "Rakara Abila",
+        "url": "https://rakaraabila.co.ke/",
+        "description": "Portfolio of Rakara Abila — freelance web designer and developer in Nairobi, Kenya.",
+        "author": { "@id": "https://rakaraabila.co.ke/#person" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://rakaraabila.co.ke/blog/?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://rakaraabila.co.ke/#service",
+        "name": "Rakara Web Studio",
+        "url": "https://rakaraabila.co.ke/",
+        "provider": { "@id": "https://rakaraabila.co.ke/#person" },
+        "areaServed": { "@type": "Country", "name": "Kenya" },
+        "serviceType": ["Web Design","Web Development","E-Commerce","API Integration","SEO Optimization"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Web Design & Development Services",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Website Development" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "E-Commerce Solutions" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "M-Pesa & Payment Integration" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Performance & SEO Optimization" } }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
+
   <title>Rakara Abila — Web Design & Development</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --ink: #0f0e0c;
-      --cream: #f5f0e8;
-      --accent: #c8502a;
-      --accent2: #2a6bc8;
-      --muted: #8a8375;
-      --card-bg: #1a1814;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 5vw;
-      backdrop-filter: blur(12px);
-      background: rgba(245,240,232,0.88);
-      border-bottom: 1px solid rgba(15,14,12,0.07);
-    }
-    .nav-logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-size: 0.78rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--ink); }
-    .nav-cta { background: var(--ink); color: var(--cream) !important; padding: 0.45rem 1.1rem; border-radius: 2rem; transition: background 0.2s !important; }
-    .nav-cta:hover { background: var(--accent) !important; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: 0.3s; }
-    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--cream); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--ink); text-decoration: none; }
-    .mobile-menu a:hover { color: var(--accent); }
-
-    /* HERO */
-    #hero {
-      min-height: 100vh;
-      display: grid; grid-template-columns: 1fr 1fr;
-      align-items: center;
-      padding: 120px 5vw 80px;
-      gap: 4rem;
-      position: relative; overflow: hidden;
-    }
-    #hero::before {
-      content: ''; position: absolute; top: -20%; right: -10%;
-      width: 60vw; height: 60vw; border-radius: 50%;
-      background: radial-gradient(circle, rgba(200,80,42,0.09) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-text { position: relative; z-index: 1; animation: fadeUp 0.8s ease both; }
-    .hero-eyebrow {
-      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem;
-    }
-    .hero-eyebrow::before { content: ''; display: inline-block; width: 2rem; height: 1px; background: var(--accent); }
-    h1 { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(2.8rem, 5.5vw, 5.2rem); line-height: 1.02; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
-    h1 em { font-style: italic; color: var(--accent); }
-    .hero-sub { font-size: 1rem; line-height: 1.75; color: var(--muted); max-width: 440px; margin-bottom: 2.5rem; }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--ink); color: var(--cream); padding: 0.85rem 2rem; border-radius: 3rem; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: background 0.25s, transform 0.2s; }
-    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
-    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; border: 1.5px solid var(--ink); color: var(--ink); padding: 0.85rem 2rem; border-radius: 3rem; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: 0.25s; }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-    .hero-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(15,14,12,0.1); }
-    .stat-num { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 700; line-height: 1; }
-    .stat-label { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; letter-spacing: 0.04em; }
-
-    /* hero visual */
-    .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; animation: fadeUp 0.8s 0.2s ease both; }
-    .hero-frame { width: 100%; max-width: 400px; aspect-ratio: 4/5; background: var(--card-bg); border-radius: 2rem; overflow: hidden; position: relative; box-shadow: 0 40px 80px rgba(15,14,12,0.22); }
-    .hero-frame-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(150deg, #1e1b16 0%, #2a241c 100%); position: relative; overflow: hidden; }
-    .frame-circles { position: absolute; inset: 0; }
-    .frame-circles span { position: absolute; border: 1px solid rgba(200,80,42,0.15); border-radius: 50%; }
-    .frame-circles span:nth-child(1) { width: 200px; height: 200px; top: -50px; right: -50px; }
-    .frame-circles span:nth-child(2) { width: 140px; height: 140px; bottom: 40px; left: -40px; border-color: rgba(42,107,200,0.12); }
-    .frame-circles span:nth-child(3) { width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%, -50%); border-color: rgba(200,80,42,0.06); }
-    .hero-initials { font-family: 'Fraunces', serif; font-size: 8rem; font-weight: 900; color: rgba(245,240,232,0.07); line-height: 1; letter-spacing: -0.05em; position: relative; z-index: 1; }
-    .hero-badge { position: absolute; bottom: 1.5rem; left: 1.5rem; background: var(--accent); color: white; padding: 0.55rem 1.1rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.04em; }
-    .floating-tag { position: absolute; background: white; border-radius: 1rem; padding: 0.65rem 0.9rem; box-shadow: 0 8px 24px rgba(15,14,12,0.14); font-size: 0.78rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
-    .floating-tag.t1 { top: 1.5rem; right: -1.2rem; animation: float 3s ease-in-out infinite; }
-    .floating-tag.t2 { bottom: 5.5rem; right: -2rem; animation: float 3s 1.5s ease-in-out infinite; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .dot-green { background: #3ddc84; }
-    .dot-orange { background: var(--accent); }
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* ABOUT */
-    #about { padding: 100px 5vw; display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start; }
-    .about-sticky { position: sticky; top: 120px; }
-    .section-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
-    h2 { font-family: 'Fraunces', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
-    h2 em { font-style: italic; color: var(--accent); }
-    .about-body p { font-size: 0.97rem; line-height: 1.85; color: #3a3530; margin-bottom: 1.1rem; }
-    .skills-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
-    .skill-pill { background: var(--ink); color: var(--cream); padding: 0.4rem 1rem; border-radius: 2rem; font-size: 0.76rem; font-weight: 400; }
-
-    /* SERVICES */
-    #services { padding: 100px 5vw; background: var(--ink); color: var(--cream); }
-    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 1.5rem; }
-    #services .section-label { color: rgba(200,80,42,0.9); }
-    #services h2 { color: var(--cream); margin-bottom: 0; }
-    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5px; background: rgba(255,255,255,0.05); }
-    .service-card { background: var(--card-bg); padding: 2.5rem; position: relative; overflow: hidden; transition: background 0.3s; }
-    .service-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.4s ease; }
-    .service-card:hover { background: #221f1b; }
-    .service-card:hover::after { width: 100%; }
-    .service-icon { font-size: 1.8rem; margin-bottom: 1.2rem; }
-    .service-card h3 { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--cream); }
-    .service-card p { font-size: 0.88rem; line-height: 1.7; color: rgba(245,240,232,0.5); }
-
-    /* WORK */
-    #work { padding: 100px 5vw; }
-    .work-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
-    .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-    .work-card { border-radius: 1.2rem; overflow: hidden; background: var(--ink); aspect-ratio: 4/3; position: relative; cursor: pointer; }
-    .work-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease, opacity 0.3s ease; opacity: 0.8; }
-    .work-card:hover img { transform: scale(1.05); opacity: 1; }
-    .work-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,14,12,0.85) 0%, transparent 60%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; }
-    .work-card-cat { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
-    .work-card h3 { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 700; color: white; }
-
-    /* TESTIMONIAL */
-    #testimonials { padding: 100px 5vw; background: var(--ink); color: var(--cream); text-align: center; position: relative; overflow: hidden; }
-    #testimonials::before { content: '"'; position: absolute; top: -0.2em; left: 50%; transform: translateX(-50%); font-family: 'Fraunces', serif; font-size: 25rem; font-weight: 900; color: rgba(200,80,42,0.06); line-height: 1; pointer-events: none; }
-    .testimonial-inner { position: relative; z-index: 1; }
-    #testimonials .section-label { color: rgba(200,80,42,0.9); justify-content: center; display: block; }
-    .testimonial-body { font-family: 'Fraunces', serif; font-size: clamp(1.3rem, 2.8vw, 2rem); font-style: italic; font-weight: 300; line-height: 1.55; max-width: 760px; margin: 2rem auto 2.5rem; color: rgba(245,240,232,0.9); }
-    .testimonial-attr { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,240,232,0.5); }
-
-    /* CLIENTS */
-    #clients { padding: 80px 5vw; }
-    .clients-label { text-align: center; margin-bottom: 3rem; }
-    .clients-track { display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
-    .client-logo { height: 36px; opacity: 0.35; filter: grayscale(1); transition: opacity 0.3s, filter 0.3s; object-fit: contain; }
-    .client-logo:hover { opacity: 0.8; filter: grayscale(0); }
-    .cta-banner { margin-top: 4rem; background: var(--ink); border-radius: 2rem; padding: 3.5rem; text-align: center; }
-    .cta-banner p { font-family: 'Fraunces', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; color: var(--cream); margin-bottom: 1.5rem; line-height: 1.25; }
-    .cta-banner p em { font-style: italic; color: var(--accent); }
-
-    /* CONTACT */
-    #contact { padding: 100px 5vw; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
-    .contact-info {}
-    .contact-links { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
-    .contact-link { display: flex; align-items: center; gap: 1rem; }
-    .contact-icon { width: 42px; height: 42px; background: var(--ink); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-    .contact-link-text a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
-    .contact-link-text a:hover { color: var(--accent); }
-    .contact-link-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
-    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-    .form-group input, .form-group textarea {
-      background: white; border: 1.5px solid rgba(15,14,12,0.1);
-      border-radius: 0.75rem; padding: 0.85rem 1.1rem;
-      font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--ink);
-      transition: border-color 0.2s, box-shadow 0.2s; outline: none;
-    }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,80,42,0.08); }
-    .form-group textarea { min-height: 130px; resize: vertical; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-    /* FOOTER */
-    footer { background: var(--ink); color: rgba(245,240,232,0.5); padding: 2.5rem 5vw; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; }
-    .footer-logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1rem; color: var(--cream); }
-    .footer-tagline { font-style: italic; }
-
-    /* SCROLL ANIMATION */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /*Social Media Icons*/
-    .contact-icon svg {
-      display: block;
-      color: #c8502a;
-    }
-
-    .contact-link a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .contact-link a:hover {
-      text-decoration: underline;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      #hero { grid-template-columns: 1fr; padding-top: 100px; gap: 3rem; }
-      .hero-visual { order: -1; }
-      .hero-frame { max-width: 300px; margin: 0 auto; }
-      .floating-tag.t2 { right: -0.5rem; }
-      #about { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-sticky { position: static; }
-      .services-grid { grid-template-columns: 1fr; }
-      .work-grid { grid-template-columns: 1fr; }
-      #contact { grid-template-columns: 1fr; gap: 3rem; }
-      nav .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .hero-stats { gap: 1.5rem; }
-    }
-    @media (max-width: 600px) {
-      .services-header { flex-direction: column; align-items: flex-start; }
-      .work-header { flex-direction: column; align-items: flex-start; }
-      .form-row { grid-template-columns: 1fr; }
-      .cta-banner { padding: 2rem; }
-      footer { flex-direction: column; text-align: center; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
+  
 </head>
 <body>
 

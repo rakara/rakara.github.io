@@ -1,14 +1,11 @@
-const CACHE_NAME = 'rakara-abila-v1.0';
+const CACHE_NAME = 'rakara-abila-v2.0';
 const urlsToCache = [
     '/',
     '/index.html',
-    '/css/uikit.min.css',
-    '/css/style.css',
-    '/js/uikit.min.js',
-    'https://code.jquery.com/jquery-3.7.0.js',
-    '/img/about_bg.jpg',
-    '/img/cta_bg.jpg',
-    '/video/ETRG.mp4'
+    '/blog.html',
+    '/style.css',
+    '/main.js',
+    '/manifest.json'
 ];
 
 // Install event

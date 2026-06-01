@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rakara Abila — Web Design & Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --obsidian: #0a0806;
+    --deep-stone: #110f0c;
+    --ash: #1c1916;
+    --warm-stone: #2a2520;
+    --titan-gold: #c9a84c;
+    --pale-gold: #e8d5a3;
+    --ember: #d4622a;
+    --marble: #f0ece4;
+    --smoke: #7a7268;
+    --off-white: #f5f1ea;
+    --font-display: 'Cinzel Decorative', serif;
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Cormorant Garamond', serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--obsidian);
+    color: var(--marble);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(10,8,6,0.92);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    backdrop-filter: blur(6px);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--titan-gold);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--titan-gold); }
+
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-ornament {
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 0%, rgba(201,168,76,0.04) 40%, rgba(212,98,42,0.06) 100%);
+    clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+  .hero-bg-lines {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(201,168,76,0.04) 80px),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(201,168,76,0.03) 80px);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-label {
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .hero-label::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--ember);
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--off-white);
+    margin-bottom: 0.5rem;
+  }
+  .hero-title em {
+    font-style: normal;
+    color: var(--titan-gold);
+    display: block;
+  }
+  .hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--smoke);
+    margin: 1.5rem 0 2.5rem;
+    max-width: 480px;
+    line-height: 1.8;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--obsidian);
+    background: var(--titan-gold);
+    border: none;
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.25s, transform 0.2s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+  .btn-primary:hover { background: var(--pale-gold); transform: translateY(-2px); }
+  .btn-ghost {
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--titan-gold);
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.25s, color 0.25s, transform 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--titan-gold); color: var(--pale-gold); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3.5rem;
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--titan-gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    margin-top: 0.3rem;
+  }
+
+  .hero-visual {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-portrait-frame {
+    width: 340px;
+    height: 420px;
+    position: relative;
+    margin-left: auto;
+  }
+  .portrait-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, var(--ash) 0%, var(--warm-stone) 100%);
+    clip-path: polygon(12% 0%, 100% 0%, 100% 88%, 88% 100%, 0% 100%, 0% 12%);
+  }
+  .portrait-gold-border {
+    position: absolute;
+    top: -4px; left: -4px; right: -4px; bottom: -4px;
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.5);
+    clip-path: polygon(11% 0%, 100% 0%, 100% 89%, 89% 100%, 0% 100%, 0% 11%);
+  }
+  .portrait-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+  }
+  .portrait-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--warm-stone), var(--ash));
+    border: 2px solid rgba(201,168,76,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--titan-gold);
+  }
+  .portrait-name {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--off-white);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+  .portrait-location {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--smoke);
+    text-align: center;
+  }
+  .portrait-badge {
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 0.4rem 1.2rem;
+    font-family: var(--font-heading);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--titan-gold);
+    margin-top: 0.5rem;
+  }
+  .portrait-stack {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stack-tag {
+    font-family: var(--font-heading);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--smoke);
+    border: 1px solid rgba(122,114,104,0.3);
+    padding: 0.2rem 0.6rem;
+  }
+  .rune-corner { position: absolute; width: 32px; height: 32px; }
+  .rune-corner.tl { top: 8px; left: 8px; border-top: 2px solid var(--titan-gold); border-left: 2px solid var(--titan-gold); }
+  .rune-corner.br { bottom: 8px; right: 8px; border-bottom: 2px solid var(--titan-gold); border-right: 2px solid var(--titan-gold); }
+
+  section { padding: 6rem 4rem; position: relative; }
+  .section-label {
+    font-family: var(--font-heading);
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .section-label::before { content: ''; display: block; width: 30px; height: 1px; background: var(--ember); }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    color: var(--off-white);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .section-title em { font-style: normal; color: var(--titan-gold); }
+  .divider { width: 60px; height: 1px; background: linear-gradient(90deg, var(--titan-gold), transparent); margin: 1.5rem 0 3rem; }
+
+  #about { background: var(--deep-stone); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; }
+  .about-left .skills-cloud { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+  .skill-chip {
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--titan-gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 0.4rem 1rem;
+    transition: background 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+  .skill-chip:hover { background: rgba(201,168,76,0.08); border-color: var(--titan-gold); }
+  .about-text { font-size: 1.1rem; font-weight: 300; color: rgba(240,236,228,0.8); line-height: 1.9; }
+
+  #services { background: var(--obsidian); }
+  .services-intro { max-width: 540px; margin-bottom: 4rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(201,168,76,0.1); }
+  .service-card {
+    background: var(--deep-stone);
+    padding: 2.5rem 2rem;
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--titan-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { background: var(--ash); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--titan-gold); margin-bottom: 1rem; opacity: 0.7; }
+  .service-name { font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; color: var(--off-white); margin-bottom: 0.8rem; }
+  .service-desc { font-size: 0.9rem; font-weight: 300; color: var(--smoke); line-height: 1.7; }
+
+  #work { background: var(--deep-stone); }
+  .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: rgba(201,168,76,0.08); }
+  .work-card {
+    background: var(--ash);
+    padding: 3rem;
+    position: relative;
+    transition: background 0.25s;
+    overflow: hidden;
+    cursor: pointer;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .work-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,8,6,0.9) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .work-card:hover { background: var(--warm-stone); }
+  .work-card-bg {
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px; height: 200px;
+    opacity: 0.06;
+    font-family: var(--font-display);
+    font-size: 8rem;
+    font-weight: 900;
+    color: var(--titan-gold);
+    line-height: 1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .work-card-content { position: relative; z-index: 2; }
+  .work-type { font-family: var(--font-heading); font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ember); margin-bottom: 0.6rem; }
+  .work-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--off-white); line-height: 1.2; }
+
+  #testimonial { background: var(--ash); padding: 7rem 4rem; text-align: center; }
+  .testimonial-rune { font-family: var(--font-display); font-size: 5rem; color: var(--titan-gold); opacity: 0.25; line-height: 1; margin-bottom: 2rem; display: block; }
+  .testimonial-text { font-family: var(--font-body); font-size: 1.5rem; font-weight: 300; font-style: italic; color: var(--pale-gold); max-width: 700px; margin: 0 auto 2rem; line-height: 1.7; }
+  .testimonial-attr { font-family: var(--font-heading); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); }
+
+  #brands { background: var(--obsidian); padding: 4rem; border-top: 1px solid rgba(201,168,76,0.1); border-bottom: 1px solid rgba(201,168,76,0.1); }
+  .brands-label { font-family: var(--font-heading); font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--smoke); text-align: center; margin-bottom: 2.5rem; }
+  .brands-row { display: flex; justify-content: center; align-items: center; gap: 4rem; flex-wrap: wrap; }
+  .brand-name { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(122,114,104,0.6); transition: color 0.25s; }
+  .brand-name:hover { color: var(--titan-gold); }
+
+  #cta-banner { background: var(--warm-stone); padding: 6rem 4rem; text-align: center; position: relative; overflow: hidden; }
+  #cta-banner::before {
+    content: 'ⅭⅠⅩⅯ';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-family: var(--font-display); font-size: 18rem; font-weight: 900;
+    color: rgba(201,168,76,0.03); pointer-events: none; line-height: 1; white-space: nowrap;
+  }
+  .cta-tagline { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; color: var(--off-white); line-height: 1.15; margin-bottom: 1rem; position: relative; z-index: 2; }
+  .cta-tagline em { font-style: normal; color: var(--titan-gold); }
+  .cta-sub { font-family: var(--font-body); font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--smoke); margin-bottom: 3rem; position: relative; z-index: 2; }
+  .cta-btn-wrap { position: relative; z-index: 2; }
+
+  #contact { background: var(--deep-stone); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; }
+  .social-links { display: flex; flex-direction: column; gap: 0.8rem; }
+  .social-link { font-family: var(--font-heading); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--smoke); text-decoration: none; display: flex; align-items: center; gap: 0.8rem; transition: color 0.2s; }
+  .social-link::before { content: '—'; color: var(--titan-gold); font-family: monospace; }
+  .social-link:hover { color: var(--titan-gold); }
+  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  label { font-family: var(--font-heading); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--smoke); }
+  input, select, textarea { background: var(--ash); border: 1px solid rgba(201,168,76,0.15); color: var(--marble); font-family: var(--font-body); font-size: 1rem; padding: 0.9rem 1.2rem; outline: none; transition: border-color 0.2s; }
+  input:focus, select:focus, textarea:focus { border-color: rgba(201,168,76,0.5); }
+  select option { background: var(--ash); }
+  textarea { resize: vertical; min-height: 140px; }
+
+  footer { background: var(--obsidian); border-top: 1px solid rgba(201,168,76,0.12); padding: 2rem 4rem; display: flex; align-items: center; justify-content: space-between; }
+  .footer-logo { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; color: var(--titan-gold); letter-spacing: 0.08em; }
+  .footer-tagline { font-family: var(--font-body); font-size: 0.85rem; font-style: italic; color: var(--smoke); }
+  .footer-copy { font-family: var(--font-heading); font-size: 0.6rem; letter-spacing: 0.15em; color: rgba(122,114,104,0.5); text-transform: uppercase; }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+    .hero-visual { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .work-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .brands-row { gap: 2rem; }
+    #cta-banner { padding: 4rem 1.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#hero">Rakara</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-bg-ornament"></div>
+  <div class="hero-content reveal">
+    <p class="hero-label">Freelance Web Designer · Nairobi, Kenya</p>
+    <h1 class="hero-title">Where Code Meets<em>Creative Soul.</em></h1>
+    <p class="hero-subtitle">Crafting digital experiences that don't merely look stunning — they convert, engage, and leave a lasting impression. Every pixel forged with purpose.</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn-primary">See My Work</a>
+      <a href="#contact" class="btn-ghost">Start a Project</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">8+</div><div class="stat-label">Years Experience</div></div>
+      <div><div class="stat-num">40+</div><div class="stat-label">Projects Delivered</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Client Satisfaction</div></div>
+    </div>
+  </div>
+  <div class="hero-visual reveal" style="transition-delay:0.2s">
+    <div class="hero-portrait-frame">
+      <div class="portrait-gold-border"></div>
+      <div class="portrait-bg"></div>
+      <div class="rune-corner tl"></div>
+      <div class="rune-corner br"></div>
+      <div class="portrait-inner">
+        <div class="portrait-avatar">RA</div>
+        <div class="portrait-name">Rakara Abila</div>
+        <div class="portrait-location">Nairobi, Kenya</div>
+        <div class="portrait-badge">Available for projects</div>
+        <div class="portrait-stack">
+          <span class="stack-tag">HTML</span><span class="stack-tag">CSS</span><span class="stack-tag">PHP</span>
+          <span class="stack-tag">React</span><span class="stack-tag">Next</span><span class="stack-tag">SQL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Building the web,<br/><em>one thoughtful pixel</em> at a time.</h2>
+      <div class="divider"></div>
+      <div class="skills-cloud">
+        <span class="skill-chip">HTML5</span><span class="skill-chip">CSS3</span><span class="skill-chip">PHP</span>
+        <span class="skill-chip">SQL</span><span class="skill-chip">React</span><span class="skill-chip">Next.js</span>
+        <span class="skill-chip">Brand Identity</span><span class="skill-chip">UX Design</span>
+        <span class="skill-chip">Social Media</span><span class="skill-chip">Responsive Design</span>
+        <span class="skill-chip">M-Pesa API</span><span class="skill-chip">Supabase</span>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:0.15s">
+      <p class="about-text">I'm Rakara Abila — a freelance web designer and developer based in Kenya, driven by a genuine passion for creating meaningful digital experiences. To me, a great website goes beyond aesthetics — it's a strategic asset that communicates your brand, builds trust, and delivers measurable results.</p>
+      <p class="about-text" style="margin-top:1.5rem">I've had the opportunity to work with startups, non-profits, and established businesses across a range of industries. Every project begins with a clear understanding of what matters most — your goals, your audience, and your story.</p>
+      <p class="about-text" style="margin-top:1.5rem">Whether you're starting from the ground up or looking to elevate your existing presence, I'm here to help you build something purposeful, effective, and truly exceptional.</p>
+      <div style="margin-top:2.5rem"><a href="#contact" class="btn-primary">Work With Me</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="services-intro reveal">
+    <p class="section-label">What I Do</p>
+    <h2 class="section-title">Expertise that<br/><em>moves</em> the needle.</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal"><div class="service-icon">I</div><div class="service-name">Custom Website Development</div><div class="service-desc">Tailor-made, responsive websites built to reflect your brand and drive real business results.</div></div>
+    <div class="service-card reveal" style="transition-delay:0.08s"><div class="service-icon">II</div><div class="service-name">Frontend Development</div><div class="service-desc">Fast, interactive interfaces crafted with clean code and modern UI/UX principles.</div></div>
+    <div class="service-card reveal" style="transition-delay:0.16s"><div class="service-icon">III</div><div class="service-name">Backend Development</div><div class="service-desc">Secure, scalable systems, APIs, and databases that power your digital platform.</div></div>
+    <div class="service-card reveal" style="transition-delay:0.24s"><div class="service-icon">IV</div><div class="service-name">E-Commerce Solutions</div><div class="service-desc">Online stores with seamless checkout, inventory systems, and payment integrations.</div></div>
+    <div class="service-card reveal" style="transition-delay:0.32s"><div class="service-icon">V</div><div class="service-name">Content Management Systems</div><div class="service-desc">Custom CMS solutions that let you manage your content easily without technical skills.</div></div>
+    <div class="service-card reveal" style="transition-delay:0.4s"><div class="service-icon">VI</div><div class="service-name">Web Applications</div><div class="service-desc">Custom dashboards, job boards, booking systems, and platforms built for your workflow.</div></div>
+    <div class="service-card reveal" style="transition-delay:0.48s"><div class="service-icon">VII</div><div class="service-name">API & Payment Integration</div><div class="service-desc">M-Pesa, Airtel Money, SMS APIs, and third-party integrations tailored to your needs.</div></div>
+    <div class="service-card reveal" style="transition-delay:0.56s"><div class="service-icon">VIII</div><div class="service-name">Performance & SEO</div><div class="service-desc">Speed, visibility, and conversion-focused improvements to grow your traffic and impact.</div></div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="reveal" style="max-width:540px;margin-bottom:3rem">
+    <p class="section-label">Selected Work</p>
+    <h2 class="section-title">Projects I'm<br/><em>proud</em> of.</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="work-grid">
+    <div class="work-card reveal"><div class="work-card-bg">I</div><div class="work-card-content"><div class="work-type">E-Commerce · Web Design & Development</div><div class="work-title">Nawiri Fresh Flowers</div></div></div>
+    <div class="work-card reveal" style="transition-delay:0.1s"><div class="work-card-bg">II</div><div class="work-card-content"><div class="work-type">E-Commerce · Web Design & Development</div><div class="work-title">MotoCars</div></div></div>
+    <div class="work-card reveal" style="transition-delay:0.2s"><div class="work-card-bg">III</div><div class="work-card-content"><div class="work-type">App Development · Fintech</div><div class="work-title">TickGas</div></div></div>
+    <div class="work-card reveal" style="transition-delay:0.3s"><div class="work-card-bg">IV</div><div class="work-card-content"><div class="work-type">E-Commerce · Progressive Web App</div><div class="work-title">ShopHub</div></div></div>
+  </div>
+</section>
+
+<section id="testimonial">
+  <span class="testimonial-rune reveal">"</span>
+  <p class="testimonial-text reveal" style="transition-delay:0.1s">Rakara demonstrated a deep understanding of my brand and its unique requirements. He translated our vision into a stunning website that perfectly captured the essence of our business.</p>
+  <p class="testimonial-attr reveal" style="transition-delay:0.2s">— Michael O., Director · GOYE Foundation</p>
+</section>
+
+<div id="brands">
+  <p class="brands-label">Brands that trust the craft</p>
+  <div class="brands-row">
+    <span class="brand-name">Coca-Cola</span>
+    <span class="brand-name">Shell</span>
+    <span class="brand-name">Equity Bank</span>
+    <span class="brand-name">Airtel</span>
+    <span class="brand-name">TotalEnergies</span>
+  </div>
+</div>
+
+<section id="cta-banner">
+  <h2 class="cta-tagline reveal">Ready to build something<br/><em>unforgettable?</em></h2>
+  <p class="cta-sub reveal" style="transition-delay:0.1s">Let's make your vision real.</p>
+  <div class="cta-btn-wrap reveal" style="transition-delay:0.2s"><a href="#contact" class="btn-primary">Request a Quote</a></div>
+</section>
+
+<section id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Let's build something<br/><em>great</em> together.</h2>
+      <div class="divider"></div>
+      <p style="font-family:var(--font-body);font-size:1rem;font-weight:300;color:rgba(240,236,228,0.7);line-height:1.8;margin-bottom:2.5rem">Have a project in mind? I'd love to hear about it. Drop me a message and I'll get back to you within 24 hours.</p>
+      <div class="social-links">
+        <a class="social-link" href="https://facebook.com/RakaraWebStudio" target="_blank">Facebook · RakaraWebStudio</a>
+        <a class="social-link" href="https://instagram.com/RakaraWebStudio" target="_blank">Instagram · RakaraWebStudio</a>
+        <a class="social-link" href="https://x.com/RakaraWebStudio" target="_blank">X · RakaraWebStudio</a>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:0.15s">
+      <form class="contact-form" onsubmit="return false">
+        <div class="form-row">
+          <div class="form-group"><label for="fname">First Name</label><input type="text" id="fname" placeholder="Atlas"/></div>
+          <div class="form-group"><label for="lname">Last Name</label><input type="text" id="lname" placeholder="Prometheus"/></div>
+        </div>
+        <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" placeholder="titan@olympus.io"/></div>
+        <div class="form-group">
+          <label for="project">Project Type</label>
+          <select id="project">
+            <option value="">Select a service</option>
+            <option>Custom Website Development</option>
+            <option>Frontend Development</option>
+            <option>Backend Development</option>
+            <option>E-Commerce Solutions</option>
+            <option>Web Application</option>
+            <option>API & Payment Integration</option>
+          </select>
+        </div>
+        <div class="form-group"><label for="message">Tell Me About Your Project</label><textarea id="message" placeholder="Describe your vision..."></textarea></div>
+        <div><button type="submit" class="btn-primary" style="width:100%;text-align:center;border:none;cursor:pointer">Send Message →</button></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Rakara Abila</div>
+  <div class="footer-tagline">Inspiration Beyond Reality.</div>
+  <div class="footer-copy">© 2026 All rights reserved.</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
