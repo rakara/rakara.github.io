@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Blog — Rakara Abila | Web Design & Dev Insights</title>
+  <meta name="description" content="Thoughts on web design, development, SEO, M-Pesa integrations, and building for the Kenyan market — by Rakara Abila." />
+  <meta name="author" content="Rakara Abila" />
+  <link rel="canonical" href="https://rakara.github.io/blog/" />
+
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://rakara.github.io/blog/" />
+  <meta property="og:title"       content="Blog — Rakara Abila" />
+  <meta property="og:description" content="Web design, development & digital strategy thoughts from a Nairobi-based freelancer." />
+  <meta property="og:image"       content="https://rakara.github.io/img/og-cover.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Rakara Abila Blog",
+    "url": "https://rakara.github.io/blog/",
+    "author": {
+      "@type": "Person",
+      "name": "Rakara Abila",
+      "url": "https://rakara.github.io/"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- NAV -->
+<div id="navbar-placeholder"></div>
+
+<main id="main">
+
+  <!-- BLOG HERO -->
+  <div class="blog-hero">
+    <p class="section-label">The Blog</p>
+    <h1>Ideas, Insights &amp; <em>How-Tos.</em></h1>
+    <p class="hero-sub">Web design, development, SEO and building digital products for the Kenyan and East African market — written from the trenches.</p>
+
+    <!-- FILTER -->
+    <div class="blog-filter" role="group" aria-label="Filter by category">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="design">Design</button>
+      <button class="filter-btn" data-filter="development">Development</button>
+      <button class="filter-btn" data-filter="seo">SEO</button>
+      <button class="filter-btn" data-filter="kenya">Kenya / Market</button>
+      <button class="filter-btn" data-filter="tools">Tools</button>
+    </div>
+  </div>
+
+  <!-- BLOG GRID -->
+  <div class="blog-grid-section">
+    <div class="blog-grid" id="blogGrid">
+
+      <!-- ── FEATURED CARD ── -->
+      <article class="blog-card featured reveal" data-category="development">
+        <div class="blog-card-img">
+          <img src="img/mpesa-integration.jpg"
+               alt="M-Pesa STK Push integration on a laptop screen"
+               width="800" height="450"
+               loading="eager" />
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="blog-tag">Development</span>
+            <span class="blog-date">28 May 2026</span>
+          </div>
+          <h2><a href="how-to-integrate-mpesa-stk-push.html">How to Integrate M-Pesa STK Push Into Any Website (Step-by-Step)</a></h2>
+          <p>A practical walkthrough — from Safaricom Daraja API credentials to handling callbacks — so your Kenyan customers can pay in seconds.</p>
+          <div class="blog-card-footer">
+            <span class="blog-read-time">8 min read</span>
+            <a href="how-to-integrate-mpesa-stk-push.html" class="blog-read-more">Read article →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── CARD 2 ── -->
+      <article class="blog-card reveal" data-category="design">
+        <div class="blog-card-img">
+          <img src="img/typography-web.jpg"
+               alt="Typography specimen showing Fraunces and DM Sans"
+               width="600" height="338"
+               loading="lazy" />
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="blog-tag">Design</span>
+            <span class="blog-date">14 May 2026</span>
+          </div>
+          <h2><a href="web-typography-that-converts.html">Web Typography That Actually Converts</a></h2>
+          <p>Why font pairing matters more than colour, and how to choose a type system that builds trust before a visitor reads a word.</p>
+          <div class="blog-card-footer">
+            <span class="blog-read-time">5 min read</span>
+            <a href="web-typography-that-converts.html" class="blog-read-more">Read article →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── CARD 3 ── -->
+      <article class="blog-card reveal" data-category="seo">
+        <div class="blog-card-img">
+          <img src="img/seo-nairobi.jpg"
+               alt="Google search results showing a Nairobi business ranking"
+               width="600" height="338"
+               loading="lazy" />
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="blog-tag">SEO</span>
+            <span class="blog-date">2 May 2026</span>
+          </div>
+          <h2><a href="local-seo-nairobi-businesses.html">Local SEO for Nairobi Businesses: A 2026 Checklist</a></h2>
+          <p>From Google Business Profile to schema markup — the exact steps I use to get Kenyan clients ranking in their city.</p>
+          <div class="blog-card-footer">
+            <span class="blog-read-time">6 min read</span>
+            <a href="local-seo-nairobi-businesses.html" class="blog-read-more">Read article →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── CARD 4 ── -->
+      <article class="blog-card reveal" data-category="kenya">
+        <div class="blog-card-img">
+          <img src="img/website-cost-kenya.jpg"
+               alt="Freelancer at a desk in Nairobi"
+               width="600" height="338"
+               loading="lazy" />
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="blog-tag">Kenya / Market</span>
+            <span class="blog-date">18 Apr 2026</span>
+          </div>
+          <h2><a href="how-much-does-a-website-cost-in-kenya.html">How Much Does a Website Cost in Kenya? (2026 Guide)</a></h2>
+          <p>Breaking down realistic KES price ranges for landing pages, business sites, e-commerce and web apps — with no fluff.</p>
+          <div class="blog-card-footer">
+            <span class="blog-read-time">4 min read</span>
+            <a href="how-much-does-a-website-cost-in-kenya.html" class="blog-read-more">Read article →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── CARD 5 ── -->
+      <article class="blog-card reveal" data-category="tools">
+        <div class="blog-card-img">
+          <img src="img/supabase-auth.jpg"
+               alt="Supabase dashboard showing auth users"
+               width="600" height="338"
+               loading="lazy" />
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="blog-tag">Tools</span>
+            <span class="blog-date">3 Apr 2026</span>
+          </div>
+          <h2><a href="supabase-auth-row-level-security.html">Supabase Auth & Row-Level Security: What You Actually Need to Know</a></h2>
+          <p>RLS confused me the first time too. Here's the mental model that finally made it click, with real policy examples.</p>
+          <div class="blog-card-footer">
+            <span class="blog-read-time">7 min read</span>
+            <a href="supabase-auth-row-level-security.html" class="blog-read-more">Read article →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── CARD 6 ── -->
+      <article class="blog-card reveal" data-category="design">
+        <div class="blog-card-img">
+          <img src="img/mobile-first.jpg"
+               alt="Website viewed on a smartphone in Nairobi"
+               width="600" height="338"
+               loading="lazy" />
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta">
+            <span class="blog-tag">Design</span>
+            <span class="blog-date">20 Mar 2026</span>
+          </div>
+          <h2><a href="mobile-first-design-kenya.html">Why Mobile-First Design Is Non-Negotiable in Kenya</a></h2>
+          <p>Over 80% of Kenyan internet users are on mobile. Here's how to design for them without sacrificing desktop quality.</p>
+          <div class="blog-card-footer">
+            <span class="blog-read-time">5 min read</span>
+            <a href="mobile-first-design-kenya.html" class="blog-read-more">Read article →</a>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /blog-grid -->
+
+    <!-- PAGINATION -->
+    <nav class="blog-pagination" aria-label="Pagination">
+      <a href="#" class="page-btn active" aria-current="page">1</a>
+      <a href="#" class="page-btn">2</a>
+      <a href="#" class="page-btn">3</a>
+      <a href="#" class="page-btn">→</a>
+    </nav>
+
+  </div><!-- /blog-grid-section -->
+
+</main>
+
+<!-- FOOTER -->
+<div id="footer-placeholder"></div>
+
+<script src="../js/blog-navbar.js"></script>
+<script src="../js/footer.js"></script>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Category filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.blog-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
