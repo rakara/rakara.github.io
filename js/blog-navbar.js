@@ -3,7 +3,7 @@ function loadNavbar() {
         <nav>
           <a href="index.html" class="nav-logo">Blog - Rakara Abila</a>
           <ul class="nav-links">
-            <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
+            <li><a href="../index.html#contact" class="nav-cta">Let's Talk</a></li>
           </ul>
           <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
             <span></span><span></span><span></span>
