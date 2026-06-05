@@ -11,16 +11,16 @@
   <meta name="description" content="Nairobi-based freelance web designer and developer crafting high-performance websites, web apps, and e-commerce platforms. 8+ years experience. M-Pesa integrations, Angular, React, PHP." />
   <meta name="keywords" content="web designer Nairobi, web developer Kenya, freelance developer Kenya, M-Pesa integration, Angular developer Nairobi, React developer Nairobi, e-commerce Kenya" />
   <meta name="author" content="Rakara Abila" />
-  <link rel="canonical" href="https://rakaraabila.co.ke/" />
+  <link rel="canonical" href="https://rakara.github.io/" />
 
   <!-- ═══════════════════════════════════════════════
        OPEN GRAPH (Facebook / LinkedIn / WhatsApp)
   ════════════════════════════════════════════════ -->
   <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://rakaraabila.co.ke/" />
+  <meta property="og:url"         content="https://rakara.github.io" />
   <meta property="og:title"       content="Rakara Abila — Freelance Web Designer &amp; Developer, Nairobi" />
   <meta property="og:description" content="Crafting digital experiences that convert, engage, and leave a lasting impression. Web design, development &amp; M-Pesa integrations for Kenyan businesses." />
-  <meta property="og:image"       content="https://rakaraabila.co.ke/img/og-cover.jpg" />
+  <meta property="og:image"       content="https://rakara.github.io/img/rakara.jpg" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale"      content="en_KE" />
@@ -34,7 +34,7 @@
   <meta name="twitter:creator"     content="@RakaraWebStudio" />
   <meta name="twitter:title"       content="Rakara Abila — Web Designer &amp; Developer, Nairobi" />
   <meta name="twitter:description" content="Crafting high-performance websites &amp; web apps for Kenyan businesses." />
-  <meta name="twitter:image"       content="https://rakaraabila.co.ke/img/og-cover.jpg" />
+  <meta name="twitter:image"       content="https://rakara.guthub.io/img/rakara.jpg" />
 
   <!-- ═══════════════════════════════════════════════
        STRUCTURED DATA — Person + WebSite
@@ -45,7 +45,7 @@
     "@graph": [
       {
         "@type": "Person",
-        "@id": "https://rakaraabila.co.ke/#person",
+        "@id": "https://rakara.github.io/#person",
         "name": "Rakara Abila",
         "jobTitle": "Freelance Web Designer & Developer",
         "description": "Nairobi-based freelance web designer and developer with 8+ years of experience building websites, web apps, and e-commerce platforms for Kenyan and East African businesses.",
@@ -82,10 +82,10 @@
       },
       {
         "@type": "ProfessionalService",
-        "@id": "https://rakaraabila.co.ke/#service",
+        "@id": "https://rakara.github.io/#service",
         "name": "Rakara Web Studio",
-        "url": "https://rakaraabila.co.ke/",
-        "provider": { "@id": "https://rakaraabila.co.ke/#person" },
+        "url": "https://rakara.github.io/",
+        "provider": { "@id": "https://rakara.github.io/#person" },
         "areaServed": { "@type": "Country", "name": "Kenya" },
         "serviceType": ["Web Design","Web Development","E-Commerce","API Integration","SEO Optimization"],
         "hasOfferCatalog": {
@@ -108,77 +108,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-
-  <style>
-    /* ── PRICING SECTION ── */
-    #pricing {
-      padding: 80px 5vw;
-      background: var(--cream, #f5f0e8);
-    }
-    .pricing-inner { text-align: center; margin-bottom: 2.5rem; }
-    .pricing-sub {
-      color: var(--muted, #8a8375);
-      max-width: 480px;
-      margin: 0.75rem auto 0;
-      font-size: 0.95rem;
-    }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.75rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .pricing-card {
-      background: var(--ink, #0f0e0c);
-      color: var(--cream, #f5f0e8);
-      padding: 2.5rem;
-      border-radius: 1.5rem;
-      position: relative;
-      transition: transform 0.3s;
-    }
-    .pricing-card:hover { transform: translateY(-8px); }
-    .pricing-card h3 {
-      font-family: 'Fraunces', serif;
-      font-size: 1.4rem;
-      margin: 0 0 0.25rem;
-    }
-    .pricing-card .price { font-size: 2rem; font-weight: 700; margin: 0.75rem 0; }
-    .pricing-card ul { list-style: none; padding: 0; margin: 1.25rem 0 1.75rem; }
-    .pricing-card li { margin-bottom: 0.55rem; color: rgba(245,240,232,0.75); font-size: 0.9rem; }
-    .pricing-card.featured { background: var(--accent, #c8502a); }
-    .pricing-card .badge {
-      position: absolute;
-      top: -10px; right: 20px;
-      background: var(--ink, #0f0e0c);
-      color: var(--cream, #f5f0e8);
-      padding: 4px 12px;
-      font-size: 0.68rem;
-      border-radius: 20px;
-      letter-spacing: 0.03em;
-    }
-    .pricing-card .btn {
-      display: inline-block;
-      padding: 0.65rem 1.4rem;
-      border-radius: 2rem;
-      text-decoration: none;
-      font-size: 0.83rem;
-      font-family: 'DM Sans', sans-serif;
-      transition: opacity 0.2s;
-    }
-    .pricing-card .btn:hover { opacity: 0.85; }
-    .pricing-card .btn-dark  { background: var(--cream, #f5f0e8); color: var(--ink, #0f0e0c); }
-    .pricing-card .btn-outline { border: 1px solid var(--cream, #f5f0e8); color: var(--cream, #f5f0e8); }
-    .value-strip {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem 2rem;
-      margin-top: 2.5rem;
-      color: var(--muted, #8a8375);
-      font-size: 0.88rem;
-    }
-  </style>
 
 </head>
 <body>
@@ -257,7 +186,9 @@
       <span class="skill-pill">CSS3</span>
       <span class="skill-pill">PHP</span>
       <span class="skill-pill">SQL</span>
+      <span class="skill-pill">Angular</span>
       <span class="skill-pill">React</span>
+      <span class="skill-pill">Vue</span>
       <span class="skill-pill">Next</span>
       <span class="skill-pill">Brand Identity</span>
       <span class="skill-pill">UX Design</span>
@@ -347,28 +278,28 @@
   </div>
   <div class="work-grid reveal">
     <div class="work-card">
-      <img src="https://rakara.github.io/img/projects/nawiri.jpg" alt="Nawiri Fresh Flowers" loading="lazy" onerror="this.style.display='none'" />
+      <img src="img/projects/nawiri.jpg" alt="Nawiri Fresh Flowers" loading="lazy" onerror="this.style.display='none'" />
       <div class="work-card-overlay">
         <p class="work-card-cat">E-Commerce · Web Design &amp; Development</p>
         <h3>Nawiri Fresh Flowers</h3>
       </div>
     </div>
     <div class="work-card">
-      <img src="https://rakara.github.io/img/projects/moto.jpg" alt="MotoCars" loading="lazy" onerror="this.style.display='none'" />
+      <img src="img/projects/moto.jpg" alt="MotoCars" loading="lazy" onerror="this.style.display='none'" />
       <div class="work-card-overlay">
         <p class="work-card-cat">E-Commerce · Web Design &amp; Development</p>
         <h3>MotoCars</h3>
       </div>
     </div>
     <div class="work-card">
-      <img src="https://rakara.github.io/img/projects/tickgas.jpg" alt="TickGas" loading="lazy" onerror="this.style.display='none'" />
+      <img src="img/projects/tickgas.jpg" alt="TickGas" loading="lazy" onerror="this.style.display='none'" />
       <div class="work-card-overlay">
         <p class="work-card-cat">E-Commerce · App Development</p>
         <h3>TickGas</h3>
       </div>
     </div>
     <div class="work-card">
-      <img src="https://rakara.github.io/img/projects/shophub.jpg" alt="ShopHub" loading="lazy" onerror="this.style.display='none'" />
+      <img src="/img/projects/shophub.jpg" alt="ShopHub" loading="lazy" onerror="this.style.display='none'" />
       <div class="work-card-overlay">
         <p class="work-card-cat">E-Commerce · Progressive Web App</p>
         <h3>ShopHub</h3>
@@ -452,11 +383,11 @@
     <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem);">Brands that <em>trust</em> the craft.</h2>
   </div>
   <div class="clients-track reveal">
-    <img class="client-logo" src="https://rakara.github.io/img/logos/cocacola.jpg" alt="Coca-Cola" />
-    <img class="client-logo" src="https://rakara.github.io/img/logos/shell.jpg" alt="Shell" />
-    <img class="client-logo" src="https://rakara.github.io/img/logos/Equity_Bank_Logo.jpg" alt="Equity Bank" />
-    <img class="client-logo" src="https://rakara.github.io/img/logos/airtel.jpg" alt="Airtel" />
-    <img class="client-logo" src="https://rakara.github.io/img/logos/total.jpg" alt="Total" />
+    <img class="client-logo" src="img/logos/cocacola.jpg" alt="Coca-Cola" />
+    <img class="client-logo" src="img/logos/shell.jpg" alt="Shell" />
+    <img class="client-logo" src="img/logos/Equity_Bank_Logo.jpg" alt="Equity Bank" />
+    <img class="client-logo" src="img/logos/airtel.jpg" alt="Airtel" />
+    <img class="client-logo" src="img/logos/total.jpg" alt="Total" />
   </div>
   <div class="cta-banner reveal">
     <p>Ready to build something <em>unforgettable?</em><br/>Let's make your vision real.</p>
