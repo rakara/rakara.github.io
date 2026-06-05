@@ -108,78 +108,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-
-  <style>
-    /* ── PRICING SECTION ── */
-    #pricing {
-      padding: 80px 5vw;
-      background: var(--cream, #f5f0e8);
-    }
-    .pricing-inner { text-align: center; margin-bottom: 2.5rem; }
-    .pricing-sub {
-      color: var(--muted, #8a8375);
-      max-width: 480px;
-      margin: 0.75rem auto 0;
-      font-size: 0.95rem;
-    }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.75rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .pricing-card {
-      background: var(--ink, #0f0e0c);
-      color: var(--cream, #f5f0e8);
-      padding: 2.5rem;
-      border-radius: 1.5rem;
-      position: relative;
-      transition: transform 0.3s;
-    }
-    .pricing-card:hover { transform: translateY(-8px); }
-    .pricing-card h3 {
-      font-family: 'Fraunces', serif;
-      font-size: 1.4rem;
-      margin: 0 0 0.25rem;
-    }
-    .pricing-card .price { font-size: 2rem; font-weight: 700; margin: 0.75rem 0; }
-    .pricing-card ul { list-style: none; padding: 0; margin: 1.25rem 0 1.75rem; }
-    .pricing-card li { margin-bottom: 0.55rem; color: rgba(245,240,232,0.75); font-size: 0.9rem; }
-    .pricing-card.featured { background: var(--accent, #c8502a); }
-    .pricing-card .badge {
-      position: absolute;
-      top: -10px; right: 20px;
-      background: var(--ink, #0f0e0c);
-      color: var(--cream, #f5f0e8);
-      padding: 4px 12px;
-      font-size: 0.68rem;
-      border-radius: 20px;
-      letter-spacing: 0.03em;
-    }
-    .pricing-card .btn {
-      display: inline-block;
-      padding: 0.65rem 1.4rem;
-      border-radius: 2rem;
-      text-decoration: none;
-      font-size: 0.83rem;
-      font-family: 'DM Sans', sans-serif;
-      transition: opacity 0.2s;
-    }
-    .pricing-card .btn:hover { opacity: 0.85; }
-    .pricing-card .btn-dark  { background: var(--cream, #f5f0e8); color: var(--ink, #0f0e0c); }
-    .pricing-card .btn-outline { border: 1px solid var(--cream, #f5f0e8); color: var(--cream, #f5f0e8); }
-    .value-strip {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem 2rem;
-      margin-top: 2.5rem;
-      color: var(--muted, #8a8375);
-      font-size: 0.88rem;
-    }
-  </style>
-
+  
 </head>
 <body>
 
@@ -189,7 +118,7 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
-    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
   </ul>
@@ -202,7 +131,7 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about" onclick="toggleMenu()">About</a>
   <a href="#services" onclick="toggleMenu()">Services</a>
-  <a href="#pricing" onclick="toggleMenu()">Pricing</a>
+  <a href="pricing.html" onclick="toggleMenu()">Pricing</a>
   <a href="#work" onclick="toggleMenu()">Work</a>
   <a href="#contact" onclick="toggleMenu()">Contact</a>
 </div>
@@ -383,65 +312,6 @@
     <p class="section-label">Client Stories</p>
     <p class="testimonial-body">"Rakara demonstrated a deep understanding of my brand and its unique requirements. He translated our vision into a stunning website that perfectly captured the essence of our business."</p>
     <p class="testimonial-attr">— Michael O., Director · GOYE Foundation</p>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing">
-  <div class="pricing-inner reveal">
-    <p class="section-label">Pricing</p>
-    <h2>Simple, Transparent <em>Pricing</em></h2>
-    <p class="pricing-sub">Strategic websites designed to grow your business — not just exist online.</p>
-  </div>
-
-  <div class="pricing-grid reveal">
-
-    <div class="pricing-card">
-      <h3>Starter</h3>
-      <p class="price">KES 15,000</p>
-      <ul>
-        <li>✔ 1–3 Page Website</li>
-        <li>✔ Mobile Responsive</li>
-        <li>✔ Contact Form</li>
-        <li>✔ Basic SEO</li>
-      </ul>
-      <a href="#contact" class="btn btn-outline">Get Started</a>
-    </div>
-
-    <div class="pricing-card featured">
-      <div class="badge">Most Popular</div>
-      <h3>Professional</h3>
-      <p class="price">KES 35,000</p>
-      <ul>
-        <li>✔ Up to 7 Pages</li>
-        <li>✔ Custom Design</li>
-        <li>✔ CMS</li>
-        <li>✔ SEO Optimization</li>
-        <li>✔ WhatsApp Integration</li>
-      </ul>
-      <a href="#contact" class="btn btn-dark">Choose Plan</a>
-    </div>
-
-    <div class="pricing-card">
-      <h3>Advanced</h3>
-      <p class="price">KES 75,000+</p>
-      <ul>
-        <li>✔ Web Applications</li>
-        <li>✔ E-commerce</li>
-        <li>✔ M-Pesa Integration</li>
-        <li>✔ APIs & Dashboards</li>
-      </ul>
-      <a href="#contact" class="btn btn-outline">Request Quote</a>
-    </div>
-
-  </div>
-
-  <div class="value-strip reveal">
-    <span>✔ Clean, professional design</span>
-    <span>✔ Fast &amp; secure build</span>
-    <span>✔ Mobile-first experience</span>
-    <span>✔ Ongoing support</span>
-    <span>✔ Built for growth</span>
   </div>
 </section>
 
