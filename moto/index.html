@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moto.co.ke — Kenya's #1 Online Car Bazaar</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5A623;
+    --gold-dark: #C8831A;
+    --navy: #1a2535;
+    --navy-light: #243044;
+    --slate: #3d5166;
+    --white: #ffffff;
+    --off-white: #f4f6f9;
+    --text: #2c3e50;
+    --muted: #8a9ab5;
+    --card-bg: #ffffff;
+    --radius: 8px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    color: var(--text);
+    background: var(--off-white);
+  }
+
+  /* ======== NAVIGATION ======== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(26, 37, 53, 0.95);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 64px;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: var(--white);
+    letter-spacing: 0.5px;
+  }
+  .logo-text span { color: var(--gold); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 8px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); background: rgba(245,166,35,0.1); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; border: none; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-gold {
+    background: var(--gold); color: var(--navy);
+  }
+  .btn-gold:hover { background: var(--gold-dark); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.5);
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-lg { padding: 14px 32px; font-size: 16px; }
+
+  .nav-actions { display: flex; gap: 8px; align-items: center; }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px; background: var(--white);
+    transition: all 0.3s;
+  }
+
+  /* ======== HERO / SLIDESHOW ======== */
+  .hero {
+    position: relative;
+    height: 100vh; min-height: 600px;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding: 0 5%;
+  }
+
+  .slides-container {
+    position: absolute; inset: 0;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: 0;
+    animation: none;
+  }
+  .slide.active { animation: kenBurns 8s ease-in-out forwards; opacity: 1; }
+  .slide.prev { opacity: 0; transition: opacity 1s; }
+
+  /* Ken Burns variants */
+  .slide:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1600&q=80'); }
+  .slide:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1600&q=80'); }
+  .slide:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1600&q=80'); }
+  .slide:nth-child(4) { background-image: url('https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1600&q=80'); }
+
+  @keyframes kenBurns {
+    0%   { opacity: 0; transform: scale(1.1) translate(2%, 1%); }
+    5%   { opacity: 1; }
+    95%  { opacity: 1; }
+    100% { opacity: 0; transform: scale(1.0) translate(-1%, -1%); }
+  }
+  @keyframes kenBurns2 {
+    0%   { opacity: 0; transform: scale(1.0) translate(-2%, -1%); }
+    5%   { opacity: 1; }
+    95%  { opacity: 1; }
+    100% { opacity: 0; transform: scale(1.1) translate(1%, 2%); }
+  }
+
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(26,37,53,0.3) 0%,
+      rgba(26,37,53,0.1) 40%,
+      rgba(0,0,0,0.6) 100%
+    );
+  }
+
+  /* Slide dots */
+  .slide-dots {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 10;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    cursor: pointer; transition: all 0.3s;
+    border: none;
+  }
+  .dot.active { background: var(--gold); width: 24px; border-radius: 4px; }
+
+  /* Hero content left side */
+  .hero-content {
+    position: relative; z-index: 5;
+    flex: 1;
+    max-width: 420px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(245,166,35,0.15);
+    border: 1px solid rgba(245,166,35,0.4);
+    color: var(--gold);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 800; line-height: 1;
+    color: var(--white);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .hero-title span { color: var(--gold); }
+  .hero-subtitle {
+    color: rgba(255,255,255,0.75);
+    font-size: 16px; line-height: 1.6;
+    margin-bottom: 28px;
+  }
+  .hero-stats {
+    display: flex; gap: 28px; margin-bottom: 32px;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px; font-weight: 800; color: var(--gold); display: block;
+  }
+  .stat-label { font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Search box */
+  .search-box {
+    position: relative; z-index: 5;
+    background: rgba(26, 37, 53, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 12px;
+    padding: 28px 24px;
+    width: 340px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .search-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .search-box h3::before {
+    content: '🔍'; font-size: 16px;
+  }
+
+  .form-group { margin-bottom: 14px; }
+  .form-group label {
+    display: block; font-size: 11px; font-weight: 600;
+    color: var(--gold); text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+  .form-group select,
+  .form-group input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    color: var(--white);
+    padding: 10px 14px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-group select option { background: var(--navy); color: var(--white); }
+  .form-group select:focus,
+  .form-group input:focus { border-color: var(--gold); }
+  .form-group input::placeholder { color: rgba(255,255,255,0.35); }
+
+  .price-range {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+
+  .search-actions {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 18px;
+  }
+  .btn-reset {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn-reset:hover { background: rgba(255,255,255,0.15); }
+  .btn-search { background: var(--gold); color: var(--navy); }
+  .btn-search:hover { background: var(--gold-dark); }
+
+  /* ======== BROWSE SECTION ======== */
+  .section {
+    padding: 64px 5%;
+  }
+
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 36px;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--navy);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::before {
+    content: '';
+    display: block; width: 4px; height: 32px;
+    background: var(--gold); border-radius: 2px;
+  }
+  .section-link {
+    color: var(--gold); font-size: 14px; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; gap: 4px;
+  }
+  .section-link:hover { color: var(--gold-dark); }
+
+  .browse-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .browse-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border: 1px solid #e8ecf0;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .browse-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+  .browse-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--navy); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .browse-card-title .icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: rgba(245,166,35,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  /* Makes grid */
+  .makes-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  .make-item {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 14px 8px;
+    border-radius: 8px; border: 1px solid #e8ecf0;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+  }
+  .make-item:hover { border-color: var(--gold); background: rgba(245,166,35,0.04); }
+  .make-item svg { color: var(--slate); width: 32px; height: 20px; }
+  .make-item span { font-size: 12px; font-weight: 600; color: var(--slate); }
+
+  /* Body types */
+  .body-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+  .body-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 12px 6px;
+    border-radius: 8px; border: 1px solid #e8ecf0;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+  }
+  .body-item:hover { border-color: var(--gold); background: rgba(245,166,35,0.04); }
+  .body-item .car-icon { font-size: 24px; }
+  .body-item span { font-size: 11px; font-weight: 500; color: var(--slate); text-align: center; line-height: 1.2; }
+
+  /* Locations */
+  .locations-list { list-style: none; }
+  .location-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 0; border-bottom: 1px solid #f0f2f5;
+    cursor: pointer; transition: color 0.2s;
+    text-decoration: none; color: inherit;
+  }
+  .location-item:last-child { border-bottom: none; }
+  .location-item:hover .location-name { color: var(--gold); }
+  .location-left { display: flex; align-items: center; gap: 10px; }
+  .location-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold);
+  }
+  .location-name { font-size: 14px; font-weight: 500; color: var(--text); transition: color 0.2s; }
+  .location-count {
+    background: var(--gold); color: var(--navy);
+    font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px;
+  }
+
+  /* ======== FEATURED LISTINGS ======== */
+  .featured-bg { background: var(--navy); }
+  .featured-bg .section-title { color: var(--white); }
+  .featured-bg .section-title::before { background: var(--gold); }
+  .featured-bg .section-link { color: var(--gold); }
+
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .listing-card {
+    background: var(--navy-light);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .listing-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+
+  .listing-img {
+    width: 100%; height: 200px;
+    background: var(--slate);
+    position: relative; overflow: hidden;
+  }
+  .listing-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s;
+  }
+  .listing-card:hover .listing-img img { transform: scale(1.05); }
+  .listing-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--gold); color: var(--navy);
+    font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .listing-fav {
+    position: absolute; top: 12px; right: 12px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: white; transition: background 0.2s;
+  }
+  .listing-fav:hover { background: rgba(245,166,35,0.8); }
+
+  .listing-body { padding: 16px; }
+  .listing-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; font-weight: 700; color: var(--white);
+    margin-bottom: 4px;
+  }
+  .listing-sub { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .listing-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 800; color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .listing-price .currency { font-size: 14px; }
+  .listing-specs {
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .spec {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* ======== SELL CTA ======== */
+  .sell-cta {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    padding: 72px 5%;
+    text-align: center;
+  }
+  .sell-cta h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(32px, 5vw, 56px); font-weight: 800;
+    text-transform: uppercase; color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .sell-cta p { color: rgba(26,37,53,0.75); font-size: 18px; margin-bottom: 32px; }
+  .sell-steps {
+    display: flex; justify-content: center; gap: 48px;
+    margin-bottom: 36px; flex-wrap: wrap;
+  }
+  .sell-step { text-align: center; }
+  .step-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--navy); color: var(--gold);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 10px;
+  }
+  .step-label { font-size: 13px; font-weight: 600; color: var(--navy); }
+  .btn-navy { background: var(--navy); color: var(--white); }
+  .btn-navy:hover { background: var(--navy-light); }
+
+  /* ======== FOOTER ======== */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.7);
+    padding: 56px 5% 24px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand .logo { margin-bottom: 16px; display: inline-flex; }
+  .footer-tagline { font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+  .social-links { display: flex; gap: 10px; }
+  .social-link {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px;
+    transition: all 0.2s;
+  }
+  .social-link:hover { background: var(--gold); color: var(--navy); }
+
+  .footer-col h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--white);
+    margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 8px; }
+  .footer-links a {
+    color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px;
+    transition: color 0.2s; display: flex; align-items: center; gap: 6px;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 13px; }
+
+  /* ======== PAGES (hidden by default) ======== */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ======== LISTINGS PAGE ======== */
+  .page-header {
+    padding-top: 64px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding-bottom: 32px;
+    padding-left: 5%; padding-right: 5%;
+  }
+  .page-header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px; font-weight: 800; text-transform: uppercase;
+    color: var(--white); margin-top: 24px; margin-bottom: 8px;
+  }
+  .page-header p { color: var(--muted); font-size: 14px; }
+  .breadcrumb {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 16px;
+    font-size: 13px; color: var(--muted);
+  }
+  .breadcrumb a { color: var(--gold); text-decoration: none; }
+  .breadcrumb span { color: rgba(255,255,255,0.3); }
+
+  .listings-layout {
+    display: grid; grid-template-columns: 280px 1fr;
+    gap: 24px; padding: 32px 5%;
+  }
+
+  .filter-sidebar {
+    background: var(--card-bg); border-radius: 12px;
+    padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border: 1px solid #e8ecf0;
+    height: fit-content; position: sticky; top: 80px;
+  }
+  .filter-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; font-weight: 700; text-transform: uppercase;
+    color: var(--navy); margin-bottom: 20px;
+  }
+  .filter-group { margin-bottom: 20px; }
+  .filter-group label {
+    display: block; font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.6px; color: var(--slate); margin-bottom: 8px;
+  }
+  .filter-group select,
+  .filter-group input {
+    width: 100%; padding: 9px 12px; border-radius: 6px;
+    border: 1px solid #dde2ea; font-family: 'Barlow', sans-serif;
+    font-size: 13px; outline: none; color: var(--text);
+    transition: border-color 0.2s;
+  }
+  .filter-group select:focus,
+  .filter-group input:focus { border-color: var(--gold); }
+
+  .filter-range { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .listings-header {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+  }
+  .results-count { font-size: 14px; color: var(--muted); }
+  .results-count strong { color: var(--text); }
+  .sort-select {
+    padding: 8px 12px; border-radius: 6px; border: 1px solid #dde2ea;
+    font-family: 'Barlow', sans-serif; font-size: 13px; outline: none;
+  }
+
+  /* ======== DETAIL PAGE ======== */
+  .detail-layout {
+    display: grid; grid-template-columns: 1fr 380px;
+    gap: 24px; padding: 32px 5%;
+  }
+
+  .gallery {
+    border-radius: 12px; overflow: hidden; background: var(--navy);
+    aspect-ratio: 16/9;
+    position: relative;
+  }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-nav {
+    position: absolute; bottom: 16px; right: 16px;
+    display: flex; gap: 8px;
+  }
+  .gallery-btn {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(26,37,53,0.8); color: white;
+    border: none; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gallery-thumbnails {
+    display: flex; gap: 8px; margin-top: 8px;
+  }
+  .thumb {
+    width: 80px; height: 56px; border-radius: 6px;
+    background: var(--slate); cursor: pointer;
+    border: 2px solid transparent; overflow: hidden; transition: border-color 0.2s;
+    flex-shrink: 0;
+  }
+  .thumb.active { border-color: var(--gold); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  .detail-specs-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0;
+  }
+  .spec-card {
+    background: var(--off-white); border-radius: 8px;
+    padding: 16px; text-align: center;
+  }
+  .spec-card .spec-icon { font-size: 24px; margin-bottom: 6px; }
+  .spec-card .spec-value { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; color: var(--navy); }
+  .spec-card .spec-label { font-size: 11px; color: var(--muted); text-transform: uppercase; }
+
+  .detail-description {
+    font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: 24px;
+  }
+
+  .price-card {
+    background: var(--card-bg); border-radius: 12px;
+    padding: 28px; box-shadow: var(--shadow);
+    border: 1px solid #e8ecf0;
+    position: sticky; top: 80px;
+    height: fit-content;
+  }
+  .price-main {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px; font-weight: 800; color: var(--gold); margin-bottom: 4px;
+  }
+  .price-neg { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .seller-info {
+    background: var(--off-white); border-radius: 8px; padding: 16px; margin-bottom: 20px;
+  }
+  .seller-name { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .seller-member { font-size: 12px; color: var(--muted); }
+  .contact-actions { display: flex; flex-direction: column; gap: 10px; }
+
+  /* ======== SELL PAGE ======== */
+  .sell-form-container {
+    max-width: 800px; margin: 0 auto; padding: 32px 5%;
+  }
+  .form-section { background: var(--card-bg); border-radius: 12px; padding: 28px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); border: 1px solid #e8ecf0; }
+  .form-section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px; font-weight: 700; color: var(--navy); text-transform: uppercase;
+    margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--gold);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-field { margin-bottom: 16px; }
+  .form-field label { display: block; font-size: 13px; font-weight: 600; color: var(--slate); margin-bottom: 6px; }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%; padding: 10px 14px; border-radius: 6px;
+    border: 1px solid #dde2ea; font-family: 'Barlow', sans-serif;
+    font-size: 14px; outline: none; color: var(--text);
+    transition: border-color 0.2s;
+  }
+  .form-field textarea { min-height: 120px; resize: vertical; }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus { border-color: var(--gold); }
+
+  .upload-zone {
+    border: 2px dashed #dde2ea; border-radius: 8px; padding: 40px;
+    text-align: center; cursor: pointer; transition: all 0.2s;
+  }
+  .upload-zone:hover { border-color: var(--gold); background: rgba(245,166,35,0.03); }
+  .upload-icon { font-size: 40px; margin-bottom: 12px; }
+  .upload-zone h4 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .upload-zone p { font-size: 13px; color: var(--muted); }
+
+  /* ======== MOBILE NAV DRAWER ======== */
+  .mobile-nav {
+    position: fixed; top: 0; right: -100%; bottom: 0;
+    width: 280px; background: var(--navy); z-index: 2000;
+    padding: 80px 24px 24px;
+    transition: right 0.3s ease;
+    box-shadow: -4px 0 30px rgba(0,0,0,0.3);
+  }
+  .mobile-nav.open { right: 0; }
+  .mobile-nav a {
+    display: block; padding: 14px 0;
+    color: rgba(255,255,255,0.8); text-decoration: none;
+    font-size: 18px; font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transition: color 0.2s;
+  }
+  .mobile-nav a:hover { color: var(--gold); }
+  .mobile-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 1999; display: none;
+  }
+  .mobile-overlay.open { display: block; }
+  .close-nav {
+    position: absolute; top: 20px; right: 20px;
+    background: none; border: none; color: white;
+    font-size: 24px; cursor: pointer;
+  }
+
+  /* ======== RESPONSIVE ======== */
+  @media (max-width: 1100px) {
+    .hero { justify-content: center; flex-direction: column; align-items: flex-end; padding-top: 80px; }
+    .hero-content { max-width: 100%; display: none; }
+  }
+  @media (max-width: 900px) {
+    .browse-grid { grid-template-columns: 1fr; }
+    .listings-layout { grid-template-columns: 1fr; }
+    .filter-sidebar { position: static; }
+    .detail-layout { grid-template-columns: 1fr; }
+    .price-card { position: static; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .detail-specs-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-row { grid-template-columns: 1fr; }
+    .sell-steps { gap: 24px; }
+  }
+  @media (max-width: 640px) {
+    .nav-links, .nav-actions { display: none; }
+    .hamburger { display: flex; }
+    .hero { align-items: center; padding: 80px 5% 20px; }
+    .search-box { width: 100%; max-width: 400px; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 16px; }
+    .section { padding: 40px 5%; }
+    .listings-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeNav()"></div>
+<div class="mobile-nav" id="mobileNav">
+  <button class="close-nav" onclick="closeNav()">✕</button>
+  <a href="#" onclick="showPage('home')">Home</a>
+  <a href="#" onclick="showPage('listings')">Buy a Car</a>
+  <a href="#" onclick="showPage('sell')">Sell Your Car</a>
+  <a href="#" onclick="showPage('detail')">My Account</a>
+  <a href="#">Dealers</a>
+  <a href="#">Blog</a>
+  <a href="#">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo" onclick="showPage('home')">
+    <div class="logo-icon">🚗</div>
+    <div class="logo-text">Moto<span>.co.ke</span></div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('listings')">Buy a Car</a></li>
+    <li><a href="#">Dealers</a></li>
+    <li><a href="#">Blog</a></li>
+    <li><a href="#">News</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <a href="#" class="btn btn-outline" onclick="showPage('listings')">Buy Car</a>
+    <a href="#" class="btn btn-gold" onclick="showPage('sell')">Sell Car</a>
+  </div>
+  <button class="hamburger" onclick="openNav()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="slides-container">
+      <div class="slide active" id="slide1"></div>
+      <div class="slide" id="slide2"></div>
+      <div class="slide" id="slide3"></div>
+      <div class="slide" id="slide4"></div>
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">🇰🇪 Kenya's #1 Car Marketplace</div>
+      <h1 class="hero-title">Find Your<br><span>Dream Car</span></h1>
+      <p class="hero-subtitle">Thousands of verified listings from trusted dealers and private sellers across Kenya.</p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">12,400+</span><span class="stat-label">Active Listings</span></div>
+        <div class="stat"><span class="stat-num">850+</span><span class="stat-label">Dealers</span></div>
+        <div class="stat"><span class="stat-num">47</span><span class="stat-label">Counties</span></div>
+      </div>
+    </div>
+
+    <!-- SEARCH BOX -->
+    <div class="search-box">
+      <h3>Search Cars</h3>
+      <div class="form-group">
+        <label>Car Make</label>
+        <select>
+          <option value="">All Makes</option>
+          <option>Toyota</option><option>Nissan</option><option>BMW</option>
+          <option>Mercedes-Benz</option><option>Honda</option><option>Mazda</option>
+          <option>Mitsubishi</option><option>Subaru</option><option>Land Rover</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Car Model</label>
+        <select>
+          <option value="">All Models</option>
+          <option>Corolla</option><option>Hilux</option><option>Prado</option>
+          <option>Vitz</option><option>X-Trail</option><option>3 Series</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Body Type</label>
+        <select>
+          <option value="">All Types</option>
+          <option>Saloon</option><option>SUV / Crossover</option><option>Hatchback</option>
+          <option>Pickup</option><option>Van</option><option>Coupe</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Price Range (KES)</label>
+        <div class="price-range">
+          <input type="text" placeholder="Min">
+          <input type="text" placeholder="Max">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <select>
+          <option value="">All Locations</option>
+          <option>Nairobi</option><option>Mombasa</option><option>Kisumu</option>
+          <option>Nakuru</option><option>Eldoret</option><option>Thika</option>
+        </select>
+      </div>
+      <div class="search-actions">
+        <button class="btn btn-reset">Reset</button>
+        <button class="btn btn-search" onclick="showPage('listings')">Search</button>
+      </div>
+    </div>
+
+    <div class="slide-dots">
+      <button class="dot active" onclick="goToSlide(0)"></button>
+      <button class="dot" onclick="goToSlide(1)"></button>
+      <button class="dot" onclick="goToSlide(2)"></button>
+      <button class="dot" onclick="goToSlide(3)"></button>
+    </div>
+  </section>
+
+  <!-- BROWSE SECTION -->
+  <section class="section" style="background: white;">
+    <div class="section-header">
+      <h2 class="section-title">Browse Car Listings</h2>
+      <a href="#" class="section-link" onclick="showPage('listings')">View All →</a>
+    </div>
+
+    <div class="browse-grid">
+      <!-- Popular Makes -->
+      <div class="browse-card">
+        <div class="browse-card-title"><div class="icon">❤️</div>Popular Makes</div>
+        <div class="makes-grid">
+          <a href="#" class="make-item" onclick="showPage('listings')">
+            <svg viewBox="0 0 60 40" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="30" cy="20" rx="20" ry="12"/><line x1="10" y1="20" x2="50" y2="20"/></svg>
+            <span>BMW</span>
+          </a>
+          <a href="#" class="make-item" onclick="showPage('listings')">
+            <svg viewBox="0 0 60 40" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 28 L10 15 L20 12 L40 12 L50 15 L55 28 Z"/><circle cx="18" cy="28" r="6"/><circle cx="42" cy="28" r="6"/></svg>
+            <span>Nissan</span>
+          </a>
+          <a href="#" class="make-item" onclick="showPage('listings')">
+            <svg viewBox="0 0 60 40" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 28 L12 16 L22 13 L38 13 L48 16 L55 28 Z"/><circle cx="16" cy="28" r="6"/><circle cx="44" cy="28" r="6"/></svg>
+            <span>Toyota</span>
+          </a>
+          <a href="#" class="make-item" onclick="showPage('listings')">
+            <svg viewBox="0 0 60 40" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="30" cy="20" rx="18" ry="10"/><circle cx="30" cy="20" r="5"/></svg>
+            <span>Mercedes</span>
+          </a>
+          <a href="#" class="make-item" onclick="showPage('listings')">
+            <svg viewBox="0 0 60 40" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 28 L14 16 L24 13 L36 13 L46 16 L52 28 Z"/><circle cx="18" cy="28" r="5"/><circle cx="42" cy="28" r="5"/></svg>
+            <span>Honda</span>
+          </a>
+          <a href="#" class="make-item" onclick="showPage('listings')">
+            <svg viewBox="0 0 60 40" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 28 L12 17 L22 14 L38 14 L48 17 L54 28 Z"/><circle cx="17" cy="28" r="5"/><circle cx="43" cy="28" r="5"/></svg>
+            <span>Mazda</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Body Types -->
+      <div class="browse-card">
+        <div class="browse-card-title"><div class="icon">🚗</div>Body Types</div>
+        <div class="body-grid">
+          <a href="#" class="body-item"><div class="car-icon">🚘</div><span>Saloons & Coupes</span></a>
+          <a href="#" class="body-item"><div class="car-icon">🚐</div><span>Station Wagons</span></a>
+          <a href="#" class="body-item"><div class="car-icon">🚙</div><span>Hatchbacks</span></a>
+          <a href="#" class="body-item"><div class="car-icon">🚌</div><span>Vans & Mini-vans</span></a>
+          <a href="#" class="body-item"><div class="car-icon">🛻</div><span>Pickups</span></a>
+          <a href="#" class="body-item"><div class="car-icon">🏎</div><span>SUVs & Crossovers</span></a>
+          <a href="#" class="body-item"><div class="car-icon">🚎</div><span>Buses</span></a>
+          <a href="#" class="body-item"><div class="car-icon">🚛</div><span>Trucks & Trailers</span></a>
+          <a href="#" class="body-item"><div class="car-icon">🏍</div><span>Motorcycles</span></a>
+        </div>
+      </div>
+
+      <!-- Locations -->
+      <div class="browse-card">
+        <div class="browse-card-title"><div class="icon">📍</div>Locations</div>
+        <ul class="locations-list">
+          <li><a href="#" class="location-item" onclick="showPage('listings')">
+            <div class="location-left"><div class="location-dot"></div><span class="location-name">Nairobi</span></div>
+            <span class="location-count">6,241</span>
+          </a></li>
+          <li><a href="#" class="location-item" onclick="showPage('listings')">
+            <div class="location-left"><div class="location-dot" style="background:#4a9fd4"></div><span class="location-name">Mombasa</span></div>
+            <span class="location-count">1,843</span>
+          </a></li>
+          <li><a href="#" class="location-item" onclick="showPage('listings')">
+            <div class="location-left"><div class="location-dot" style="background:#58c07a"></div><span class="location-name">Kisumu</span></div>
+            <span class="location-count">987</span>
+          </a></li>
+          <li><a href="#" class="location-item" onclick="showPage('listings')">
+            <div class="location-left"><div class="location-dot" style="background:#e97a6b"></div><span class="location-name">Nakuru</span></div>
+            <span class="location-count">763</span>
+          </a></li>
+          <li><a href="#" class="location-item" onclick="showPage('listings')">
+            <div class="location-left"><div class="location-dot" style="background:#9b8fd4"></div><span class="location-name">Eldoret</span></div>
+            <span class="location-count">524</span>
+          </a></li>
+          <li><a href="#" class="location-item" onclick="showPage('listings')">
+            <div class="location-left"><div class="location-dot" style="background:#f0a058"></div><span class="location-name">Thika</span></div>
+            <span class="location-count">412</span>
+          </a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED LISTINGS -->
+  <section class="section featured-bg">
+    <div class="section-header">
+      <h2 class="section-title">Featured Listings</h2>
+      <a href="#" class="section-link" onclick="showPage('listings')">Browse All Cars →</a>
+    </div>
+    <div class="listings-grid">
+      <div class="listing-card" onclick="showPage('detail')">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80" alt="Toyota Prado">
+          <span class="listing-badge">Featured</span>
+          <button class="listing-fav">♡</button>
+        </div>
+        <div class="listing-body">
+          <div class="listing-title">Toyota Land Cruiser Prado</div>
+          <div class="listing-sub">2020 · Nairobi, Kenya</div>
+          <div class="listing-price"><span class="currency">KES </span>9,500,000</div>
+          <div class="listing-specs">
+            <span class="spec">⛽ Diesel</span>
+            <span class="spec">⚙️ Auto</span>
+            <span class="spec">📏 48,000 km</span>
+            <span class="spec">🎨 White</span>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card" onclick="showPage('detail')">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&q=80" alt="BMW 3 Series">
+          <span class="listing-badge">New</span>
+          <button class="listing-fav">♡</button>
+        </div>
+        <div class="listing-body">
+          <div class="listing-title">BMW 3 Series 320i</div>
+          <div class="listing-sub">2021 · Nairobi, Kenya</div>
+          <div class="listing-price"><span class="currency">KES </span>5,800,000</div>
+          <div class="listing-specs">
+            <span class="spec">⛽ Petrol</span>
+            <span class="spec">⚙️ Auto</span>
+            <span class="spec">📏 22,000 km</span>
+            <span class="spec">🎨 Black</span>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card" onclick="showPage('detail')">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1485291571150-772bcfc10da5?w=600&q=80" alt="Nissan X-Trail">
+          <button class="listing-fav">♡</button>
+        </div>
+        <div class="listing-body">
+          <div class="listing-title">Nissan X-Trail 2.0</div>
+          <div class="listing-sub">2019 · Mombasa, Kenya</div>
+          <div class="listing-price"><span class="currency">KES </span>3,200,000</div>
+          <div class="listing-specs">
+            <span class="spec">⛽ Petrol</span>
+            <span class="spec">⚙️ Auto</span>
+            <span class="spec">📏 67,000 km</span>
+            <span class="spec">🎨 Silver</span>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card" onclick="showPage('detail')">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&q=80" alt="Mercedes C-Class">
+          <span class="listing-badge">Hot</span>
+          <button class="listing-fav">♡</button>
+        </div>
+        <div class="listing-body">
+          <div class="listing-title">Mercedes-Benz C200</div>
+          <div class="listing-sub">2020 · Nairobi, Kenya</div>
+          <div class="listing-price"><span class="currency">KES </span>7,400,000</div>
+          <div class="listing-specs">
+            <span class="spec">⛽ Petrol</span>
+            <span class="spec">⚙️ Auto</span>
+            <span class="spec">📏 31,000 km</span>
+            <span class="spec">🎨 Grey</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELL CTA -->
+  <section class="sell-cta">
+    <h2>Ready to Sell Your Car?</h2>
+    <p>List on Moto.co.ke — Kenya's #1 Online Car Bazaar</p>
+    <div class="sell-steps">
+      <div class="sell-step"><div class="step-num">1</div><div class="step-label">Create a Free Listing</div></div>
+      <div class="sell-step"><div class="step-num">2</div><div class="step-label">Add Photos & Details</div></div>
+      <div class="sell-step"><div class="step-num">3</div><div class="step-label">Get Buyer Inquiries</div></div>
+      <div class="sell-step"><div class="step-num">4</div><div class="step-label">Close the Deal!</div></div>
+    </div>
+    <a href="#" class="btn btn-navy btn-lg" onclick="showPage('sell')">List Your Car Now</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo" onclick="showPage('home')">
+          <div class="logo-icon">🚗</div>
+          <div class="logo-text">Moto<span>.co.ke</span></div>
+        </a>
+        <p class="footer-tagline">Kenya's largest and most trusted online car marketplace. Buy, sell, or browse thousands of vehicles from across the country.</p>
+        <div class="social-links">
+          <a href="#" class="social-link">𝕏</a>
+          <a href="#" class="social-link">f</a>
+          <a href="#" class="social-link">in</a>
+          <a href="#" class="social-link">📷</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#">About Moto.co.ke</a></li>
+          <li><a href="#">Moto Blog</a></li>
+          <li><a href="#">Moto News</a></li>
+          <li><a href="#">Our Partners</a></li>
+          <li><a href="#">RTG Group</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Social</h4>
+        <ul class="footer-links">
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Google Plus</a></li>
+          <li><a href="#">Pinterest</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Client Support</a></li>
+          <li><a href="#">Email</a></li>
+          <li><a href="#">Telephone</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Moto.co.ke — All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">f</a>
+        <a href="#" class="social-link">G+</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ===================== LISTINGS PAGE ===================== -->
+<div id="page-listings" class="page">
+  <div class="page-header">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a><span>›</span>Buy a Car</div>
+    <h1>Car Listings</h1>
+    <p>12,400+ vehicles available across Kenya</p>
+  </div>
+  <div class="listings-layout">
+    <aside class="filter-sidebar">
+      <div class="filter-title">🔧 Filters</div>
+      <div class="filter-group">
+        <label>Make</label>
+        <select><option>All Makes</option><option>Toyota</option><option>Nissan</option><option>BMW</option><option>Mercedes</option></select>
+      </div>
+      <div class="filter-group">
+        <label>Model</label>
+        <select><option>All Models</option></select>
+      </div>
+      <div class="filter-group">
+        <label>Body Type</label>
+        <select><option>All Types</option><option>Saloon</option><option>SUV</option><option>Hatchback</option><option>Pickup</option></select>
+      </div>
+      <div class="filter-group">
+        <label>Year</label>
+        <div class="filter-range">
+          <input type="number" placeholder="From" value="2015">
+          <input type="number" placeholder="To" value="2024">
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Price (KES)</label>
+        <div class="filter-range">
+          <input type="text" placeholder="Min">
+          <input type="text" placeholder="Max">
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Mileage (km)</label>
+        <div class="filter-range">
+          <input type="text" placeholder="Min">
+          <input type="text" placeholder="Max">
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Transmission</label>
+        <select><option>Any</option><option>Automatic</option><option>Manual</option></select>
+      </div>
+      <div class="filter-group">
+        <label>Fuel Type</label>
+        <select><option>Any</option><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option></select>
+      </div>
+      <div class="filter-group">
+        <label>Location</label>
+        <select><option>All Kenya</option><option>Nairobi</option><option>Mombasa</option><option>Kisumu</option><option>Nakuru</option></select>
+      </div>
+      <button class="btn btn-gold" style="width:100%">Apply Filters</button>
+      <button class="btn btn-outline" style="width:100%;margin-top:8px;border-color:#dde2ea;color:var(--slate)">Clear All</button>
+    </aside>
+
+    <div>
+      <div class="listings-header">
+        <p class="results-count">Showing <strong>1–12</strong> of <strong>12,400</strong> cars</p>
+        <select class="sort-select">
+          <option>Sort: Newest First</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+          <option>Mileage: Low to High</option>
+          <option>Year: Newest</option>
+        </select>
+      </div>
+      <div class="listings-grid">
+        <div class="listing-card" onclick="showPage('detail')">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80" alt="">
+            <span class="listing-badge">Featured</span>
+            <button class="listing-fav">♡</button>
+          </div>
+          <div class="listing-body" style="background:white;color:var(--text)">
+            <div class="listing-title" style="color:var(--navy)">Toyota Land Cruiser Prado</div>
+            <div class="listing-sub">2020 · Nairobi</div>
+            <div class="listing-price">KES 9,500,000</div>
+            <div class="listing-specs"><span class="spec" style="color:var(--muted)">⛽ Diesel</span><span class="spec" style="color:var(--muted)">⚙️ Auto</span><span class="spec" style="color:var(--muted)">📏 48,000 km</span></div>
+          </div>
+        </div>
+        <div class="listing-card" onclick="showPage('detail')">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&q=80" alt="">
+            <button class="listing-fav">♡</button>
+          </div>
+          <div class="listing-body" style="background:white;color:var(--text)">
+            <div class="listing-title" style="color:var(--navy)">BMW 3 Series 320i</div>
+            <div class="listing-sub">2021 · Nairobi</div>
+            <div class="listing-price">KES 5,800,000</div>
+            <div class="listing-specs"><span class="spec" style="color:var(--muted)">⛽ Petrol</span><span class="spec" style="color:var(--muted)">⚙️ Auto</span><span class="spec" style="color:var(--muted)">📏 22,000 km</span></div>
+          </div>
+        </div>
+        <div class="listing-card" onclick="showPage('detail')">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1485291571150-772bcfc10da5?w=600&q=80" alt="">
+            <button class="listing-fav">♡</button>
+          </div>
+          <div class="listing-body" style="background:white;color:var(--text)">
+            <div class="listing-title" style="color:var(--navy)">Nissan X-Trail 2.0</div>
+            <div class="listing-sub">2019 · Mombasa</div>
+            <div class="listing-price">KES 3,200,000</div>
+            <div class="listing-specs"><span class="spec" style="color:var(--muted)">⛽ Petrol</span><span class="spec" style="color:var(--muted)">⚙️ Auto</span><span class="spec" style="color:var(--muted)">📏 67,000 km</span></div>
+          </div>
+        </div>
+        <div class="listing-card" onclick="showPage('detail')">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&q=80" alt="">
+            <span class="listing-badge">Hot</span>
+            <button class="listing-fav">♡</button>
+          </div>
+          <div class="listing-body" style="background:white;color:var(--text)">
+            <div class="listing-title" style="color:var(--navy)">Mercedes-Benz C200</div>
+            <div class="listing-sub">2020 · Nairobi</div>
+            <div class="listing-price">KES 7,400,000</div>
+            <div class="listing-specs"><span class="spec" style="color:var(--muted)">⛽ Petrol</span><span class="spec" style="color:var(--muted)">⚙️ Auto</span><span class="spec" style="color:var(--muted)">📏 31,000 km</span></div>
+          </div>
+        </div>
+        <div class="listing-card" onclick="showPage('detail')">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=600&q=80" alt="">
+            <button class="listing-fav">♡</button>
+          </div>
+          <div class="listing-body" style="background:white;color:var(--text)">
+            <div class="listing-title" style="color:var(--navy)">Toyota Hilux Revo</div>
+            <div class="listing-sub">2022 · Nakuru</div>
+            <div class="listing-price">KES 6,100,000</div>
+            <div class="listing-specs"><span class="spec" style="color:var(--muted)">⛽ Diesel</span><span class="spec" style="color:var(--muted)">⚙️ Manual</span><span class="spec" style="color:var(--muted)">📏 18,000 km</span></div>
+          </div>
+        </div>
+        <div class="listing-card" onclick="showPage('detail')">
+          <div class="listing-img">
+            <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80" alt="">
+            <button class="listing-fav">♡</button>
+          </div>
+          <div class="listing-body" style="background:white;color:var(--text)">
+            <div class="listing-title" style="color:var(--navy)">Subaru Outback</div>
+            <div class="listing-sub">2018 · Kisumu</div>
+            <div class="listing-price">KES 2,800,000</div>
+            <div class="listing-specs"><span class="spec" style="color:var(--muted)">⛽ Petrol</span><span class="spec" style="color:var(--muted)">⚙️ Auto</span><span class="spec" style="color:var(--muted)">📏 72,000 km</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DETAIL PAGE ===================== -->
+<div id="page-detail" class="page">
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="#" onclick="showPage('home')">Home</a><span>›</span>
+      <a href="#" onclick="showPage('listings')">Buy a Car</a><span>›</span>
+      Toyota Land Cruiser Prado
+    </div>
+    <h1>Toyota Land Cruiser Prado VX</h1>
+    <p>Listed 3 days ago · Nairobi, Kenya</p>
+  </div>
+
+  <div class="detail-layout">
+    <div>
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=1200&q=80" alt="Main photo" id="mainImg">
+        <div class="gallery-nav">
+          <button class="gallery-btn">‹</button>
+          <button class="gallery-btn">›</button>
+        </div>
+      </div>
+      <div class="gallery-thumbnails">
+        <div class="thumb active"><img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=200&q=80"></div>
+        <div class="thumb"><img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=200&q=80"></div>
+        <div class="thumb"><img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=200&q=80"></div>
+        <div class="thumb"><img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=200&q=80"></div>
+      </div>
+
+      <div style="background:white;border-radius:12px;padding:28px;margin-top:20px;box-shadow:0 2px 12px rgba(0,0,0,0.07)">
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:16px;">Vehicle Specifications</h2>
+        <div class="detail-specs-grid">
+          <div class="spec-card"><div class="spec-icon">📅</div><div class="spec-value">2020</div><div class="spec-label">Year</div></div>
+          <div class="spec-card"><div class="spec-icon">📏</div><div class="spec-value">48,000 km</div><div class="spec-label">Mileage</div></div>
+          <div class="spec-card"><div class="spec-icon">⛽</div><div class="spec-value">Diesel</div><div class="spec-label">Fuel</div></div>
+          <div class="spec-card"><div class="spec-icon">⚙️</div><div class="spec-value">Automatic</div><div class="spec-label">Transmission</div></div>
+          <div class="spec-card"><div class="spec-icon">🎨</div><div class="spec-value">Pearl White</div><div class="spec-label">Colour</div></div>
+          <div class="spec-card"><div class="spec-icon">🔧</div><div class="spec-value">4.0L V6</div><div class="spec-label">Engine</div></div>
+          <div class="spec-card"><div class="spec-icon">🛞</div><div class="spec-value">4WD</div><div class="spec-label">Drive</div></div>
+          <div class="spec-card"><div class="spec-icon">💺</div><div class="spec-value">7 Seats</div><div class="spec-label">Capacity</div></div>
+          <div class="spec-card"><div class="spec-icon">🏠</div><div class="spec-value">Nairobi</div><div class="spec-label">Location</div></div>
+        </div>
+
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:12px;margin-top:24px;">Description</h3>
+        <p class="detail-description">This well-maintained 2020 Toyota Land Cruiser Prado VX is in excellent condition, owned from new. Fully loaded with leather seats, sunroof, rear entertainment, and all terrain tyres. Service history available. No accidents. Logbook ready. Only selling due to relocation. Serious buyers only, no time wasters please. Test drive available by appointment in Westlands, Nairobi.</p>
+
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:12px;">Features & Extras</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="background:var(--off-white);padding:6px 12px;border-radius:20px;font-size:13px;color:var(--slate)">Leather Seats</span>
+          <span style="background:var(--off-white);padding:6px 12px;border-radius:20px;font-size:13px;color:var(--slate)">Sunroof</span>
+          <span style="background:var(--off-white);padding:6px 12px;border-radius:20px;font-size:13px;color:var(--slate)">Rear Camera</span>
+          <span style="background:var(--off-white);padding:6px 12px;border-radius:20px;font-size:13px;color:var(--slate)">Bluetooth</span>
+          <span style="background:var(--off-white);padding:6px 12px;border-radius:20px;font-size:13px;color:var(--slate)">Navigation</span>
+          <span style="background:var(--off-white);padding:6px 12px;border-radius:20px;font-size:13px;color:var(--slate)">Climate Control</span>
+          <span style="background:var(--off-white);padding:6px 12px;border-radius:20px;font-size:13px;color:var(--slate)">Alloy Wheels</span>
+          <span style="background:var(--off-white);padding:6px 12px;border-radius:20px;font-size:13px;color:var(--slate)">Park Sensors</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="price-card">
+        <div class="price-main">KES 9,500,000</div>
+        <div class="price-neg">Negotiable</div>
+
+        <div class="seller-info">
+          <div class="seller-name">🏠 Private Seller</div>
+          <div class="seller-member">Member since January 2022 · ⭐ 4.8</div>
+        </div>
+
+        <div class="contact-actions">
+          <button class="btn btn-gold btn-lg" style="justify-content:center">📞 Show Phone Number</button>
+          <button class="btn btn-outline" style="border-color:var(--gold);color:var(--gold);justify-content:center">💬 Send Message</button>
+          <button class="btn" style="background:var(--off-white);color:var(--text);justify-content:center">🔖 Save Listing</button>
+        </div>
+
+        <hr style="border:none;border-top:1px solid #e8ecf0;margin:20px 0">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px">
+          <span>Listing ID</span><span style="color:var(--text);font-weight:600">#MCK-2024-44892</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px">
+          <span>Listed</span><span style="color:var(--text);font-weight:600">3 days ago</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)">
+          <span>Views</span><span style="color:var(--text);font-weight:600">1,247</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SELL PAGE ===================== -->
+<div id="page-sell" class="page">
+  <div class="page-header">
+    <div class="breadcrumb"><a href="#" onclick="showPage('home')">Home</a><span>›</span>Sell Your Car</div>
+    <h1>List Your Car for Sale</h1>
+    <p>Free listing · Reach thousands of buyers across Kenya</p>
+  </div>
+
+  <div class="sell-form-container">
+    <!-- Progress -->
+    <div style="display:flex;gap:0;margin-bottom:24px;border-radius:8px;overflow:hidden;border:1px solid #e8ecf0;background:white">
+      <div style="flex:1;padding:16px;text-align:center;background:var(--navy);color:white">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Step 1</div>
+        <div style="font-size:12px;opacity:0.8">Vehicle Details</div>
+      </div>
+      <div style="flex:1;padding:16px;text-align:center;color:var(--muted)">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Step 2</div>
+        <div style="font-size:12px">Photos</div>
+      </div>
+      <div style="flex:1;padding:16px;text-align:center;color:var(--muted)">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Step 3</div>
+        <div style="font-size:12px">Contact & Price</div>
+      </div>
+      <div style="flex:1;padding:16px;text-align:center;color:var(--muted)">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Step 4</div>
+        <div style="font-size:12px">Publish</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Vehicle Details</div>
+      <div class="form-row">
+        <div class="form-field"><label>Make *</label><select><option>Select Make</option><option>Toyota</option><option>Nissan</option><option>BMW</option><option>Mercedes-Benz</option><option>Honda</option></select></div>
+        <div class="form-field"><label>Model *</label><select><option>Select Model</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>Year *</label><input type="number" placeholder="e.g. 2020" min="1980" max="2025"></div>
+        <div class="form-field"><label>Mileage (km) *</label><input type="number" placeholder="e.g. 48000"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>Body Type *</label><select><option>Select Type</option><option>Saloon</option><option>SUV/Crossover</option><option>Hatchback</option><option>Pickup</option><option>Van</option></select></div>
+        <div class="form-field"><label>Condition *</label><select><option>Select Condition</option><option>Excellent</option><option>Good</option><option>Fair</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>Transmission</label><select><option>Automatic</option><option>Manual</option></select></div>
+        <div class="form-field"><label>Fuel Type</label><select><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>Colour</label><input type="text" placeholder="e.g. Pearl White"></div>
+        <div class="form-field"><label>Engine Size</label><input type="text" placeholder="e.g. 2000cc"></div>
+      </div>
+      <div class="form-field"><label>Description *</label><textarea placeholder="Describe your car — condition, service history, extras, reason for selling..."></textarea></div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Upload Photos</div>
+      <div class="upload-zone">
+        <div class="upload-icon">📷</div>
+        <h4>Drag & drop photos here</h4>
+        <p>or click to browse · JPG, PNG · Max 10MB each · Up to 20 photos</p>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Price & Location</div>
+      <div class="form-row">
+        <div class="form-field"><label>Asking Price (KES) *</label><input type="number" placeholder="e.g. 1500000"></div>
+        <div class="form-field"><label>Negotiable?</label><select><option>Yes, price is negotiable</option><option>No, firm price</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="form-field"><label>County / Location *</label><select><option>Select County</option><option>Nairobi</option><option>Mombasa</option><option>Kisumu</option><option>Nakuru</option><option>Eldoret</option></select></div>
+        <div class="form-field"><label>Area / Estate</label><input type="text" placeholder="e.g. Westlands"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Contact Details</div>
+      <div class="form-row">
+        <div class="form-field"><label>Your Name *</label><input type="text" placeholder="Full name"></div>
+        <div class="form-field"><label>Phone Number *</label><input type="tel" placeholder="+254 7XX XXX XXX"></div>
+      </div>
+      <div class="form-field"><label>Email Address</label><input type="email" placeholder="yourname@example.com"></div>
+    </div>
+
+    <div style="text-align:center;padding-bottom:48px">
+      <button class="btn btn-gold btn-lg" style="min-width:200px">Publish Listing →</button>
+      <p style="margin-top:12px;font-size:13px;color:var(--muted)">By publishing, you agree to our Terms & Conditions</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ======== PAGE SWITCHING ========
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ======== MOBILE NAV ========
+  function openNav() {
+    document.getElementById('mobileNav').classList.add('open');
+    document.getElementById('mobileOverlay').classList.add('open');
+  }
+  function closeNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('mobileOverlay').classList.remove('open');
+  }
+
+  // ======== SLIDESHOW WITH KEN BURNS ========
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  let current = 0;
+  let slideInterval;
+
+  const kbAnims = [
+    'kenBurns', 'kenBurns2', 'kenBurns', 'kenBurns2'
+  ];
+
+  function goToSlide(n) {
+    slides[current].classList.remove('active');
+    slides[current].style.animation = 'none';
+    dots[current].classList.remove('active');
+
+    current = n;
+
+    slides[current].style.animation = 'none';
+    // Force reflow
+    void slides[current].offsetWidth;
+    slides[current].style.animation = `${kbAnims[current % 2]} 8s ease-in-out forwards`;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function nextSlide() {
+    goToSlide((current + 1) % slides.length);
+  }
+
+  // Init
+  slides[0].style.animation = 'kenBurns 8s ease-in-out forwards';
+  slideInterval = setInterval(nextSlide, 7500);
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      clearInterval(slideInterval);
+      goToSlide(i);
+      slideInterval = setInterval(nextSlide, 7500);
+    });
+  });
+</script>
+
+</body>
+</html>
