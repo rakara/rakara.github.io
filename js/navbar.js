@@ -7,7 +7,7 @@ function loadNavbar() {
             <li><a href="#services">Services</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#work">Work</a></li>
-            <li><a href="blog" target="_blank">Blog</a></li>
+            <li><a href="blog">Blog</a></li>
             <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
           </ul>
           <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
@@ -21,6 +21,7 @@ function loadNavbar() {
           <a href="#services" onclick="toggleMenu()">Services</a>
           <a href="#pricing" onclick="toggleMenu()">Pricing</a>
           <a href="#work" onclick="toggleMenu()">Work</a>
+          <a href="blog" onclick="toggleMenu()">Blog</a>
           <a href="#contact" onclick="toggleMenu()">Contact</a>
         </div>
     `;
