@@ -19,5 +19,9 @@
       "sizes": "512x512",
       "type": "image/svg+xml"
     }
+  ],
+  "categories": [
+    "lifestyle",
+    "shopping"
   ]
 }
